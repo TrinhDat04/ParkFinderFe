@@ -1,0 +1,21 @@
+{
+  "BUTTON_OK": "OK",
+  "BUTTON_CANCEL": "CANCEL",
+  "BUTTON_YES": "YES",
+  "BUTTON_NO": "NO",
+  "BUTTON_SAVE": "SAVE",
+  "BUTTON_GO": "GO",
+  "LABEL_DATE": "Date",
+  "LABEL_HOUR": "Hour",
+  "LABEL_ENGLISH": "English",
+  "LABEL_FRENCH": "French",
+  "LABEL_VIETNAM": "Viet Nam",
+  "LABEL_EN": "English",
+  "LABEL_FR": "French",
+  "LABEL_VI": "Viet Nam",
+  "MESSAGE_SUCCESS": "Success",
+  "MESSAGE_SAVE_SUCCESS": "Save Success",
+  "MESSAGE_DELETE_SUCCESS": "Delete Success",
+  "MESSAGE_UPDATE_SUCCESS": "Update Success",
+  "MESSAGE_ERROR": "Error"
+}

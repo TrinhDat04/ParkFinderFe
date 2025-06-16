@@ -1,0 +1,17 @@
+<header class="header">
+  <div class="logo">
+    <img src="assets/icons/gift-voucher.png" alt="Logo" />
+  </div>
+
+  <nav class="nav">
+    <ul class="nav-list">
+      <li><a routerLink="/user/create" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Create</a></li>
+      <li><a routerLink="/user/profile" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Profile</a></li>
+      <li><a routerLink="/dashboard/financian" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Dashboard</a></li>
+    </ul>
+  </nav>
+
+  <div class="cta">
+    <app-language></app-language>
+  </div>
+</header>

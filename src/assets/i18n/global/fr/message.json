@@ -1,0 +1,7 @@
+{
+  "MESSAGE_SUCCESS": "Success",
+  "MESSAGE_SAVE_SUCCESS": "Save Success",
+  "MESSAGE_DELETE_SUCCESS": "Delete Success",
+  "MESSAGE_UPDATE_SUCCESS": "Update Success",
+  "MESSAGE_ERROR": "Error"
+}
