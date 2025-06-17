@@ -1,4 +1,3 @@
-(process.env as any).NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
