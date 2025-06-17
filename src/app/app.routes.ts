@@ -8,6 +8,8 @@ import { DashboardLayoutComponent } from './layout/dashboard-layout/dashboard-la
 import { AuthGuard } from './core/guards/auth.guard';
 import { HasAnyRoleGuard } from './core/guards/has-any-role.guard';
 import { EnumRole } from './core/constants/roles.enum';
+import {UserProfileComponent} from './features/user/pages/user-profile/user-profile.component';
+import {UserProfileResolver} from './core/resolvers/user-profile-resolver';
 export const routes: Routes = [
   {
     path: 'auth',
@@ -22,7 +24,6 @@ export const routes: Routes = [
   },
   {
     path: 'user',
-    component: MainLayoutComponent,
     children: [
       {
         path: '',
@@ -36,6 +37,9 @@ export const routes: Routes = [
           roles: [EnumRole.Admin],
         } as RouteData,
         canActivate: [HasAnyRoleGuard],
+      },
+      {
+        path: 'profile', component: UserProfileComponent, resolve: { userData: UserProfileResolver }
       },
     ],
     canActivate: [AuthGuard],

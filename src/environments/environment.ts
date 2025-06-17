@@ -1,8 +1,8 @@
 export const ENVIRONMENT = {
   serviceUrl: {
-    default: 'http://localhost:3000/api',
+    default: 'https://localhost:7135/api/User',
     auth: 'https://dev-auth.example.com',
-    user: 'https://dev-user.example.com',
+    user: 'https://localhost:7135/api/User',
     payment: 'https://dev-payment.example.com',
     products: 'https://dev-product.example.com',
   },

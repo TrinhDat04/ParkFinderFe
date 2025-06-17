@@ -18,6 +18,7 @@ export class ApiService {
       }`,
       {
         params: httpParams,
+        headers: option.headers
       }
     );
   }
