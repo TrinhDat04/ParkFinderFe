@@ -25,11 +25,10 @@ export class LoginComponent implements OnInit {
           if (response.token) {
             this.message = 'Đăng nhập thành công!';
             localStorage.setItem("user_token", response.token);
-            // Decode JWT để lấy user_id
             const tokenParts = response.token.split('.');
             if (tokenParts.length === 3) {
               const payload = JSON.parse(atob(tokenParts[1]));
-              const userId = payload.Id; // lấy đúng key theo token
+              const userId = payload.Id;
               console.log('Decoded userId:', userId);
               localStorage.setItem("user_id", userId);
             } else {

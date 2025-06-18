@@ -27,7 +27,6 @@ export class UserProfileComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router, private userService: UserService) {}
 
   ngOnInit(): void {
-    // Lấy dữ liệu user từ resolver (đã preload)
     this.route.data.subscribe((data) => {
       if (data['userData']) {
         this.user = data['userData'];
