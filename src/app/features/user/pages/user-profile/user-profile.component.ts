@@ -36,19 +36,41 @@ export class UserProfileComponent implements OnInit {
   }
 
   editProfile() {
-    // Kiểm tra password và confirm password
+    if (!this.user.fullName || this.user.fullName.trim() === '') {
+      alert('Họ và tên không được để trống!');
+      return;
+    }
+
+    if (!this.user.email || this.user.email.trim() === '') {
+      alert('Email không được để trống!');
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(this.user.email)) {
+      alert('Email không hợp lệ!');
+      return;
+    }
+
+    if (this.user.phone && this.user.phone.length < 9) {
+      alert('Số điện thoại phải có ít nhất 9 chữ số!');
+      return;
+    }
+    if (!this.user.phone || this.user.phone.trim() === '') {
+      alert('SĐT không được để trống!');
+      return;
+    }
+
     if (this.password !== this.confirmPassword) {
       alert('Mật khẩu và Nhập lại mật khẩu không khớp!');
       return;
     }
 
-    // Chuẩn bị dữ liệu gửi lên API
     const updatePresenter: UpdateProfilePresenter = {
       fullName: this.user.fullName,
       phone: this.user.phone,
       email: this.user.email,
-      password: this.password ? this.password : undefined, // chỉ gửi nếu người dùng nhập password mới
-      role: this.user.role
+      passwordHash: this.password ? this.password : undefined,
     };
 
     this.userService.editProfile(updatePresenter).subscribe({
