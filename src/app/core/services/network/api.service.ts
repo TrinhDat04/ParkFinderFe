@@ -18,6 +18,7 @@ export class ApiService {
       }`,
       {
         params: httpParams,
+        headers: option.headers
       }
     );
   }
@@ -27,7 +28,8 @@ export class ApiService {
       `${ENVIRONMENT.serviceUrl[option.serviceUrl || 'default']}${
         option.endpoint
       }`,
-      option.paramsObj
+      option.paramsObj,
+      option.headers ? { headers: option.headers } : {}
     );
   }
 

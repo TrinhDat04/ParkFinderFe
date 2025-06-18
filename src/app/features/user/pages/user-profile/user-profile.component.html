@@ -1,3 +1,44 @@
-<p>
-  user-profile works!
-</p>
+<div class="container mt-3">
+  <div class="text-center bg-primary text-white py-4 rounded-top">
+    <div class="mx-auto bg-light rounded-circle" style="width: 100px; height: 100px;"></div>
+  </div>
+
+  <form class="bg-white p-3 shadow-sm">
+    <div class="mb-3">
+      <input type="text" class="form-control" placeholder="Họ và tên" [(ngModel)]="user.fullName" name="fullName">
+    </div>
+    <div class="mb-3">
+      <input type="tel" class="form-control" placeholder="Số điện thoại" [(ngModel)]="user.phone" name="phone">
+    </div>
+    <div class="mb-3">
+      <input type="email" class="form-control" placeholder="Email" [(ngModel)]="user.email" name="email">
+    </div>
+    <div class="mb-3">
+      <input type="password" class="form-control" placeholder="Mật khẩu" [(ngModel)]="password" name="password">
+    </div>
+    <div class="mb-3 position-relative">
+      <input [type]="showPassword ? 'text' : 'password'" class="form-control" placeholder="Nhập lại mật khẩu" [(ngModel)]="confirmPassword" name="confirmPassword">
+      <i class="bi bi-eye position-absolute top-50 end-0 translate-middle-y me-3" style="cursor: pointer;" (click)="showPassword = !showPassword"></i>
+    </div>
+    <div class="mb-3">
+      <input type="text" class="form-control" placeholder="Vai trò" [(ngModel)]="user.role" name="role" readonly>
+    </div>
+    <button type="button" class="btn btn-primary w-100 mb-2" (click)="editProfile()">Chỉnh sửa tài khoản</button>
+    <button type="button" class="btn btn-outline-primary w-100" (click)="logout()">Đăng xuất</button>
+  </form>
+
+
+  <nav class="navbar fixed-bottom navbar-light bg-light border-top">
+    <div class="d-flex justify-content-around w-100">
+      <a class="text-center text-decoration-none" routerLink="/home">
+        <i class="bi bi-house fs-4"></i><br>Trang chủ
+      </a>
+      <a class="text-center text-decoration-none" routerLink="/map">
+        <i class="bi bi-geo-alt fs-4"></i><br>Bản đồ
+      </a>
+      <a class="text-center text-decoration-none" routerLink="/account">
+        <i class="bi bi-person fs-4"></i><br>Tài khoản
+      </a>
+    </div>
+  </nav>
+</div>
