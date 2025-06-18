@@ -13,14 +13,14 @@
     <div class="mb-3">
       <input type="email" class="form-control" placeholder="Email" [(ngModel)]="user.email" name="email">
     </div>
-    <!-- Password và Confirm Password chỉ dùng FE -->
-<!--    <div class="mb-3">-->
-<!--      <input type="password" class="form-control" placeholder="Mật khẩu" [(ngModel)]="password" name="password">-->
-<!--    </div>-->
-<!--    <div class="mb-3 position-relative">-->
-<!--      <input [type]="showPassword ? 'text' : 'password'" class="form-control" placeholder="Nhập lại mật khẩu" [(ngModel)]="confirmPassword" name="confirmPassword">-->
-<!--      <i class="bi bi-eye position-absolute top-50 end-0 translate-middle-y me-3" style="cursor: pointer;" (click)="showPassword = !showPassword"></i>-->
-<!--    </div>-->
+<!--     Password và Confirm Password chỉ dùng FE-->
+    <div class="mb-3">
+      <input type="password" class="form-control" placeholder="Mật khẩu" [(ngModel)]="password" name="password">
+    </div>
+    <div class="mb-3 position-relative">
+      <input [type]="showPassword ? 'text' : 'password'" class="form-control" placeholder="Nhập lại mật khẩu" [(ngModel)]="confirmPassword" name="confirmPassword">
+      <i class="bi bi-eye position-absolute top-50 end-0 translate-middle-y me-3" style="cursor: pointer;" (click)="showPassword = !showPassword"></i>
+    </div>
     <!-- Role + CreatedAt nếu cần -->
     <div class="mb-3">
       <input type="text" class="form-control" placeholder="Vai trò" [(ngModel)]="user.role" name="role" readonly>

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { ApiService } from '../../../core/services/network/api.service';
 import { User } from '../models/user';
 import { USER_ENDPOINTS } from '../../../core/constants/endpoints/user-service-endpoints';
+import {UpdateProfilePresenter} from '../models/update-profile-presenter';
 
 @Injectable({
   providedIn: 'root',
@@ -23,8 +24,16 @@ export class UserService {
       'userId': userId // nếu backend vẫn yêu cầu
     });
     return this.apService.get<User>({
+      serviceUrl: 'user',
       endpoint: USER_ENDPOINTS.getUser,
       headers: headers,
+    });
+  }
+  editProfile(presenter: UpdateProfilePresenter): Observable<any> {
+    return this.apService.post({
+      serviceUrl: 'user',
+      endpoint: USER_ENDPOINTS.updateProfile,
+      paramsObj: presenter,
     });
   }
 }
