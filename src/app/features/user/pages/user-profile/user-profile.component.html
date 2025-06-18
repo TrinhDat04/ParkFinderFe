@@ -13,7 +13,6 @@
     <div class="mb-3">
       <input type="email" class="form-control" placeholder="Email" [(ngModel)]="user.email" name="email">
     </div>
-<!--     Password và Confirm Password chỉ dùng FE-->
     <div class="mb-3">
       <input type="password" class="form-control" placeholder="Mật khẩu" [(ngModel)]="password" name="password">
     </div>
@@ -21,14 +20,9 @@
       <input [type]="showPassword ? 'text' : 'password'" class="form-control" placeholder="Nhập lại mật khẩu" [(ngModel)]="confirmPassword" name="confirmPassword">
       <i class="bi bi-eye position-absolute top-50 end-0 translate-middle-y me-3" style="cursor: pointer;" (click)="showPassword = !showPassword"></i>
     </div>
-    <!-- Role + CreatedAt nếu cần -->
     <div class="mb-3">
       <input type="text" class="form-control" placeholder="Vai trò" [(ngModel)]="user.role" name="role" readonly>
     </div>
-<!--    <div class="mb-3">-->
-<!--      <input type="text" class="form-control" placeholder="Ngày tạo" [(ngModel)]="user.createdAt" name="createdAt" readonly>-->
-<!--    </div>-->
-
     <button type="button" class="btn btn-primary w-100 mb-2" (click)="editProfile()">Chỉnh sửa tài khoản</button>
     <button type="button" class="btn btn-outline-primary w-100" (click)="logout()">Đăng xuất</button>
   </form>

@@ -20,7 +20,6 @@ export class UserProfileResolver implements Resolve<User> {
     if (isPlatformBrowser(this.platformId)) {
       userId = localStorage.getItem("user_id");
     }
-    // const userId = '11111111-1111-1111-1111-111111111111';
     if (!userId) {
       throw new Error('Missing userId in localStorage');
     }

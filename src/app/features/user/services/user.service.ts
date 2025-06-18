@@ -27,7 +27,7 @@ export class UserService {
     }
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`,
-      'userId': userId // nếu backend vẫn yêu cầu
+      'userId': userId
     });
     return this.apService.get<User>({
       serviceUrl: 'user',

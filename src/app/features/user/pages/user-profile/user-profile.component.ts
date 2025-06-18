@@ -86,8 +86,8 @@ export class UserProfileComponent implements OnInit {
   }
 
   logout() {
-    localStorage.removeItem('user_token'); // theo key bạn lưu token
+    localStorage.removeItem('user_token');
     alert('Bạn đã đăng xuất!');
-    this.router.navigate(['/auth/login']); // điều hướng về trang login hoặc trang chủ
+    this.router.navigate(['/auth/login']);
   }
 }
