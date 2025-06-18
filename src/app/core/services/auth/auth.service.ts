@@ -5,12 +5,18 @@ import {EnumPemission} from '../../constants/pemission.enum';
 import {LOCAL_STORAGE_KEYS} from '../../constants/local-storage-key';
 import {ApiService} from '../network/api.service';
 import {Observable} from 'rxjs';
+import {AngularFireAuth} from '@angular/fire/compat/auth';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private localStorageService: LocalStorageService, private apiService: ApiService) {
+  constructor(private localStorageService: LocalStorageService, private apiService: ApiService,
+              private afAuth: AngularFireAuth) {
   }
 
   isAuthenticated(): boolean {
@@ -48,4 +54,18 @@ export class AuthService {
       paramsObj: userData
     });
   }
+
+  async getFirebaseToken() {
+    const userCredential = await this.afAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    return await userCredential.user?.getIdToken(); // Retrieve the ID token
+  }
+
+  loginWithGG(tokenModel: { token: string }): Observable<any> {
+    return this.apiService.post<any>({
+      serviceUrl: 'auth',
+      endpoint: '/loginWithGG',
+      paramsObj: tokenModel
+    })
+  }
+
 }

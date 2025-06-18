@@ -24,7 +24,8 @@ export class LoginComponent implements OnInit {
         next: response => {
           if (response.token) {
             this.message = 'Đăng nhập thành công!';
-            console.log('Token:', response.token); // Handle authentication token
+            localStorage.setItem("user_token", response.token);
+            console.log('Saved token successfully'); // Handle authentication token
           } else {
             this.message = response.message || 'Đăng nhập thất bại'; // Use API-provided message
           }
