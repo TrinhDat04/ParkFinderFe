@@ -1,4 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import mapboxgl from 'mapbox-gl';
 import { ENVIRONMENT } from '../../../../../environments/environment';
 import { MAP_ENDPOINTS } from '../../../../core/constants/endpoints/map-endpoints';
@@ -8,17 +10,23 @@ import { MAP_ENDPOINTS } from '../../../../core/constants/endpoints/map-endpoint
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css'],
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements AfterViewInit {
   @ViewChild('mapContainer', { static: true }) mapContainer!: ElementRef;
   private map!: mapboxgl.Map;
   private geolocate!: mapboxgl.GeolocateControl;
   private userCoords: number[] | null = null;
   private pinCoords: number[] | null = null;
+  protected selectedFeature: any = null;
+  protected panelHeight = 100; 
+  protected dragStartY = 0;
+  protected isDragging = false;
 
-  constructor() {}
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
-  ngOnInit() {
-    this.Init();
+  ngAfterViewInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      this.Init();
+    }
   }
 
   Init(): void {
@@ -73,11 +81,31 @@ export class MapComponent implements OnInit {
       this.geolocate.trigger();
     });
 
-    this.map.on('click', (event) => {
-      const { lng, lat } = event.lngLat;
-      console.log('User clicked at:', { longitude: lng, latitude: lat });
+    this.geolocate.on("geolocate", (position) => {
+      this.userCoords = [
+        position.coords.longitude,
+        position.coords.latitude,
+        position.coords.accuracy,
+      ];
     });
 
+    // this.map.on('click', (event) => {
+    //   const { lng, lat } = event.lngLat;
+    //   console.log('User clicked at:', { longitude: lng, latitude: lat });
+    // });
+
+    this.map.on('mouseenter', 'points', () => {
+      this.map.getCanvas().style.cursor = 'pointer';
+    });
+
+    this.map.on('mouseleave', 'points', () => {
+      this.map.getCanvas().style.cursor = '';
+    });
+
+    this.map.on('load', () => this.setupClickEvents());
+  }
+
+  setupClickEvents(): void {
     this.map.on('click', 'points', (e) => {
       const features = this.map.queryRenderedFeatures(e.point, {
         layers: ['points'],
@@ -88,61 +116,33 @@ export class MapComponent implements OnInit {
         const geometry = features[0].geometry;
         if (geometry.type == 'Point') {
           const coors = [geometry.coordinates[0], geometry.coordinates[1]];
-
-          console.log(props);
-
           if (props != null) {
-            new mapboxgl.Popup()
-              .setLngLat(e.lngLat)
-              .setHTML(
-                `
-            <div style="color: #333; font-family: sans-serif; font-size: 14px;">
-              <strong style="color: #2c7;">Name: ${props['Name']}</strong><br/>
-              <span style="color: #555;">Description: ${props['Description']}</span><br/>
-              <button id="navigate-btn" style="margin-top: 8px; cursor: pointer;">Navigate</button>
-            </div>
-          `
-              )
-              .addTo(this.map);
-
-            setTimeout(() => {
-              const btn = document.getElementById('navigate-btn');
-              if (btn) {
-                btn.addEventListener('click', () => {
-                  if (!this.userCoords) {
-                    alert('User location not available yet.');
-                    return;
-                  }
-                  this.pinCoords = coors;
-                  this.getRoute(this.userCoords, this.pinCoords);
-                });
-              }
-            }, 100);
+            this.selectedFeature = {
+              name: props['Name'],
+              description: props['Description'],
+              coords: coors,
+            };
           }
         }
       }
     });
+  }
 
-    this.map.on('mouseenter', 'points', () => {
-      this.map.getCanvas().style.cursor = 'pointer';
-    });
+  closeDetailPanel(): void {
+    this.selectedFeature = null;
+  }
 
-    this.map.on('mouseleave', 'points', () => {
-      this.map.getCanvas().style.cursor = '';
-    });
-
-    this.geolocate.on('geolocate', (position: GeolocationPosition) => {
-      this.userCoords = [
-        position.coords.longitude,
-        position.coords.latitude,
-        position.coords.accuracy,
-      ];
-      console.log('User location:', {
-        longitude: this.userCoords[0],
-        latitude: this.userCoords[1],
-        accuracy: this.userCoords[2],
-      });
-    });
+  startNavigation(): void {
+    if (!this.userCoords || !this.selectedFeature) {
+      alert('User location not available');
+      return;
+    }
+    this.pinCoords = this.selectedFeature.coords;
+    if (!this.pinCoords) {
+      alert('Unable to locate destination');
+      return;
+    }
+    this.getRoute(this.userCoords, this.pinCoords);
   }
 
   async getRoute(userCoords: number[], pinCoords: number[]) {

@@ -1,1 +1,17 @@
 <div class="map-container" #mapContainer></div>
+
+<!-- <div class="detail-panel">
+  <div class="drag-handle"></div>
+  <h3>{{ selectedFeature?.name }}</h3>
+  <p>{{ selectedFeature?.description }}</p>
+  <button (click)="startNavigation()">Navigate</button>
+  <button (click)="closeDetailPanel()">Close</button>
+</div> -->
+
+<div class="detail-panel" *ngIf="selectedFeature">
+  <div class="drag-handle"></div>
+  <h3>{{ selectedFeature.name }}</h3>
+  <p>{{ selectedFeature.description }}</p>
+  <button (click)="startNavigation()">Navigate</button>
+  <button (click)="closeDetailPanel()">Close</button>
+</div>
