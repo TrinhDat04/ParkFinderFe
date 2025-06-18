@@ -1,0 +1,26 @@
+<div class="search-container">
+  <div class="search-wrapper">
+    <span class="icon">
+      <img
+        src="assets/icons/map-marker-alt-solid.svg"
+        alt="Location Icon"
+        class="icon"
+      />
+    </span>
+    <input
+      type="text"
+      [formControl]="searchControl"
+      placeholder="Tìm kiếm bãi đỗ xe"
+      class="search-input"
+    />
+  </div>
+  <ul *ngIf="results.length > 0" class="search-results">
+    <li
+      *ngFor="let result of results"
+      (click)="selectResult(result)"
+      class="search-result-item"
+    >
+      {{ result.name }}
+    </li>
+  </ul>
+</div>
