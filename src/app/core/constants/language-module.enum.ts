@@ -3,4 +3,5 @@ export enum EnumLanguageModule {
   User = 'user',
   Dashboard = 'dashboard',
   Auth = 'Auth',
+  Map = 'map'
 }
