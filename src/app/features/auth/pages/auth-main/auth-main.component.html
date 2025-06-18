@@ -1,0 +1,54 @@
+<section class="gradient-custom">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card text-dark" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
+
+            <div class="mb-md-5 mt-md-4 pb-5">
+
+              <div class="mb-lg-5">
+                <img src="assets/icons/notexticon.png" alt="ParkFinder icon"
+                     style="width: 50%; height: auto"/>
+              </div>
+
+              <a data-mdb-button-init data-mdb-ripple-init
+                 class="btn btn-primary btn-lg px-5 mb-4"
+                 style="width: 80%"
+                 href="/auth/login">
+                Đăng nhập
+              </a>
+              <a data-mdb-button-init data-mdb-ripple-init
+                 class="btn btn-primary btn-lg px-5"
+                 style="width: 80%"
+                 href="/auth/register">
+                Đăng ký
+              </a>
+
+              <hr/>
+
+              <button class="btn btn-light border btn-lg px-5 mb-4"
+                      (click)="loginWithGoogle()"
+                 style="width: 80%">
+                <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo" width="20"
+                     height="20" class="me-2">
+                Login with Google
+              </button>
+
+              <p style="color: red;">{{ message }}</p>
+
+
+              <div class="d-flex justify-content-center text-center mt-4 pt-1">
+                <a href="#!" class="text-white"><i class="fab fa-facebook-f fa-lg"></i></a>
+                <a href="#!" class="text-white"><i class="fab fa-twitter fa-lg mx-4 px-2"></i></a>
+                <a href="#!" class="text-white"><i class="fab fa-google fa-lg"></i></a>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
