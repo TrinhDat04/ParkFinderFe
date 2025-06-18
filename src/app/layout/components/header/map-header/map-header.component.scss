@@ -1,0 +1,20 @@
+.my-header{
+  background-color: #2657C1 !important;
+}
+.custom-header-navbar {
+  background-color: #2563d6; /* Màu xanh giống hình */
+  height: 64px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.header-icon {
+  color: #fff;
+  font-size: 2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}

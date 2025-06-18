@@ -9,6 +9,7 @@ import { AuthGuard } from './core/guards/auth.guard';
 import { HasAnyRoleGuard } from './core/guards/has-any-role.guard';
 import { EnumRole } from './core/constants/roles.enum';
 import { MapComponent } from './features/map/pages/map/map.component';
+import {MapLayoutComponent} from './layout/map-layout/map-layout.component';
 export const routes: Routes = [
   {
     path: 'auth',
@@ -60,7 +61,7 @@ export const routes: Routes = [
   },
   {
     path: 'map',
-    component: MapComponent,
+    component: MapLayoutComponent,
     children: [
       {
         path: '',
@@ -75,7 +76,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'map',
     pathMatch: 'full',
   },
   {

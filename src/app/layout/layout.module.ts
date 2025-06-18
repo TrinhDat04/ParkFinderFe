@@ -7,6 +7,9 @@ import { DashboardLayoutComponent } from './dashboard-layout/dashboard-layout.co
 import { ExampleHeaderComponent } from './components/header/example-header/example-header.component';
 import { ExampleLeftHeaderComponent } from './components/header/example-left-header/example-left-header.component';
 import { SharedModule } from '../shared/components/shared-components.module';
+import { MapLayoutComponent } from './map-layout/map-layout.component';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { MapHeaderComponent } from './components/header/map-header/map-header.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +18,9 @@ import { SharedModule } from '../shared/components/shared-components.module';
     DashboardLayoutComponent,
     ExampleHeaderComponent,
     ExampleLeftHeaderComponent,
+    MapLayoutComponent,
+    NavBarComponent,
+    MapHeaderComponent,
   ],
   imports: [CommonModule, RouterModule,SharedModule],
   exports: [
@@ -22,6 +28,7 @@ import { SharedModule } from '../shared/components/shared-components.module';
     AuthLayoutComponent,
     DashboardLayoutComponent,
     ExampleHeaderComponent,
+    MapLayoutComponent,
   ],
 })
 export class LayoutModule {}

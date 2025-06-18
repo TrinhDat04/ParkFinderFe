@@ -4,7 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MapComponent } from './pages/map/map.component';
 import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [{ path: 'map', component: MapComponent }];
+const routes: Routes = [{ path: '', component: MapComponent }];
 @NgModule({
   declarations: [MapComponent],
   imports: [CommonModule, RouterModule.forChild(routes), TranslateModule],
