@@ -21,12 +21,10 @@ export class UserService {
   }
 
   getUserProfile(userId: string): Observable<User> {
-    // const token = localStorage.getItem("user_token") ?? '';
     let token = '';
     if (isPlatformBrowser(this.platformId)) {
       token = localStorage.getItem('user_token') ?? '';
     }
-    // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ5b3VyX3N1YmplY3RfaGVyZSIsImp0aSI6IjgyNWYxZWU5LTgxZDYtNGNmMS05YzcwLTM0NDA0ZmRhYTExZCIsIklkIjoiMTExMTExMTEtMTExMS0xMTExLTExMTEtMTExMTExMTExMTExIiwiZW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTc1MDE2NzA0NSwiZXhwIjoxNzUwMjI3MDQ1LCJpYXQiOjE3NTAxNjcwNDUsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9obS1lc2hvcC01YmQwMSIsImF1ZCI6ImhtLWVzaG9wLTViZDAxIn0.80FVV57DqUvAzJc4A2xNpN5RfYu9Dfu_8Y7W-QZdmyk';
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`,
       'userId': userId // nếu backend vẫn yêu cầu
