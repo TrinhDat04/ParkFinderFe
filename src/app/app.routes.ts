@@ -8,6 +8,7 @@ import { DashboardLayoutComponent } from './layout/dashboard-layout/dashboard-la
 import { AuthGuard } from './core/guards/auth.guard';
 import { HasAnyRoleGuard } from './core/guards/has-any-role.guard';
 import { EnumRole } from './core/constants/roles.enum';
+import { MapComponent } from './features/map/pages/map/map.component';
 export const routes: Routes = [
   {
     path: 'auth',
@@ -54,6 +55,21 @@ export const routes: Routes = [
           language: TranslationModuleResolver,
         },
         data: { LanguageModules: [EnumLanguageModule.Dashboard] } as RouteData,
+      },
+    ],
+  },
+  {
+    path: 'map',
+    component: MapComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./features/map/map.modules').then((m) => m.MapModule),
+        resolve: {
+          language: TranslationModuleResolver,
+        },
+        data: { LanguageModules: [EnumLanguageModule.Map] } as RouteData,
       },
     ],
   },
