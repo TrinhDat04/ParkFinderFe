@@ -59,6 +59,14 @@ export class AuthService {
     });
   }
 
+  sendVerificationToken(credentials: { email: string }): Observable<any> {
+    return this.apiService.post<any>({
+      serviceUrl: "auth",
+      endpoint: "/sendEmail",
+      paramsObj: credentials
+    });
+  }
+
   async getFirebaseToken() {
     const userCredential = await this.afAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
     return await userCredential.user?.getIdToken(); // Retrieve the ID token
@@ -70,6 +78,22 @@ export class AuthService {
       endpoint: '/loginWithGG',
       paramsObj: tokenModel
     })
+  }
+
+  verifyCode(model: { email: string | null, code: string }): Observable<any> {
+    return this.apiService.post<any>({
+      serviceUrl: 'auth',
+      endpoint: '/verifyCode',
+      paramsObj: model
+    });
+  }
+
+  changePassword(request: { email: string | null, newPassword: string }): Observable<any> {
+    return this.apiService.post<any>({
+      serviceUrl: 'auth',
+      endpoint: '/changePassword',
+      paramsObj: request
+    });
   }
 
 }
