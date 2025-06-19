@@ -12,7 +12,7 @@ export class MapService {
     constructor(private apService : ApiService) {}
   getParkingLotDetail(id: string): Observable<ParkingLot> {
     return this.apService.get<ParkingLot>({
-      serviceUrl: 'parkingLot',
+      serviceUrl: 'default',
       endpoint: MAP_ENDPOINTS.getParkingLotDetail(id),
     });
   }
