@@ -35,3 +35,13 @@
   font-weight: 500;
   margin-top: 2px;
 }
+
+.nav-item-custom.active {
+  background-color: #1976d2;
+  color: #fff;
+}
+
+.nav-item-custom.active i,
+.nav-item-custom.active .nav-label {
+  color: #fff;
+}
