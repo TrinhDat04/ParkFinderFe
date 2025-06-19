@@ -2,13 +2,59 @@
   <app-search-box (resultSelected)="onSearchResult($event)"></app-search-box>
 </div>
 
-<div class="detail-panel" *ngIf="selectedFeature">
+<div class="detail-panel" *ngIf="selectedFeature && !detailSelected">
   <div class="drag-handle"></div>
-  <h3>{{ selectedFeature.properties['Name'] }}</h3>
-  <p>{{ selectedFeature.properties['Description'] }}</p>
-  <button (click)="startNavigation()">Navigate</button>
+  <h3>{{ selectedFeature.properties['name'] }}</h3>
+  <p>{{ selectedFeature.properties['description'] }}</p>
+  <div class="button-group">
+    <button (click)="startNavigation()">Navigate</button>
+    <button (click)="showDetails()">Detail</button>
+  </div>
+
   <button (click)="closeDetailPanel()">Close</button>
 </div>
+
+
+<div class="detail-panel detail-selected" *ngIf="detailSelected && parkingLot">
+  <div class="drag-handle"></div>
+
+  <button class="close-button" (click)="closeDetail()">
+    <span class="material-icons">close</span>
+  </button>
+
+  <div class="detail-header">
+    <h3>{{ parkingLot.name }}</h3>
+    <!-- Ví dụ thêm phần rating nếu có -->
+    <!-- <div class="rating">4.6 ★★★★☆ (8 reviews) · Parking lot</div> -->
+  </div>
+
+  <div class="button-group">
+    <button (click)="startNavigation()">Chỉ đường</button>
+    <button>Gọi điện</button>
+  </div>
+
+  <div class="info-row">
+    📍 <span>{{ parkingLot.description }}</span>
+  </div>
+  <div class="info-row">
+    🕒 <span>{{ parkingLot.openTime }} - {{ parkingLot.closeTime }}</span>
+  </div>
+  <div class="info-row">
+    💰 <span>{{ parkingLot.pricePerHour | currency:'VND':'symbol' }}</span>
+  </div>
+  <div class="info-row">
+    🛠️ <span>{{ parkingLot.utilities }}</span>
+  </div>
+  <div class="info-row">
+    🚗 <span>Chỗ đậu tổng: {{ parkingLot.totalSlots }}</span>
+  </div>
+  <div class="info-row">
+    🅿️ <span>Chỗ còn trống: {{ parkingLot.availableSlots }}</span>
+  </div>
+</div>
+
+
+
 
 <button
   *ngIf="isNavigating"

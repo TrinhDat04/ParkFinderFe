@@ -4,6 +4,8 @@ import { isPlatformBrowser } from '@angular/common';
 import mapboxgl from 'mapbox-gl';
 import { ENVIRONMENT } from '../../../../../environments/environment';
 import { MAP_ENDPOINTS } from '../../../../core/constants/endpoints/map-endpoints';
+import {MapService} from '../../services/map.services';
+import {ParkingLot} from '../../models/parking-lot';
 
 @Component({
   selector: 'app-map',
@@ -18,8 +20,10 @@ export class MapComponent implements AfterViewInit {
   private pinCoords: number[] | null = null;
   protected selectedFeature: any = null;
   protected isNavigating = false;
+  protected detailSelected: any = null;
+  parkingLot?: ParkingLot;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, private mapService: MapService) {}
 
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
@@ -242,5 +246,26 @@ export class MapComponent implements AfterViewInit {
         zoom: 16,
       });
     }
+  }
+
+  showDetails() {
+    this.detailSelected= true;
+    const id = this.selectedFeature?.properties?.['id'];
+    this.loadDetail(id!);
+  }
+
+  loadDetail(id: string) {
+    this.mapService.getParkingLotDetail(id).subscribe({
+      next: (data) => {
+        this.parkingLot = data;
+      },
+      error: (err) => {
+        console.error('Lỗi khi lấy dữ liệu bãi đỗ xe', err);
+      }
+    });
+  }
+  closeDetail() {
+    this.detailSelected = null;
+    this.parkingLot = undefined;
   }
 }
