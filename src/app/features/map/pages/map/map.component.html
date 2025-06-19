@@ -23,7 +23,7 @@
 
   <div class="detail-header">
     <h3>{{ parkingLot.name }}</h3>
-    <div class="rating">4.6 ★★★★☆ (8 reviews) · Parking lot</div>
+<!--    <div class="rating">4.6 ★★★★☆ (8 reviews) · Parking lot</div>-->
   </div>
 
   <div class="button-group">
@@ -32,22 +32,22 @@
   </div>
 
   <div class="info-row">
-    📍 <span>{{ parkingLot.description }}</span>
+    <i class="bi bi-geo-alt" style="color: dodgerblue; font-size: 24px;"></i> <span> {{ parkingLot.description }}</span>
   </div>
   <div class="info-row">
-    🕒 <span>{{ parkingLot.openTime }} - {{ parkingLot.closeTime }}</span>
+    <i class="bi bi-clock" style="color: dodgerblue; font-size: 24px;"></i> <span> {{ parkingLot.openTime }} - {{ parkingLot.closeTime }}</span>
   </div>
   <div class="info-row">
-    💰 <span>{{ parkingLot.pricePerHour | currency:'VND':'symbol' }}</span>
+    <i class="bi bi-cash-coin" style="color: dodgerblue; font-size: 24px;"></i> <span> {{ parkingLot.pricePerHour | currency:'VND':'symbol' }}</span>
   </div>
   <div class="info-row">
-    🛠️ <span>{{ parkingLot.utilities }}</span>
+    <i class="bi bi-gear-fill" style="color: dodgerblue; font-size: 24px;"></i> <span> {{ parkingLot.utilities }}</span>
   </div>
   <div class="info-row">
-    🚗 <span>Chỗ đậu tổng: {{ parkingLot.totalSlots }}</span>
+    <i class="bi bi-car-front" style="color: dodgerblue; font-size: 24px;"></i> <span> Chỗ đậu tổng: {{ parkingLot.totalSlots }}</span>
   </div>
   <div class="info-row">
-    🅿️ <span>Chỗ còn trống: {{ parkingLot.availableSlots }}</span>
+    <i class="bi bi-p-circle" style="color: dodgerblue; font-size: 24px;"></i> <span> Chỗ còn trống: {{ parkingLot.availableSlots }}</span>
   </div>
 </div>
 
