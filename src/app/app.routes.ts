@@ -42,7 +42,7 @@ export const routes: Routes = [
         canActivate: [HasAnyRoleGuard],
       },
       {
-        path: 'profile', component: UserProfileComponent, resolve: { userData: UserProfileResolver }
+        path: 'profile', component: UserProfileComponent,canActivate: [AuthGuard], resolve: { userData: UserProfileResolver }
       },
     ],
     canActivate: [AuthGuard],

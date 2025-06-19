@@ -23,6 +23,14 @@ export class AuthMainComponent implements AfterViewInit {
           next: response => {
             this.message = "Đăng nhập thành công";
             localStorage.setItem("user_token", response.token);
+            const tokenParts = response.token.split('.');
+            if (tokenParts.length === 3) {
+              const payload = JSON.parse(atob(tokenParts[1]));
+              const userId = payload.Id;
+              localStorage.setItem("user_id", userId);
+            } else {
+              console.warn('Invalid JWT token format');
+            }
             console.log('Login successful');
           },
           error: error => {
