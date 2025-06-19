@@ -22,6 +22,8 @@ export class MapComponent implements AfterViewInit {
   protected isNavigating = false;
   protected detailSelected: any = null;
   parkingLot?: ParkingLot;
+  protected totalDistance: number = -1;
+  protected totalTime: number = -1;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object, private mapService: MapService) {}
 
@@ -117,8 +119,8 @@ export class MapComponent implements AfterViewInit {
     this.map.on('load', () => this.setupClickEvents());
   }
 
-  setupClickEvents(): void {
-    this.map.on('click', 'points-click-buffer', (e) => {
+  async setupClickEvents() {
+    this.map.on('click', 'points-click-buffer', async (e) => {
       const feature = e.features?.[0];
 
       console.log(feature);
@@ -134,7 +136,42 @@ export class MapComponent implements AfterViewInit {
           };
         }
       }
+
+      this.pinCoords = this.selectedFeature.coords;
+
+      if (this.pinCoords && this.userCoords && this.selectedFeature) {
+        const url = `${MAP_ENDPOINTS.getRoute(
+          this.userCoords,
+          this.pinCoords
+        )}`;
+        const response = await fetch(url);
+        const data = await response.json();
+
+        this.totalDistance = data.routes[0].distance;
+        this.totalTime = data.routes[0].duration;
+      }
     });
+  }
+
+  formatDuration(seconds: number): string {
+    const hrs = Math.floor(seconds / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
+
+    if (hrs > 0 && mins > 0) {
+      return `${hrs} giờ ${mins} phút`;
+    } else if (hrs > 0) {
+      return `${hrs} giờ`;
+    } else if (mins > 0) {
+      return `${mins} phút`;
+    } else {
+      return 'Ít hơn một phút';
+    }
+  }
+
+  formatDistance(meters: number): string {
+    const km = meters / 1000;
+    const rounded = parseFloat(km.toFixed(1));
+    return `${rounded} Km`;
   }
 
   closeDetailPanel(): void {
@@ -168,8 +205,6 @@ export class MapComponent implements AfterViewInit {
 
     const bounds = new mapboxgl.LngLatBounds();
 
-    console.log(this.map.getStyle().layers);
-
     if (source) {
       source.setData({
         type: 'Feature',
@@ -202,11 +237,9 @@ export class MapComponent implements AfterViewInit {
       });
       this.map.setFilter('points', ['==', ['get', 'id'], lotId]);
 
-      this.map.setFilter('points-click-buffer', [
-        '==',
-        ['get', 'id'],
-        lotId,
-      ]);
+      this.map.setFilter('points', ['==', ['get', 'id'], lotId]);
+
+      this.map.setFilter('points-click-buffer', ['==', ['get', 'id'], lotId]);
 
       bounds.extend(userCoords as [number, number]);
       bounds.extend(pinCoords as [number, number]);
@@ -217,6 +250,7 @@ export class MapComponent implements AfterViewInit {
         duration: 1000,
       });
       this.closeDetailPanel();
+      this.closeDetail();
       this.isNavigating = true;
     }
   }
@@ -242,7 +276,7 @@ export class MapComponent implements AfterViewInit {
     if (this.map) {
       this.map.flyTo({
         center: [location.lng, location.lat],
-        zoom: 16,
+        zoom: 13,
       });
     }
   }
@@ -263,6 +297,7 @@ export class MapComponent implements AfterViewInit {
       }
     });
   }
+
   closeDetail() {
     this.detailSelected = null;
     this.parkingLot = undefined;
