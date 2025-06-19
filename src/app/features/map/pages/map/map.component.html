@@ -1,17 +1,19 @@
-<div class="map-container" #mapContainer></div>
-
-<!-- <div class="detail-panel">
-  <div class="drag-handle"></div>
-  <h3>{{ selectedFeature?.name }}</h3>
-  <p>{{ selectedFeature?.description }}</p>
-  <button (click)="startNavigation()">Navigate</button>
-  <button (click)="closeDetailPanel()">Close</button>
-</div> -->
+<div class="map-container" #mapContainer>
+  <app-search-box (resultSelected)="onSearchResult($event)"></app-search-box>
+</div>
 
 <div class="detail-panel" *ngIf="selectedFeature">
   <div class="drag-handle"></div>
-  <h3>{{ selectedFeature.name }}</h3>
-  <p>{{ selectedFeature.description }}</p>
+  <h3>{{ selectedFeature.properties['Name'] }}</h3>
+  <p>{{ selectedFeature.properties['Description'] }}</p>
   <button (click)="startNavigation()">Navigate</button>
   <button (click)="closeDetailPanel()">Close</button>
 </div>
+
+<button
+  *ngIf="isNavigating"
+  (click)="stopNavigation()"
+  class="cancel-button"
+>
+  Cancel Navigation
+</button>

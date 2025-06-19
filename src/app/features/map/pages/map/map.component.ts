@@ -17,9 +17,7 @@ export class MapComponent implements AfterViewInit {
   private userCoords: number[] | null = null;
   private pinCoords: number[] | null = null;
   protected selectedFeature: any = null;
-  protected panelHeight = 100; 
-  protected dragStartY = 0;
-  protected isDragging = false;
+  protected isNavigating = false;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
@@ -57,42 +55,52 @@ export class MapComponent implements AfterViewInit {
         maxzoom: 14,
       });
 
-      this.map.loadImage('/assets/icons/sus.png', (error, image) => {
-        if (error) throw error;
-        if (image && !this.map.hasImage('icon')) {
-          this.map.addImage('icon', image);
-        }
+      this.map.loadImage(
+        '/assets/icons/parking_lot_pin.png',
+        (error, image) => {
+          if (error) throw error;
+          if (image && !this.map.hasImage('icon')) {
+            this.map.addImage('icon', image);
+          }
 
-        this.map.addLayer({
-          id: 'points',
-          type: 'symbol',
-          source: 'test_layer',
-          'source-layer': 'test_layer',
-          layout: {
-            'icon-image': 'icon',
-            'icon-size': 0.12,
-            'icon-anchor': 'bottom',
-            'icon-allow-overlap': true,
-          },
-          filter: ['==', '$type', 'Point'],
-        });
-      });
+          this.map.addLayer({
+            id: 'points',
+            type: 'symbol',
+            source: 'test_layer',
+            'source-layer': 'test_layer',
+            layout: {
+              'icon-image': 'icon',
+              'icon-size': 0.17,
+              'icon-anchor': 'bottom',
+              'icon-allow-overlap': true,
+            },
+            filter: ['==', '$type', 'Point'],
+          });
+
+          this.map.addLayer({
+            id: 'points-click-buffer',
+            type: 'circle',
+            source: 'test_layer',
+            'source-layer': 'test_layer',
+            paint: {
+              'circle-radius': 45,
+              'circle-opacity': 0,
+            },
+            filter: ['==', '$type', 'Point'],
+          });
+        }
+      );
 
       this.geolocate.trigger();
     });
 
-    this.geolocate.on("geolocate", (position) => {
+    this.geolocate.on('geolocate', (position) => {
       this.userCoords = [
         position.coords.longitude,
         position.coords.latitude,
         position.coords.accuracy,
       ];
     });
-
-    // this.map.on('click', (event) => {
-    //   const { lng, lat } = event.lngLat;
-    //   console.log('User clicked at:', { longitude: lng, latitude: lat });
-    // });
 
     this.map.on('mouseenter', 'points', () => {
       this.map.getCanvas().style.cursor = 'pointer';
@@ -106,23 +114,20 @@ export class MapComponent implements AfterViewInit {
   }
 
   setupClickEvents(): void {
-    this.map.on('click', 'points', (e) => {
-      const features = this.map.queryRenderedFeatures(e.point, {
-        layers: ['points'],
-      });
+    this.map.on('click', 'points-click-buffer', (e) => {
+      const feature = e.features?.[0];
 
-      if (features.length) {
-        const props = features[0].properties;
-        const geometry = features[0].geometry;
-        if (geometry.type == 'Point') {
-          const coors = [geometry.coordinates[0], geometry.coordinates[1]];
-          if (props != null) {
-            this.selectedFeature = {
-              name: props['Name'],
-              description: props['Description'],
-              coords: coors,
-            };
-          }
+      console.log(feature);
+
+      if (feature && feature.geometry.type === 'Point') {
+        const coords = feature.geometry.coordinates as [number, number];
+        const props = feature.properties;
+
+        if (props) {
+          this.selectedFeature = {
+            coords: coords,
+            properties: props,
+          };
         }
       }
     });
@@ -153,7 +158,13 @@ export class MapComponent implements AfterViewInit {
 
     const route = data.routes[0].geometry;
 
+    const lotId = this.selectedFeature?.properties?.ParkingLotId;
+
     const source = this.map.getSource('route') as mapboxgl.GeoJSONSource;
+
+    const bounds = new mapboxgl.LngLatBounds();
+
+    console.log(this.map.getStyle().layers);
 
     if (source) {
       source.setData({
@@ -184,6 +195,51 @@ export class MapComponent implements AfterViewInit {
           'line-width': 5,
           'line-opacity': 0.75,
         },
+      });
+
+      this.map.setFilter('points', ['==', ['get', 'ParkingLotId'], lotId]);
+
+      this.map.setFilter('points-buffer-layer', [
+        '==',
+        ['get', 'ParkingLotId'],
+        lotId,
+      ]);
+
+      bounds.extend(userCoords as [number, number]);
+      bounds.extend(pinCoords as [number, number]);
+
+      this.map.fitBounds(bounds, {
+        padding: 150,
+        maxZoom: 15,
+        duration: 1000,
+      });
+      this.closeDetailPanel();
+      this.isNavigating = true;
+    }
+  }
+
+  stopNavigation(): void {
+    this.isNavigating = false;
+
+    if (this.map.getLayer('route-line')) {
+      this.map.removeLayer('route-line');
+    }
+    if (this.map.getSource('route')) {
+      this.map.removeSource('route');
+    }
+
+    const baseFilter = ['==', '$type', 'Point'];
+    this.map.setFilter('points', baseFilter);
+    this.map.setFilter('points-click-buffer', baseFilter);
+
+    this.selectedFeature = null;
+  }
+
+  onSearchResult(location: { lat: number; lng: number }) {
+    if (this.map) {
+      this.map.flyTo({
+        center: [location.lng, location.lat],
+        zoom: 16,
       });
     }
   }

@@ -11,6 +11,7 @@ import { EnumRole } from './core/constants/roles.enum';
 import {UserProfileComponent} from './features/user/pages/user-profile/user-profile.component';
 import {UserProfileResolver} from './core/resolvers/user-profile-resolver';
 import { MapComponent } from './features/map/pages/map/map.component';
+import {MapLayoutComponent} from './layout/map-layout/map-layout.component';
 export const routes: Routes = [
   {
     path: 'auth',
@@ -65,7 +66,7 @@ export const routes: Routes = [
   },
   {
     path: 'map',
-    component: MapComponent,
+    component: MapLayoutComponent,
     children: [
       {
         path: '',
@@ -80,7 +81,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'map',
     pathMatch: 'full',
   },
   {

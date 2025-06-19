@@ -1,13 +1,13 @@
 .map-container {
   position: absolute;
-  top: 0;
+  top: 60px;
   bottom: 0;
   width: 100%;
 }
 
 .detail-panel {
   position: absolute;
-  bottom: 0;
+  bottom: 60px;
   left: 0;
   width: 100%;
   max-height: 40%;
@@ -51,4 +51,21 @@ button {
 button:last-child {
   background-color: #ccc;
   color: black;
+}
+
+.cancel-button {
+  position: absolute;
+  bottom: 70px;         
+  left: 50%;            
+  width: 80vw;
+  transform: translateX(-50%); 
+  z-index: 1000;
+
+  background-color: #306EF3 !important; 
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  color: white !important;
 }
