@@ -7,13 +7,16 @@ import { UserCreateComponent } from './pages/user-create/user-create.component';
 import { UserEditComponent } from './pages/user-edit/user-edit.component';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 import { RouterModule, Routes } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import {UserProfileResolver} from '../../core/resolvers/user-profile-resolver';
+
 const routes: Routes = [
   { path: '', component: UserListComponent },
   { path: 'list', component: UserListComponent },
   { path: 'create', component: UserCreateComponent },
   { path: 'detail', component: UserDetailComponent },
   { path: 'edit', component: UserEditComponent },
-  { path: 'profile', component: UserProfileComponent },
+  { path: 'profile', component: UserProfileComponent ,resolve: { userData: UserProfileResolver }},
 ];
 @NgModule({
   declarations: [
@@ -23,6 +26,6 @@ const routes: Routes = [
     UserEditComponent,
     UserProfileComponent
   ],
-  imports: [CommonModule, RouterModule.forChild(routes), TranslateModule],
+  imports: [CommonModule, RouterModule.forChild(routes), TranslateModule, FormsModule],
 })
 export class UserModule {}
