@@ -1,14 +1,14 @@
 <div class="container-fluid navbar-container">
   <nav class="navbar my-navbar fixed-bottom shadow">
-    <div class="nav-item-custom">
+    <div class="nav-item-custom" style="cursor:pointer" routerLink="/homepage" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
       <i class="bi bi-house"></i>
       <div class="nav-label">Trang chủ</div>
     </div>
-    <div class="nav-item-custom">
+    <div class="nav-item-custom" style="cursor:pointer" routerLink="/map" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
       <i class="bi bi-geo-alt"></i>
       <div class="nav-label">Bản đồ</div>
     </div>
-    <div class="nav-item-custom">
+    <div class="nav-item-custom" style="cursor:pointer" routerLink="/user/profile" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
       <i class="bi bi-person-fill"></i>
       <div class="nav-label">Tài khoản</div>
     </div>
