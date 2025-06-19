@@ -1,44 +1,91 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Output,
+  EventEmitter,
+  PLATFORM_ID,
+  Inject,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { debounceTime, switchMap, distinctUntilChanged } from 'rxjs/operators';
-import { of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { MAP_ENDPOINTS } from '../../../../core/constants/endpoints/map-endpoints';
-import { ParkingLotsLocationDto } from '../../models/parking-lots-location-dto'
+import {
+  debounceTime,
+  distinctUntilChanged,
+} from 'rxjs/operators';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-search-box',
   templateUrl: './search-box.component.html',
-  styleUrls: ['./search-box.component.css']
+  styleUrls: ['./search-box.component.css'],
 })
 export class SearchBoxComponent {
   searchControl = new FormControl('');
-  results: ParkingLotsLocationDto[] = [];
+  results: { name: string; placeId: string }[] = [];
 
-  @Output() resultSelected = new EventEmitter<{ lat: number, lng: number }>();
+  @Output() resultSelected = new EventEmitter<{ lat: number; lng: number }>();
 
-  constructor(private http: HttpClient) {
-    this.searchControl.valueChanges.pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-      switchMap(query => query ? this.fetchResults(query) : of([]))
-    ).subscribe(results => {
-      this.results = results;
-    });
+  private autocompleteService!: google.maps.places.AutocompleteService;
+  private placesService!: google.maps.places.PlacesService;
+
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    if (isPlatformBrowser(this.platformId)) {
+      this.initGoogleSearch();
+    }
   }
 
-  fetchResults(query: string) {
-    const url = `${MAP_ENDPOINTS.getParkingLotLocation(query)}`;
-    return this.http.get<ParkingLotsLocationDto[]>(url);
+  initGoogleSearch() {
+    const checkGoogleLoaded = () => {
+      if (window?.google?.maps) {
+        this.autocompleteService = new google.maps.places.AutocompleteService();
+        const dummyDiv = document.createElement('div');
+        this.placesService = new google.maps.places.PlacesService(dummyDiv);
+
+        this.searchControl.valueChanges
+          .pipe(debounceTime(300), distinctUntilChanged())
+          .subscribe((query) => {
+            if (!query) {
+              this.results = [];
+              return;
+            }
+
+            this.autocompleteService.getPlacePredictions(
+              { input: query, componentRestrictions: { country: 'vn' } },
+              (predictions, status) => {
+                if (
+                  status === google.maps.places.PlacesServiceStatus.OK &&
+                  predictions
+                ) {
+                  this.results = predictions.map((p) => ({
+                    name: p.description,
+                    placeId: p.place_id,
+                  }));
+                } else {
+                  this.results = [];
+                }
+              }
+            );
+          });
+      } else {
+        setTimeout(checkGoogleLoaded, 100);
+      }
+    };
+
+    checkGoogleLoaded();
   }
 
-  selectResult(result: ParkingLotsLocationDto) {
-  if (result.latitude && result.longitude) {
-    this.resultSelected.emit({
-      lat: result.latitude,
-      lng: result.longitude
-    });
+  selectResult(result: { name: string; placeId: string }) {
+    this.placesService.getDetails(
+      { placeId: result.placeId, fields: ['geometry'] },
+      (place, status) => {
+        if (
+          status === google.maps.places.PlacesServiceStatus.OK &&
+          place?.geometry?.location
+        ) {
+          const lat = place.geometry.location.lat();
+          const lng = place.geometry.location.lng();
+          this.resultSelected.emit({ lat, lng });
+          this.results = [];
+        }
+      }
+    );
   }
-  this.results = [];
-}
 }
