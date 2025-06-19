@@ -34,13 +34,13 @@ export class AuthMainComponent implements AfterViewInit {
             console.log('Login successful');
           },
           error: error => {
-            this.message = error.error?.message;
+            this.message = 'Đăng nhập thất bại, vui lòng thử lại sau';
             console.error('Error: ', error)
           }
         });
     } else {
+      this.message = 'Đăng nhập thất bại, vui lòng thử lại sau';
       console.log("Failed to receive token");
     }
-
   }
 }

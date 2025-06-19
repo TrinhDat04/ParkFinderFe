@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../../core/services/auth/auth.service';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-register',
@@ -15,7 +18,7 @@ export class RegisterComponent implements OnInit {
   phoneNumber: string | null = null;
   message = '';
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -43,9 +46,19 @@ export class RegisterComponent implements OnInit {
     })
       .subscribe({
         next: response => {
-          this.message = response.message || 'Đăng kí thành công!';
           console.log('User registered:', response);
           this.registerErrors = {}; // Clear errors on success
+
+          Swal.fire({
+            icon: 'success',
+            title: 'Đăng ký thành công!',
+            timer: 2000,
+            showConfirmButton: false
+          }).then(() => {
+            // Navigate after SweetAlert closes
+            this.router.navigate(['/auth/login']);
+          });
+
         },
         error: error => {
           this.message = error.error?.message;
