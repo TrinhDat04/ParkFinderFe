@@ -32,11 +32,7 @@ export const routes: Routes = [
         path: '',
         loadChildren: () =>
           import('./features/user/user.module').then((m) => m.UserModule),
-        resolve: {
-          language: TranslationModuleResolver,
-        },
         data: {
-          LanguageModules: [EnumLanguageModule.User],
           roles: [EnumRole.Admin],
         } as RouteData,
         canActivate: [HasAnyRoleGuard],
@@ -57,10 +53,6 @@ export const routes: Routes = [
           import('./features/dashboard/dashboard.module').then(
             (m) => m.DashboardModule
           ),
-        resolve: {
-          language: TranslationModuleResolver,
-        },
-        data: { LanguageModules: [EnumLanguageModule.Dashboard] } as RouteData,
       },
     ],
   },
@@ -72,10 +64,6 @@ export const routes: Routes = [
         path: '',
         loadChildren: () =>
           import('./features/map/map.modules').then((m) => m.MapModule),
-        resolve: {
-          language: TranslationModuleResolver,
-        },
-        data: { LanguageModules: [EnumLanguageModule.Map] } as RouteData,
       },
     ],
   },
@@ -89,10 +77,6 @@ export const routes: Routes = [
           import('./features/homepage/homepage.module').then(
             (m) => m.HomepageModule
           ),
-        resolve: {
-          language: TranslationModuleResolver,
-        },
-        data: { LanguageModules: [EnumLanguageModule.Dashboard] } as RouteData,
       },
     ],
   },
@@ -103,6 +87,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'dashboard',
+    redirectTo: 'map',
   },
 ];
