@@ -4,8 +4,8 @@
 
 <div class="detail-panel" *ngIf="selectedFeature">
   <div class="drag-handle"></div>
-  <h3>{{ selectedFeature.properties['Name'] }}</h3>
-  <p>{{ selectedFeature.properties['Description'] }}</p>
+  <h3>{{ selectedFeature.properties['name'] }}</h3>
+  <p>{{ selectedFeature.properties['description'] }}</p>
   <button (click)="startNavigation()">Navigate</button>
   <button (click)="closeDetailPanel()">Close</button>
 </div>
