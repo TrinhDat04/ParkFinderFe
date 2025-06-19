@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
 import {LocalStorageService} from '../storage/local-storage.service';
 import {EnumRole} from '../../constants/roles.enum';
 import {EnumPemission} from '../../constants/pemission.enum';
@@ -9,6 +9,7 @@ import {AngularFireAuth} from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
+import {isPlatformBrowser} from '@angular/common';
 
 
 @Injectable({
@@ -16,13 +17,16 @@ import 'firebase/compat/firestore';
 })
 export class AuthService {
   constructor(private localStorageService: LocalStorageService, private apiService: ApiService,
-              private afAuth: AngularFireAuth) {
+              private afAuth: AngularFireAuth, @Inject(PLATFORM_ID) private platformId: Object) {
   }
 
   isAuthenticated(): boolean {
-    // return this.localStorageService.getItem(LOCAL_STORAGE_KEYS.USER_TOKEN) ? true : false;
-    return true;
-  }
+    if (isPlatformBrowser(this.platformId)) {
+      const token = localStorage.getItem('user_token');
+      const userId = localStorage.getItem('user_id');
+      return !!token && !!userId;
+    }
+    return false;  }
 
   hasAnyRoles(requireAnyRoles: EnumRole[]): boolean {
     return true;

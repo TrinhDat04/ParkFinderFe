@@ -9,6 +9,7 @@ import { UserProfileComponent } from './pages/user-profile/user-profile.componen
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import {UserProfileResolver} from '../../core/resolvers/user-profile-resolver';
+import {AuthGuard} from '../../core/guards/auth.guard';
 
 const routes: Routes = [
   { path: '', component: UserListComponent },
@@ -16,7 +17,7 @@ const routes: Routes = [
   { path: 'create', component: UserCreateComponent },
   { path: 'detail', component: UserDetailComponent },
   { path: 'edit', component: UserEditComponent },
-  { path: 'profile', component: UserProfileComponent ,resolve: { userData: UserProfileResolver }},
+  { path: 'profile', component: UserProfileComponent ,canActivate: [AuthGuard],resolve: { userData: UserProfileResolver }},
 ];
 @NgModule({
   declarations: [
