@@ -25,6 +25,7 @@ export class UserService {
     if (isPlatformBrowser(this.platformId)) {
       token = localStorage.getItem('user_token') ?? '';
     }
+
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`,
       'userId': userId
