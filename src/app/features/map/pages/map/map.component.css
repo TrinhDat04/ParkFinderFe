@@ -98,7 +98,7 @@ button:last-child {
 }
 
 
-/* Nút close X là icon */
+
 .detail-panel.detail-selected .close-button {
   position: absolute;
   top: 10px;
@@ -106,18 +106,19 @@ button:last-child {
   background: transparent;
   border: none;
   cursor: pointer;
-  z-index: 1001; /* đảm bảo luôn trên cùng */
-  padding: 4px;
+  z-index: 1001;
+  padding: 8px;
+  align-self: flex-end;
 }
 
-/* Style cho icon Material */
+
 .detail-panel.detail-selected .close-button .material-icons {
   font-size: 24px;
   color: #333;
 
   .detail-panel.detail-selected .detail-header {
     text-align: center;
-    margin-top: 16px; /* để không bị che bởi nút X */
+    margin-top: 16px;
   }
 
   .detail-panel.detail-selected .detail-header h3 {
