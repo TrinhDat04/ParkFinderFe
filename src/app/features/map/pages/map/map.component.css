@@ -36,6 +36,17 @@
   margin: 0 auto 10px;
 }
 
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px; /* khoảng cách giữa 2 nút */
+  margin-bottom: 8px; /* cách với nút Close */
+}
+
+.button-group button {
+  width: 48%; /* để đủ 2 nút trên 1 hàng */
+}
+
 button {
   display: block;
   margin: 8px 0;
@@ -55,13 +66,13 @@ button:last-child {
 
 .cancel-button {
   position: absolute;
-  bottom: 70px;         
-  left: 50%;            
+  bottom: 70px;
+  left: 50%;
   width: 80vw;
-  transform: translateX(-50%); 
+  transform: translateX(-50%);
   z-index: 1000;
 
-  background-color: #306EF3 !important; 
+  background-color: #306EF3 !important;
   border: none;
   padding: 12px 20px;
   border-radius: 8px;
@@ -69,3 +80,90 @@ button:last-child {
   font-size: 16px;
   color: white !important;
 }
+.detail-panel.detail-selected {
+  position: absolute;
+  bottom: 60px; /* Đẩy lên khỏi thanh tab bar */
+  left: 0;
+  width: 100%;
+  height: calc(45% + 60px); /* Để panel dài thêm, tránh bị cắt */
+  background: #fff;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  z-index: 999; /* Đảm bảo nổi lên trên map và thanh menu */
+  overflow-y: auto; /* Nếu dài quá sẽ scroll */
+}
+
+
+/* Nút close X là icon */
+.detail-panel.detail-selected .close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 1001; /* đảm bảo luôn trên cùng */
+  padding: 4px;
+}
+
+/* Style cho icon Material */
+.detail-panel.detail-selected .close-button .material-icons {
+  font-size: 24px;
+  color: #333;
+
+  .detail-panel.detail-selected .detail-header {
+    text-align: center;
+    margin-top: 16px; /* để không bị che bởi nút X */
+  }
+
+  .detail-panel.detail-selected .detail-header h3 {
+    margin: 8px 0 4px;
+    font-size: 18px;
+  }
+
+  .detail-panel.detail-selected .rating {
+    font-size: 14px;
+    color: #666;
+  }
+
+  .detail-panel.detail-selected .button-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin: 12px 0;
+  }
+
+  .detail-panel.detail-selected .button-group button {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    background-color: #306EF3;
+    color: white;
+  }
+
+  .detail-panel.detail-selected .button-group button:last-child {
+    background-color: #ccc;
+    color: black;
+  }
+
+  .detail-panel.detail-selected .info-row {
+    display: flex;
+    align-items: center;
+    margin: 4px 0;
+    font-size: 14px;
+    color: #444;
+  }
+
+  .detail-panel.detail-selected .info-row span {
+    margin-left: 8px;
+  }
+}
+
+
