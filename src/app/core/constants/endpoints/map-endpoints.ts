@@ -5,5 +5,9 @@ export const MAP_ENDPOINTS = {
   getRoute: (userCoords: number[], pinCoords: number[]) =>
     `https://api.mapbox.com/directions/v5/mapbox/driving/${userCoords[0]},${userCoords[1]};${pinCoords[0]},${pinCoords[1]}?geometries=geojson&access_token=${ENVIRONMENT.mapboxAccessToken}`,
   getParkingLotLocation: (param: string) => ENVIRONMENT.serviceUrl.default + `/ParkingLot/search/${param}`,
-  getParkingLotDetail: (id: string) => `/ParkingLot/detail/${id}`
+  getParkingLotDetail: (id: string) => `/ParkingLot/detail/${id}`,
+  getParkingLotLocationMapboxAPI: (query: string) => 
+    `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
+      query
+    )}.json?access_token=${ENVIRONMENT.mapboxAccessToken}&limit=1`,
 }
