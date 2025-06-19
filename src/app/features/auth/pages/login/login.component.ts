@@ -29,7 +29,6 @@ export class LoginComponent implements OnInit {
             if (tokenParts.length === 3) {
               const payload = JSON.parse(atob(tokenParts[1]));
               const userId = payload.Id;
-              console.log('Decoded userId:', userId);
               localStorage.setItem("user_id", userId);
             } else {
               console.warn('Invalid JWT token format');
