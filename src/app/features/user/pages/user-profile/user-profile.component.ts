@@ -20,48 +20,68 @@ export class UserProfileComponent implements OnInit {
     createdAt: new Date(),
   };
 
-  // Thêm các biến mới
+  errors: string[] = [];
+  successMessage: string = '';
+  modalVisible = false;
+  modalTitle = '';
+  modalMessage = '';
   password: string = '';
   confirmPassword: string = '';
   showPassword: boolean = false;
   constructor(private route: ActivatedRoute, private router: Router, private userService: UserService) {}
 
+  openModal(title: string, message: string) {
+    this.modalTitle = title;
+    this.modalMessage = message;
+    this.modalVisible = true;
+    // Thêm class 'modal-open' cho body để tránh scroll nền khi modal mở
+    document.body.classList.add('modal-open');
+  }
+
+  // Hàm đóng modal
+  closeModal() {
+    this.modalVisible = false;
+    document.body.classList.remove('modal-open');
+  }
   ngOnInit(): void {
     this.route.data.subscribe((data) => {
       if (data['userData']) {
         this.user = data['userData'];
+      } else {
+        alert('Bạn chưa đăng nhập, vui lòng đăng nhập lại!');
+        this.router.navigate(['/auth']);
       }
     });
   }
 
   editProfile() {
+    this.errors = [];
+    this.successMessage = '';
+
     if (!this.user.fullName || this.user.fullName.trim() === '') {
-      alert('Họ và tên không được để trống!');
-      return;
+      this.errors.push('Họ và tên không được để trống!');
     }
 
     if (!this.user.email || this.user.email.trim() === '') {
-      alert('Email không được để trống!');
-      return;
+      this.errors.push('Email không được để trống!');
+    } else {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(this.user.email)) {
+        this.errors.push('Email không hợp lệ!');
+      }
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(this.user.email)) {
-      alert('Email không hợp lệ!');
-      return;
-    }
-
-    if (this.user.phone && this.user.phone.length < 9) {
-      alert('Số điện thoại phải có ít nhất 9 chữ số!');
-      return;
-    }
     if (!this.user.phone || this.user.phone.trim() === '') {
-      alert('SĐT không được để trống!');
-      return;
+      this.errors.push('SĐT không được để trống!');
+    } else if (this.user.phone.length < 9) {
+      this.errors.push('Số điện thoại phải có ít nhất 9 chữ số!');
     }
 
     if (this.password !== this.confirmPassword) {
-      alert('Mật khẩu và Nhập lại mật khẩu không khớp!');
+      this.errors.push('Mật khẩu và Nhập lại mật khẩu không khớp!');
+    }
+
+    if (this.errors.length > 0) {
       return;
     }
 
@@ -74,19 +94,22 @@ export class UserProfileComponent implements OnInit {
 
     this.userService.editProfile(updatePresenter).subscribe({
       next: (res) => {
-        console.log('Update response:', res);
-        alert('Thông tin tài khoản đã được cập nhật!');
+        this.successMessage = 'Thông tin tài khoản đã được cập nhật!';
       },
       error: (err) => {
-        console.error('Update error:', err);
-        alert('Đã xảy ra lỗi khi cập nhật thông tin!');
+        this.errors.push('Đã xảy ra lỗi khi cập nhật thông tin!');
       }
     });
   }
 
+
+
   logout() {
     localStorage.removeItem('user_token');
-    alert('Bạn đã đăng xuất!');
-    this.router.navigate(['/auth/login']);
+    this.openModal('Đăng xuất', 'Bạn đã đăng xuất!');
+    setTimeout(() => {
+      this.closeModal();
+      this.router.navigate(['/homepage']);
+    }, 1500);
   }
 }
