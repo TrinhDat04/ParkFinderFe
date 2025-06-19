@@ -75,6 +75,23 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'homepage',
+    component: MainLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./features/homepage/homepage.module').then(
+            (m) => m.HomepageModule
+          ),
+        resolve: {
+          language: TranslationModuleResolver,
+        },
+        data: { LanguageModules: [EnumLanguageModule.Dashboard] } as RouteData,
+      },
+    ],
+  },
+  {
     path: '',
     redirectTo: 'map',
     pathMatch: 'full',

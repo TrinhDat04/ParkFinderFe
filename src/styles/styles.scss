@@ -2,14 +2,71 @@
 @import "themes/variables";
 @import "themes/light-theme";
 @import "themes/dark-theme";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 html,
 body {
   height: 100%;
 }
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: 'Poppins', Arial, Helvetica, sans-serif;
 }
 .mapboxgl-user-location-accuracy-circle {
   display: none !important;
 }
+
+.color-branding {
+  color: #2657C1 !important;
+}
+
+.color-blue{
+  color: #306EF3 !important;
+}
+.color-gray {
+  color: #D9D9D9 !important;
+}
+.btn-corlor-branding{
+ background-color: #2657C1 !important;
+  color: #ffff !important;
+}
+
+.btn-color-blue {
+  background-color: #306EF3 !important;
+  color: #ffff !important;
+}
+
+.btn-color-gray{
+  background-color: #D9D9D9 !important;
+  color: #000 !important;
+}
+
+.btn-color-black {
+  background-color: #000 !important;
+  color: #ffff !important;
+}
+.text-branding {
+  color: #2657C1 !important;
+}
+
+.text-blue {
+  color: #306EF3 !important;
+}
+
+.text-gray {
+  color: #D9D9D9 !important;
+}
+.background-color-white {
+  background-color: #F5F5F5 !important;
+}
+
+.background-color-branding {
+  background-color: #2657C1 !important;
+}
+
+.background-color-gray {
+  background-color: #D9D9D9 !important;
+}
+.background-color-blue {
+  background-color: #306EF3 !important;
+}
+

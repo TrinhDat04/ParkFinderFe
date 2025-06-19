@@ -10,6 +10,7 @@ import { SharedModule } from '../shared/components/shared-components.module';
 import { MapLayoutComponent } from './map-layout/map-layout.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { MapHeaderComponent } from './components/header/map-header/map-header.component';
+import { BasicHeaderComponent } from './components/header/basic-header/basic-header.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { MapHeaderComponent } from './components/header/map-header/map-header.co
     MapLayoutComponent,
     NavBarComponent,
     MapHeaderComponent,
+    BasicHeaderComponent,
   ],
   imports: [CommonModule, RouterModule,SharedModule],
   exports: [
@@ -29,6 +31,7 @@ import { MapHeaderComponent } from './components/header/map-header/map-header.co
     DashboardLayoutComponent,
     ExampleHeaderComponent,
     MapLayoutComponent,
+    BasicHeaderComponent,
   ],
 })
 export class LayoutModule {}
