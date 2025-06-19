@@ -162,7 +162,7 @@ export class MapComponent implements AfterViewInit {
 
     const route = data.routes[0].geometry;
 
-    const lotId = this.selectedFeature?.properties?.ParkingLotId;
+    const lotId = this.selectedFeature?.properties?.id;
 
     const source = this.map.getSource('route') as mapboxgl.GeoJSONSource;
 
@@ -200,12 +200,11 @@ export class MapComponent implements AfterViewInit {
           'line-opacity': 0.75,
         },
       });
+      this.map.setFilter('points', ['==', ['get', 'id'], lotId]);
 
-      this.map.setFilter('points', ['==', ['get', 'ParkingLotId'], lotId]);
-
-      this.map.setFilter('points-buffer-layer', [
+      this.map.setFilter('points-click-buffer', [
         '==',
-        ['get', 'ParkingLotId'],
+        ['get', 'id'],
         lotId,
       ]);
 
