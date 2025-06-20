@@ -4,8 +4,8 @@ import { isPlatformBrowser } from '@angular/common';
 import mapboxgl from 'mapbox-gl';
 import { ENVIRONMENT } from '../../../../../environments/environment';
 import { MAP_ENDPOINTS } from '../../../../core/constants/endpoints/map-endpoints';
-import {MapService} from '../../services/map.services';
-import {ParkingLot} from '../../models/parking-lot';
+import { MapService } from '../../services/map.services';
+import { ParkingLot } from '../../models/parking-lot';
 
 @Component({
   selector: 'app-map',
@@ -25,7 +25,10 @@ export class MapComponent implements AfterViewInit {
   protected totalDistance: number = -1;
   protected totalTime: number = -1;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object, private mapService: MapService) {}
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private mapService: MapService
+  ) {}
 
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
@@ -123,8 +126,6 @@ export class MapComponent implements AfterViewInit {
     this.map.on('click', 'points-click-buffer', async (e) => {
       const feature = e.features?.[0];
 
-      console.log(feature);
-
       if (feature && feature.geometry.type === 'Point') {
         const coords = feature.geometry.coordinates as [number, number];
         const props = feature.properties;
@@ -134,6 +135,12 @@ export class MapComponent implements AfterViewInit {
             coords: coords,
             properties: props,
           };
+
+          const location: { lat: number; lng: number } = {
+            lat: coords[1],
+            lng: coords[0 ],
+          };
+          this.flyToLocation(location, 14);
         }
       }
 
@@ -199,7 +206,7 @@ export class MapComponent implements AfterViewInit {
 
     const route = data.routes[0].geometry;
 
-    const lotId = this.selectedFeature?.properties?.id;
+    const lotId = this.selectedFeature?.properties?.ParkingLotId;
 
     const source = this.map.getSource('route') as mapboxgl.GeoJSONSource;
 
@@ -235,11 +242,13 @@ export class MapComponent implements AfterViewInit {
           'line-opacity': 0.75,
         },
       });
-      this.map.setFilter('points', ['==', ['get', 'id'], lotId]);
+      this.map.setFilter('points', ['==', ['get', 'ParkingLotId'], lotId]);
 
-      this.map.setFilter('points', ['==', ['get', 'id'], lotId]);
-
-      this.map.setFilter('points-click-buffer', ['==', ['get', 'id'], lotId]);
+      this.map.setFilter('points-click-buffer', [
+        '==',
+        ['get', 'ParkingLotId'],
+        lotId,
+      ]);
 
       bounds.extend(userCoords as [number, number]);
       bounds.extend(pinCoords as [number, number]);
@@ -273,17 +282,21 @@ export class MapComponent implements AfterViewInit {
   }
 
   onSearchResult(location: { lat: number; lng: number }) {
+    this.flyToLocation(location, 13);
+  }
+
+  flyToLocation(location: { lat: number; lng: number }, z: number) {
     if (this.map) {
       this.map.flyTo({
         center: [location.lng, location.lat],
-        zoom: 13,
+        zoom: z,
       });
     }
   }
 
   showDetails() {
-    this.detailSelected= true;
-    const id = this.selectedFeature?.properties?.['id'];
+    this.detailSelected = true;
+    const id = this.selectedFeature?.properties?.['ParkingLotId'];
     this.loadDetail(id!);
   }
 
@@ -294,7 +307,7 @@ export class MapComponent implements AfterViewInit {
       },
       error: (err) => {
         console.error('Lỗi khi lấy dữ liệu bãi đỗ xe', err);
-      }
+      },
     });
   }
 
