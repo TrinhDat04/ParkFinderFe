@@ -4,8 +4,16 @@
 
 <div class="detail-panel" *ngIf="selectedFeature && !detailSelected">
   <div class="drag-handle"></div>
-  <h3>{{ selectedFeature.properties["name"] }}</h3>
-  <p>Giá: {{ selectedFeature.properties["price"] | number : "1.0-0" }}đ / lượt</p>
+  <h3>{{ selectedFeature.properties["Name"] }}</h3>
+  <p>{{ selectedFeature.properties["Description"] }}</p>
+  <div class="info-row">
+    <p>Khoảng cách: {{ formatDistance(totalDistance) }}</p>
+    <p>{{ formatDuration(totalTime) }}</p>
+  </div>
+  <p>
+    Giá: {{ selectedFeature.properties["PricePerHour"] | number : "1.0-0" }}đ /
+    lượt
+  </p>
   <div class="button-group">
     <button (click)="startNavigation()">Chỉ đường</button>
     <button (click)="showDetails()">Chi tiết</button>
