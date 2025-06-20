@@ -85,7 +85,7 @@ button:last-child {
   bottom: 60px; /* Đẩy lên khỏi thanh tab bar */
   left: 0;
   width: 100%;
-  height: calc(45% + 60px); /* Để panel dài thêm, tránh bị cắt */
+  max-height: 100%; /* Để panel dài thêm, tránh bị cắt */
   background: #fff;
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
@@ -103,18 +103,23 @@ button:last-child {
   position: absolute;
   top: 10px;
   right: 10px;
-  background: transparent;
+  background-color: white; /* màu đỏ */
   border: none;
   cursor: pointer;
   z-index: 1001;
   padding: 8px;
-  align-self: flex-end;
+  border-radius: 50%; /* làm tròn nút */
+  width: 48px; /* to hơn */
+  height: 48px; /* to hơn */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 
 .detail-panel.detail-selected .close-button .material-icons {
-  font-size: 24px;
-  color: #333;
+  font-size: 28px;
+  color: red;
 
   .detail-panel.detail-selected .detail-header {
     text-align: center;
