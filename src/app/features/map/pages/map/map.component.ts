@@ -67,7 +67,7 @@ export class MapComponent implements AfterViewInit {
       });
 
       this.map.loadImage(
-        '/assets/icons/parking_lot_pin.png',
+        '/assets/icons/sus.png',
         (error, image) => {
           if (error) throw error;
           if (image && !this.map.hasImage('icon')) {
