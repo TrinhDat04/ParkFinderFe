@@ -25,17 +25,6 @@
 .search-box {
   background-color: $color-light-gray;
 }
-.action-box{
-  border: 1px solid $color-gray;
-  padding: 5px;
-  border-radius: 8px;
-}
-
-.filter-count{
-  background-color: $color-branding;
-  padding: 2px;
-  margin: 10px;
-}
 
 .search-input {
   flex: 1;
@@ -50,7 +39,7 @@
 
 .search-results {
   position: absolute;
-  top: 100%; 
+  top: 100%;
   left: 0;
   width: 100%;
   margin-top: 4px;
@@ -75,4 +64,14 @@
   &:last-child {
     border-bottom: none;
   }
+}
+::ng-deep .full-screen-dialog .mat-mdc-dialog-surface {
+  display: block;
+  border-radius: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: 100vw !important;
+  max-height: 100vh !important;
+  box-sizing: border-box;
+  padding: 10px 20px;
 }

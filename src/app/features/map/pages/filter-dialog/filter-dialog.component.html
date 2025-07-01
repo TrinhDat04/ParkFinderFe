@@ -1,0 +1,80 @@
+<!-- Header -->
+<div class="filter-header d-flex justify-content-between align-items-center">
+  <a class="text-primary" href="#">Thoát</a>
+  <span class="fw-bold">Bộ lọc</span>
+  <a class="text-primary" href="#">Xóa</a>
+</div>
+
+<!-- Danh mục -->
+<div class="filter-section">
+  <div class="d-flex justify-content-between align-items-center" (click)="toggleDropdown('category')">
+    <span>Danh mục</span>
+    <span *ngIf="selectedCategoryCount > 0" class="filter-count rounded-circle">{{selectedCategoryCount}}</span>
+  </div>
+  <div *ngIf="dropdownOpen.category" class="dropdown-list">
+    <!-- Lặp qua các danh mục -->
+    <div *ngFor="let cat of categories">
+      <input type="checkbox" [checked]="cat.selected" (change)="toggleCategory(cat)"> {{cat.name}}
+    </div>
+  </div>
+</div>
+
+<!-- Mức giá -->
+<div class="filter-section">
+  <div class="d-flex justify-content-between align-items-center" (click)="toggleDropdown('price')">
+    <span>Mức giá</span>
+    <i class="bi bi-chevron-down"></i>
+  </div>
+  <div *ngIf="dropdownOpen.price" class="dropdown-list">
+    <div *ngFor="let price of prices">
+      <input type="checkbox" [checked]="price.selected" (change)="togglePrice(price)"> {{price.name}}
+    </div>
+  </div>
+</div>
+
+<!-- Tính năng -->
+<div class="filter-section">
+  <div class="d-flex justify-content-between align-items-center" (click)="toggleDropdown('feature')">
+    <span>Tính năng</span>
+    <span *ngIf="selectedFeatureCount > 0" class="filter-count rounded-circle">{{selectedFeatureCount}}</span>
+  </div>
+  <div *ngIf="dropdownOpen.feature" class="feature-tags mt-2">
+    <span *ngFor="let feature of features"
+          class="tag"
+          [class.selected]="feature.selected"
+          (click)="toggleFeature(feature)">
+      {{feature.name}}
+    </span>
+  </div>
+</div>
+
+<!-- Quy mô -->
+<div class="filter-section">
+  <div class="d-flex justify-content-between align-items-center" (click)="toggleDropdown('scale')">
+    <span>Quy mô</span>
+    <i class="bi bi-chevron-down"></i>
+  </div>
+  <div *ngIf="dropdownOpen.scale" class="dropdown-list">
+    <div *ngFor="let scale of scales">
+      <input type="checkbox" [checked]="scale.selected" (change)="toggleScale(scale)"> {{scale.name}}
+    </div>
+  </div>
+</div>
+
+<!-- Đánh giá khách hàng -->
+<div class="filter-section">
+  <div class="d-flex justify-content-between align-items-center" (click)="toggleDropdown('rating')">
+    <span>Đánh giá khách hàng</span>
+    <i class="bi bi-chevron-down"></i>
+  </div>
+  <div *ngIf="dropdownOpen.rating" class="dropdown-list">
+    <div *ngFor="let rating of ratings">
+      <input type="checkbox" [checked]="rating.selected" (change)="toggleRating(rating)"> {{rating.name}}
+    </div>
+  </div>
+</div>
+
+<!-- Button Áp dụng -->
+<div class="filter-footer">
+  <button class="btn btn-primary w-100">Áp dụng</button>
+</div>

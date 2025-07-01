@@ -5,12 +5,8 @@
       <input type="text" [formControl]="searchControl" placeholder="Tìm kiếm" class="search-input" />
     </div>
     <div class="row">
-      <div class="d-flex justify-content-end">
-        <div class="d-flex flex-row action-box">
-          <div class=""><i class="bi bi-filter"></i></div>
-          <div class="">Lọc</div>
-          <!-- <div class="rounded-circle">3</div> -->
-        </div>
+      <div (click)="openFilterDialog()">
+        <app-filter-box></app-filter-box>
       </div>
     </div>
 
