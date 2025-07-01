@@ -37,9 +37,9 @@ export class SearchBoxComponent implements OnInit {
     }
   }
 
-  // ngOnInit(): void {
-  //     this.openFilterDialog();
-  // }
+  ngOnInit(): void {
+      // this.openFilterDialog();
+  }
 
   initGoogleSearch() {
     const checkGoogleLoaded = () => {
