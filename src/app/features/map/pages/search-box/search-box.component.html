@@ -1,26 +1,19 @@
-<div class="search-container">
-  <div class="search-wrapper">
-    <span class="icon">
-      <img
-        src="assets/icons/map-marker-alt-solid.svg"
-        alt="Location Icon"
-        class="icon"
-      />
-    </span>
-    <input
-      type="text"
-      [formControl]="searchControl"
-      placeholder="Tìm kiếm bãi đỗ xe"
-      class="search-input"
-    />
+<div class="search-container z-3">
+  <div class="container search-wrapper p-2">
+    <div class="row search-box m-1 p-2 rounded-pill align-items-center">
+      <i class="bi bi-search"></i>
+      <input type="text" [formControl]="searchControl" placeholder="Tìm kiếm" class="search-input" />
+    </div>
+    <div class="row">
+      <div (click)="openFilterDialog()">
+        <app-filter-box></app-filter-box>
+      </div>
+    </div>
+
   </div>
-  <ul *ngIf="results.length > 0" class="search-results">
-    <li
-      *ngFor="let result of results"
-      (click)="selectResult(result)"
-      class="search-result-item"
-    >
+  <!-- <ul *ngIf="results.length > 0" class="search-results">
+    <li *ngFor="let result of results" (click)="selectResult(result)" class="search-result-item">
       {{ result.name }}
     </li>
-  </ul>
+  </ul> -->
 </div>

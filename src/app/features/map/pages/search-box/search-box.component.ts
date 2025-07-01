@@ -3,7 +3,7 @@ import {
   Output,
   EventEmitter,
   PLATFORM_ID,
-  Inject,
+  Inject, OnInit,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import {
@@ -11,13 +11,15 @@ import {
   distinctUntilChanged,
 } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
+import {FilterDialogComponent} from '../filter-dialog/filter-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-search-box',
   templateUrl: './search-box.component.html',
-  styleUrls: ['./search-box.component.css'],
+  styleUrls: ['./search-box.component.scss'],
 })
-export class SearchBoxComponent {
+export class SearchBoxComponent implements OnInit {
   searchControl = new FormControl('');
   results: { name: string; placeId: string }[] = [];
 
@@ -26,10 +28,17 @@ export class SearchBoxComponent {
   private autocompleteService!: google.maps.places.AutocompleteService;
   private placesService!: google.maps.places.PlacesService;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private dialog: MatDialog
+  ) {
     if (isPlatformBrowser(this.platformId)) {
       this.initGoogleSearch();
     }
+  }
+
+  ngOnInit(): void {
+      this.openFilterDialog();
   }
 
   initGoogleSearch() {
@@ -48,7 +57,7 @@ export class SearchBoxComponent {
             }
 
             this.autocompleteService.getPlacePredictions(
-              { input: query, componentRestrictions: { country: 'vn' } },
+              {input: query, componentRestrictions: {country: 'vn'}},
               (predictions, status) => {
                 if (
                   status === google.maps.places.PlacesServiceStatus.OK &&
@@ -74,7 +83,7 @@ export class SearchBoxComponent {
 
   selectResult(result: { name: string; placeId: string }) {
     this.placesService.getDetails(
-      { placeId: result.placeId, fields: ['geometry'] },
+      {placeId: result.placeId, fields: ['geometry']},
       (place, status) => {
         if (
           status === google.maps.places.PlacesServiceStatus.OK &&
@@ -82,10 +91,19 @@ export class SearchBoxComponent {
         ) {
           const lat = place.geometry.location.lat();
           const lng = place.geometry.location.lng();
-          this.resultSelected.emit({ lat, lng });
+          this.resultSelected.emit({lat, lng});
           this.results = [];
         }
       }
     );
+  }
+
+  openFilterDialog() {
+    this.dialog.open(FilterDialogComponent, {
+      width: '100vw',
+      height: '100vh',
+      maxWidth: '100vw',
+      panelClass: 'full-screen-dialog'
+    });
   }
 }

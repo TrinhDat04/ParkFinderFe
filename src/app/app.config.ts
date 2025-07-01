@@ -30,6 +30,6 @@ export const appConfig: ApplicationConfig = {
         useFactory: (http: HttpClient) => new TranslateHttpLoader(http),
         deps: [HttpClient]
       }
-    }).providers ?? [], provideAnimationsAsync()
+    }).providers ?? [], provideAnimationsAsync(), provideAnimationsAsync()
   ]
 };

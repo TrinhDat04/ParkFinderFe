@@ -1,0 +1,26 @@
+@import '../../../../../styles/themes/colors';
+
+.rounded-circle {
+  backdrop-filter: $color-blue;
+}
+
+.action-box {
+  border: 1px solid $color-gray;
+  padding: 5px 10px;
+
+  border-radius: 8px;
+  min-width: 80px;
+}
+
+.filter-count {
+  width: 20px;
+  height: 20px;
+  background-color: $color-branding;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: normal;
+  font-size: 10px;
+}
