@@ -2,71 +2,81 @@
 @import "themes/variables";
 @import "themes/light-theme";
 @import "themes/dark-theme";
+@import "themes/colors";
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 html,
 body {
   height: 100%;
 }
+
 body {
   margin: 0;
   font-family: 'Poppins', Arial, Helvetica, sans-serif;
+  font-weight: 600;
 }
+
+// Hide Mapbox user location accuracy circle
 .mapboxgl-user-location-accuracy-circle {
   display: none !important;
 }
 
+// Color utility classes using SCSS variables
 .color-branding {
-  color: #2657C1 !important;
+  color: $color-branding !important;
 }
 
-.color-blue{
-  color: #306EF3 !important;
+.color-blue {
+  color: $color-blue !important;
 }
+
 .color-gray {
-  color: #D9D9D9 !important;
+  color: $color-gray !important;
 }
-.btn-corlor-branding{
- background-color: #2657C1 !important;
-  color: #ffff !important;
+
+.btn-color-branding {
+  background-color: $color-branding !important;
+  color: $color-white !important;
 }
 
 .btn-color-blue {
-  background-color: #306EF3 !important;
-  color: #ffff !important;
+  background-color: $color-blue !important;
+  color: $color-white !important;
 }
 
-.btn-color-gray{
-  background-color: #D9D9D9 !important;
-  color: #000 !important;
+.btn-color-gray {
+  background-color: $color-gray !important;
+  color: $color-black !important;
 }
 
 .btn-color-black {
-  background-color: #000 !important;
-  color: #ffff !important;
+  background-color: $color-black !important;
+  color: $color-white !important;
 }
+
 .text-branding {
-  color: #2657C1 !important;
+  color: $color-branding !important;
 }
 
 .text-blue {
-  color: #306EF3 !important;
+  color: $color-blue !important;
 }
 
 .text-gray {
-  color: #D9D9D9 !important;
+  color: $color-gray !important;
 }
+
 .background-color-white {
-  background-color: #F5F5F5 !important;
+  background-color: $color-background-white !important;
 }
 
 .background-color-branding {
-  background-color: #2657C1 !important;
+  background-color: $color-branding !important;
 }
 
 .background-color-gray {
-  background-color: #D9D9D9 !important;
-}
-.background-color-blue {
-  background-color: #306EF3 !important;
+  background-color: $color-gray !important;
 }
 
+.background-color-blue {
+  background-color: $color-blue !important;
+}

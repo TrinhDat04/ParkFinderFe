@@ -1,8 +1,10 @@
+@import '../../../../../styles/themes/colors';
+
 .my-header{
-  background-color: #2657C1 !important;
+  background-color: $color-branding !important;
 }
 .custom-header-navbar {
-  background-color: #2563d6; /* Màu xanh giống hình */
+  background-color: $color-blue; /* Màu xanh giống hình */
   height: 64px;
   display: flex;
   justify-content: space-between;
@@ -12,7 +14,7 @@
 }
 
 .header-icon {
-  color: #fff;
+  color: $color-white;
   font-size: 2rem;
   cursor: pointer;
   display: flex;
