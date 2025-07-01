@@ -1,0 +1,47 @@
+.my-navbar {
+  background-color: #D9D9D9 !important;
+  color: #1976d2;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 64px;
+  padding: 0;
+  border-top: 1px solid #e0e0e0;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.08);
+}
+
+.nav-item-custom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 0;
+  color: #1976d2;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+  padding: 6px 0;
+}
+
+.nav-item-custom i {
+  font-size: 1.7rem;
+  margin-bottom: 2px;
+  color: #1976d2;
+}
+
+.nav-label {
+  font-size: 14px;
+  color: #1976d2;
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.nav-item-custom.active {
+  background-color: #1976d2;
+  color: #fff;
+}
+
+.nav-item-custom.active i,
+.nav-item-custom.active .nav-label {
+  color: #fff;
+}

@@ -1,0 +1,68 @@
+<section class="vh-100 gradient-custom">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card text-black" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
+
+            <div class="mb-md-5 mt-md-4 pb-5">
+
+              <h4 class="fw-bold mb-2 text-uppercase text-primary">Đăng ký tài khoản</h4>
+              <p class="mb-5">Đăng ký ngay tài khoản để trải nghiệm những tính năng tuyệt vời từ <strong
+                class="text-primary">ParkFinder</strong></p>
+
+              <div data-mdb-input-init class="form-outline form-white mb-4">
+                <input type="email" id="typeFullNameX" class="form-control" placeholder="Họ và tên"
+                       [(ngModel)]="fullName"/>
+                <p *ngIf="registerErrors['FullName']" class="text-danger">{{ registerErrors['FullName'] }}</p>
+              </div>
+
+              <div data-mdb-input-init class="form-outline form-white mb-4">
+                <input type="email" id="typePhoneNumberX" class="form-control" placeholder="Số điện thoại"
+                       [(ngModel)]="phoneNumber"/>
+                <p *ngIf="registerErrors['PhoneNumber']" class="text-danger">{{ registerErrors['PhoneNumber'] }}</p>
+              </div>
+
+              <div data-mdb-input-init class="form-outline form-white mb-4">
+                <input type="email" id="typeEmailX" class="form-control" placeholder="Email"
+                       [(ngModel)]="email"/>
+                <p *ngIf="registerErrors['Email']" class="text-danger">{{ registerErrors['Email'] }}</p>
+              </div>
+
+              <div data-mdb-input-init class="form-outline form-white mb-4">
+                <input type="password" id="typePasswordX" class="form-control" placeholder="Mật khẩu"
+                       [(ngModel)]="password"/>
+                <p *ngIf="registerErrors['Password']" class="text-danger">{{ registerErrors['Password'] }}</p>
+              </div>
+
+              <div data-mdb-input-init class="form-outline form-white mb-4">
+                <input type="password" id="typeConfirmPasswordX" class="form-control" placeholder="Xác nhận mật khẩu"
+                       [(ngModel)]="confirmPassword"/>
+              </div>
+
+              <p style="color: red;">{{ message }}</p>
+
+              <p>Bạn đã có tài khoản? <a href="/auth/login" class="text-primary fw-bold">Đăng nhập</a></p>
+
+              <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg px-5"
+                      (click)="register()">Đăng ký
+              </button>
+
+              <div class="d-flex justify-content-center text-center mt-4 pt-1">
+                <a href="#!" class="text-white"><i class="fab fa-facebook-f fa-lg"></i></a>
+                <a href="#!" class="text-white"><i class="fab fa-twitter fa-lg mx-4 px-2"></i></a>
+                <a href="#!" class="text-white"><i class="fab fa-google fa-lg"></i></a>
+              </div>
+
+            </div>
+
+            <div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

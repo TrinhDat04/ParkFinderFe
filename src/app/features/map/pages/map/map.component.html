@@ -1,0 +1,112 @@
+<div class="map-container" #mapContainer>
+  <app-search-box (resultSelected)="onSearchResult($event)"></app-search-box>
+</div>
+
+<div class="detail-panel" *ngIf="selectedFeature && !detailSelected">
+  <div class="drag-handle"></div>
+  <h3>{{ selectedFeature.properties["Name"] }}</h3>
+  <p>{{ selectedFeature.properties["Description"] }}</p>
+  <div class="info-row">
+    <p>Khoảng cách: {{ formatDistance(totalDistance) }}</p>
+    <p>{{ formatDuration(totalTime) }}</p>
+  </div>
+  <p>
+    Giá: {{ selectedFeature.properties["PricePerHour"] | number : "1.0-0" }}đ /
+    lượt
+  </p>
+  <div class="button-group">
+    <button (click)="startNavigation()">Chỉ đường</button>
+    <button (click)="showDetails()">Chi tiết</button>
+  </div>
+  <button (click)="closeDetailPanel()">Đóng</button>
+</div>
+
+<div class="detail-panel detail-selected" *ngIf="detailSelected && parkingLot">
+  <div class="drag-handle"></div>
+
+  <button class="close-button" (click)="closeDetail()">
+    <span class="material-icons">close</span>
+  </button>
+
+  <div class="detail-header">
+    <h3>{{ parkingLot.name }}</h3>
+    <!--    <div class="rating">4.6 ★★★★☆ (8 reviews) · Parking lot</div>-->
+  </div>
+
+  <div class="button-group">
+    <button (click)="startNavigation()">Chỉ đường</button>
+    <button>Gọi điện</button>
+  </div>
+
+  <div class="info-row">
+    <i class="bi bi-geo-alt" style="color: dodgerblue; font-size: 24px"></i>
+    <span> {{ parkingLot.description }}</span>
+  </div>
+  <div class="info-row">
+    <i class="bi bi-clock" style="color: dodgerblue; font-size: 24px"></i>
+    <span> {{ parkingLot.openTime }} - {{ parkingLot.closeTime }}</span>
+  </div>
+  <div class="info-row">
+    <i class="bi bi-cash-coin" style="color: dodgerblue; font-size: 24px"></i>
+    <span> {{ parkingLot.pricePerHour | currency : "VND" : "symbol" }}</span>
+  </div>
+  <div class="info-row">
+    <i class="bi bi-gear-fill" style="color: dodgerblue; font-size: 24px"></i>
+    <span> {{ parkingLot.utilities }}</span>
+  </div>
+  <div class="info-row">
+    <i class="bi bi-car-front" style="color: dodgerblue; font-size: 24px"></i>
+    <span> Chỗ đậu tổng: {{ parkingLot.totalSlots }}</span>
+  </div>
+  <div class="info-row">
+    <i class="bi bi-p-circle" style="color: dodgerblue; font-size: 24px"></i>
+    <span> Chỗ còn trống: {{ parkingLot.availableSlots }}</span>
+  </div>
+</div>
+
+<div class="detail-panel detail-selected" *ngIf="detailSelected && parkingLot">
+  <div class="drag-handle"></div>
+
+  <button class="close-button" (click)="closeDetail()">
+    <span class="material-icons">close</span>
+  </button>
+
+  <div class="detail-header">
+    <h3>{{ parkingLot.name }}</h3>
+    <!--    <div class="rating">4.6 ★★★★☆ (8 reviews) · Parking lot</div>-->
+  </div>
+
+  <div class="button-group">
+    <button (click)="startNavigation()">Chỉ đường</button>
+    <button>Gọi điện</button>
+  </div>
+
+  <div class="info-row">
+    <i class="bi bi-geo-alt" style="color: dodgerblue; font-size: 24px"></i>
+    <span> {{ parkingLot.description }}</span>
+  </div>
+  <div class="info-row">
+    <i class="bi bi-clock" style="color: dodgerblue; font-size: 24px"></i>
+    <span> {{ parkingLot.openTime }} - {{ parkingLot.closeTime }}</span>
+  </div>
+  <div class="info-row">
+    <i class="bi bi-cash-coin" style="color: dodgerblue; font-size: 24px"></i>
+    <span> {{ parkingLot.pricePerHour | currency : "VND" : "symbol" }}</span>
+  </div>
+  <div class="info-row">
+    <i class="bi bi-gear-fill" style="color: dodgerblue; font-size: 24px"></i>
+    <span> {{ parkingLot.utilities }}</span>
+  </div>
+  <div class="info-row">
+    <i class="bi bi-car-front" style="color: dodgerblue; font-size: 24px"></i>
+    <span> Chỗ đậu tổng: {{ parkingLot.totalSlots }}</span>
+  </div>
+  <div class="info-row">
+    <i class="bi bi-p-circle" style="color: dodgerblue; font-size: 24px"></i>
+    <span> Chỗ còn trống: {{ parkingLot.availableSlots }}</span>
+  </div>
+</div>
+
+<button *ngIf="isNavigating" (click)="stopNavigation()" class="cancel-button">
+  Dừng chỉ đường
+</button>

@@ -1,0 +1,12 @@
+// _custom-theme.scss
+@import "~@angular/material/theming";
+
+// Define your custom color palette
+$custom-primary: mat-palette($mat-indigo);
+$custom-accent: mat-palette($mat-pink, A200, A100, A400);
+
+// Create a custom theme using the defined palettes
+$custom-theme: mat-light-theme($custom-primary, $custom-accent);
+
+// Include Angular Material's base styles
+@include angular-material-theme($custom-theme);

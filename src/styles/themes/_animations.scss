@@ -1,0 +1,9 @@
+.fade-in {
+    animation: fade-in $transition-duration ease-in-out;
+  }
+  
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  

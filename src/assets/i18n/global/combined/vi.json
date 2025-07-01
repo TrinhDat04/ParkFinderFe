@@ -1,0 +1,21 @@
+{
+  "BUTTON_OK": "Đồng ý",
+  "BUTTON_CANCEL": "Hủy bỏ",
+  "BUTTON_YES": "Chấp nhận",
+  "BUTTON_NO": "Từ chối",
+  "BUTTON_SAVE": "Lưu",
+  "BUTTON_GO": "Đi tiếp",
+  "LABEL_DATE": "Ngày",
+  "LABEL_HOUR": "Giờ",
+  "LABEL_ENGLISH": "Anh",
+  "LABEL_FRENCH": "Pháp",
+  "LABEL_VIETNAM": "Việt",
+  "LABEL_EN": "Anh",
+  "LABEL_FR": "Pháp",
+  "LABEL_VI": "Việt",
+  "MESSAGE_SUCCESS": "Thành công",
+  "MESSAGE_SAVE_SUCCESS": "Lưu thành công",
+  "MESSAGE_DELETE_SUCCESS": "Xóa thành công",
+  "MESSAGE_UPDATE_SUCCESS": "Cập nhập thành công",
+  "MESSAGE_ERROR": "Lỗi"
+}

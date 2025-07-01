@@ -1,0 +1,16 @@
+.code-inputs {
+  display: flex;
+  gap: 20px; /* increased gap between boxes */
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.digit-box {
+  width: 2.5rem;
+  height: 3rem;
+  font-size: 2rem;
+  text-align: center;
+  background-color: #e0e0e0; /* light grey background */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}

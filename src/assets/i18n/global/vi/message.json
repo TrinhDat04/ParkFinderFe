@@ -1,0 +1,7 @@
+{
+  "MESSAGE_SUCCESS": "Thành công",
+  "MESSAGE_SAVE_SUCCESS": "Lưu thành công",
+  "MESSAGE_DELETE_SUCCESS": "Xóa thành công",
+  "MESSAGE_UPDATE_SUCCESS": "Cập nhập thành công",
+  "MESSAGE_ERROR": "Lỗi"
+}

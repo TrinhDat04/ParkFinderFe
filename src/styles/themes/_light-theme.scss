@@ -1,0 +1,10 @@
+@import 'variables';
+@import 'typography';
+@import 'spacing';
+@import 'animations';
+@import 'layout';
+
+:root {
+  --primary-color: $primary-color;
+  --background-color: #ffffff;
+}

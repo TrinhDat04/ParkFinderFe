@@ -1,0 +1,55 @@
+<div class="container mt-3">
+  <div class="text-center bg-primary text-white py-4 rounded-top">
+    <div class="mx-auto bg-light rounded-circle" style="width: 100px; height: 100px;"></div>
+  </div>
+
+  <form class="bg-white p-3 shadow-sm">
+    <div class="mb-3">
+      <input type="text" class="form-control" placeholder="Họ và tên" [(ngModel)]="user.fullName" name="fullName">
+    </div>
+    <div class="mb-3">
+      <input type="tel" class="form-control" placeholder="Số điện thoại" [(ngModel)]="user.phone" name="phone">
+    </div>
+    <div class="mb-3">
+      <input type="email" class="form-control" placeholder="Email" [(ngModel)]="user.email" name="email">
+    </div>
+    <div class="mb-3">
+      <input type="password" class="form-control" placeholder="Mật khẩu" [(ngModel)]="password" name="password">
+    </div>
+    <div class="mb-3 position-relative">
+      <input [type]="showPassword ? 'text' : 'password'" class="form-control" placeholder="Nhập lại mật khẩu" [(ngModel)]="confirmPassword" name="confirmPassword">
+      <i class="bi bi-eye position-absolute top-50 end-0 translate-middle-y me-3" style="cursor: pointer;" (click)="showPassword = !showPassword"></i>
+    </div>
+    <div class="mb-3">
+      <input type="text" class="form-control" placeholder="Vai trò" [(ngModel)]="user.role" name="role" readonly>
+    </div>
+    <button type="button" class="btn btn-primary w-100 mb-2" (click)="editProfile()">Chỉnh sửa tài khoản</button>
+    <button type="button" class="btn btn-outline-primary w-100" (click)="logout()">Đăng xuất</button>
+    <div *ngIf="errors.length > 0" class="mt-3 text-danger">
+      <ul>
+        <li *ngFor="let err of errors">{{ err }}</li>
+      </ul>
+    </div>
+    <div *ngIf="successMessage" class="mt-3 text-success text-center">
+      {{ successMessage }}
+    </div>
+  </form>
+  <!-- Modal Bootstrap -->
+  <div class="modal fade" tabindex="-1" [ngClass]="{'show': modalVisible}" [style.display]="modalVisible ? 'block' : 'none'" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitle">{{ modalTitle }}</h5>
+          <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>{{ modalMessage }}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="closeModal()">Đóng</button>
+        </div>
+      </div>
+    </div>
+    <div class="modal-backdrop fade show"></div>
+  </div>
+</div>

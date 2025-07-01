@@ -1,0 +1,17 @@
+<div class="left-menu">
+  <div class="menu-header">
+    <img src="assets/icons/salary.png" alt="Logo" class="menu-logo" />
+    <h2 class="menu-title">My App</h2>
+  </div>
+  <ul class="menu-list">
+    <li class="menu-item">
+      <a routerLink="/user" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <span class="icon">👤</span>
+        <span class="text">User</span>
+      </a>
+    </li>
+    <li class="menu-item">
+      <app-language></app-language>
+    </li>
+  </ul>
+</div>
