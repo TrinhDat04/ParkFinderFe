@@ -30,14 +30,15 @@
               },
               "src/favicon.ico",
               "src/assets/i18n",
-              "src/assets/icons"
+              "src/assets/icons",
+              "src/assets/images"
             ],
             "styles": [
               "src/styles/styles.scss",
               "@angular/material/prebuilt-themes/azure-blue.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/mapbox-gl/dist/mapbox-gl.css",
-              "node_modules/bootstrap-icons/font/bootstrap-icons.css" 
+              "node_modules/bootstrap-icons/font/bootstrap-icons.css"
             ],
             "scripts": [],
             "server": "src/main.server.ts",

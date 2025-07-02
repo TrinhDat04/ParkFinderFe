@@ -1,0 +1,50 @@
+<div class="container">
+  <h2 class="title">CÀI ĐẶT</h2>
+
+  <div class="profile">
+    <div class="avatar">
+      <img src="/assets/images/avatar-placeholder.png" alt="avatar" />
+      <span class="edit-icon" (click)="goToProfile()">✎</span>
+    </div>
+    <h3>{{ user.fullName }}</h3>
+    <p class="handle">{{ user.email }}</p>
+  </div>
+
+  <ul class="settings-list">
+    <li (click)="toggleShow('username')">
+      <span>Tên đăng nhập</span> <span>›</span>
+    </li>
+    <div *ngIf="showUsername" class="detail-box">
+      {{ user.email }}
+    </div>
+
+    <li (click)="toggleShow('phone')">
+      <span>Số điện thoại</span> <span>›</span>
+    </li>
+    <div *ngIf="showPhone" class="detail-box">
+      {{ user.phone || 'Chưa cập nhật' }}
+    </div>
+
+    <li><span>Ngôn ngữ</span> <span>›</span></li>
+    <li><span (click)="onRegisterParking()">Đăng Kí Bãi Đỗ</span> <span>›</span></li>
+    <li><span (click)="logout()">Đăng xuất</span> <span>›</span></li>
+  </ul>
+  <!-- Modal Bootstrap -->
+  <div class="modal fade" tabindex="-1" [ngClass]="{'show': modalVisible}" [style.display]="modalVisible ? 'block' : 'none'" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitle">{{ modalTitle }}</h5>
+          <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>{{ modalMessage }}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="closeModal()">Đóng</button>
+        </div>
+      </div>
+    </div>
+    <div class="modal-backdrop fade show"></div>
+  </div>
+</div>
