@@ -84,6 +84,21 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'map-google',
+    component: MapLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./features/map-google/map-google.module').then((m) => m.MapGoogleModule ),
+        resolve: {
+          language: TranslationModuleResolver,
+        },
+        data: { LanguageModules: [EnumLanguageModule.Map] } as RouteData,
+      },
+    ],
+  },
+  {
     path: 'homepage',
     component: MainLayoutComponent,
     children: [
