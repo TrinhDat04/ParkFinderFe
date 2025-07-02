@@ -1,10 +1,10 @@
 <div class="container vh-100 d-flex flex-column justify-content-end justify-content-md-center">
   <div class="row d-flex justify-content-center align-items-center h-100">
     <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-      <div class="card text-black" style="border-radius: 1rem;">
-        <div class="card-body p-5 text-center">
-          <h4 class="fw-bold mb-2 text-uppercase text-primary">Đăng ký tài khoản</h4>
-          <p class="mb-5">Đăng ký ngay tài khoản để trải nghiệm những tính năng tuyệt vời từ <strong
+      <div class="card text-black" style="border: none">
+        <div class="card-body text-center">
+          <p class="title mb-2 text-uppercase text-primary">Đăng ký tài khoản</p>
+          <p class="mb-5 subtitle text-muted">Đăng ký ngay tài khoản để trải nghiệm những tính năng tuyệt vời từ <strong
             class="text-primary">ParkFinder</strong></p>
 
           <div data-mdb-input-init class="form-outline form-white mb-4">
@@ -25,24 +25,35 @@
             <p *ngIf="registerErrors['Email']" class="text-danger">{{ registerErrors['Email'] }}</p>
           </div>
 
-          <div data-mdb-input-init class="form-outline form-white mb-4">
+          <div class="mb-4 position-relative">
             <input type="password" id="typePasswordX" class="form-control" placeholder="Mật khẩu"
-                   [(ngModel)]="password"/>
+                   [(ngModel)]="password"
+                   [type]="passwordVisible ? 'text' : 'password'"/>
+            <i class="bi position-absolute top-50 end-0 translate-middle-y me-3"
+               [ngClass]="passwordVisible ? 'bi-eye-slash' : 'bi-eye'"
+               id="togglePassword" style="cursor: pointer;"
+               (click)="togglePassword()"></i>
             <p *ngIf="registerErrors['Password']" class="text-danger">{{ registerErrors['Password'] }}</p>
           </div>
 
-          <div data-mdb-input-init class="form-outline form-white mb-5">
-            <input type="password" id="typeConfirmPasswordX" class="form-control" placeholder="Xác nhận mật khẩu"
-                   [(ngModel)]="confirmPassword"/>
+          <div class="mb-5 position-relative">
+            <input type="password" id="typeConfirmPasswordX" class="form-control pe-5" placeholder="Xác nhận mật khẩu"
+                   [(ngModel)]="confirmPassword"
+                   [type]="confirmPasswordVisible ? 'text' : 'password'"/>
+            <i class="bi position-absolute top-50 end-0 translate-middle-y me-3"
+               [ngClass]="confirmPasswordVisible ? 'bi-eye-slash' : 'bi-eye'"
+               id="toggleConfirmPassword" style="cursor: pointer;"
+               (click)="toggleConfirmPassword()"></i>
           </div>
 
           <div class="mb-3">
             <p style="color: red;">{{ message }}</p>
           </div>
 
-          <p>Bạn đã có tài khoản? <a href="/auth/login" class="text-primary fw-bold">Đăng nhập</a></p>
+          <p style="font-weight: 300; font-size: 11px">Bạn đã có tài khoản? <a href="/auth/login" class="text-primary fw-bold text-decoration-none">Đăng nhập</a></p>
 
           <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg px-5"
+                  style="width: 100%; text-transform: uppercase; font-size: 14px; font-weight: 700"
                   (click)="register()">Đăng ký
           </button>
 

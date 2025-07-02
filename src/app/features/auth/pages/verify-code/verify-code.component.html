@@ -1,12 +1,12 @@
 <div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center">
-  <div class="card text-dark p-4" style="max-width: 450px; width: 100%;border-radius: 1rem;">
-    <div class="card-body p-5 text-center">
+  <div class="card text-dark p-4" style="max-width: 450px; width: 100%; border: none">
+    <div class="card-body text-center">
 
-      <div class="mb-md-5 mt-md-4 pb-5 flex-grow-1">
+      <div class="mt-md-4 pb-5 flex-grow-1" style="margin-bottom: 360px">
 
-        <h5 class="fw-bold mb-2 text-uppercase text-primary">NHẬP MÃ XÁC NHẬN</h5>
-        <p class="mb-0 text-sm-center">Mã đã được gửi đến email của bạn</p>
-        <p class="mb-5 text-sm-center">Mã xác nhận bao gồm 4 chữ số</p>
+        <p class="title mb-2 text-uppercase text-primary">NHẬP MÃ XÁC NHẬN</p>
+        <p class="mb-0 text-center subtitle">Mã đã được gửi đến email của bạn</p>
+        <p class="mb-5 text-center subtitle">Mã xác nhận bao gồm 4 chữ số</p>
 
         <div class="code-inputs">
           <input *ngFor="let field of codeFields; let i = index"
@@ -25,9 +25,10 @@
       </div>
       <div>
         <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg px-5"
+                style="width: 100%"
                 [disabled]="!isCodeComplete()"
                 (click)="verifyCode()">
-          <small style="font-weight: bold; font-size: 13px;">XÁC NHẬN</small>
+          <span style="font-weight: bold; font-size: 13px;">XÁC NHẬN</span>
         </button>
       </div>
     </div>

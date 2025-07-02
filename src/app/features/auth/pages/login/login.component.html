@@ -1,4 +1,4 @@
-<div class="container vh-100 d-flex flex-column justify-content-end justify-content-md-center">
+<div class="container-fluid vh-100 d-flex flex-column justify-content-end justify-content-md-center">
   <div class="card mx-auto mb-4" style="width: 100%; max-width: 400px;">
     <div class="card-body text-center">
       <form>
@@ -61,7 +61,8 @@
         <div class="d-flex justify-content-center">
           <button type="button"
                   class="btn btn-danger rounded-circle d-flex justify-content-center align-items-center"
-                  style="width: 40px; height: 40px;">
+                  style="width: 40px; height: 40px;"
+                  (click)="loginWithGoogle()">
             <i class="bi bi-google" style="font-size: 1rem;"></i>
           </button>
         </div>
