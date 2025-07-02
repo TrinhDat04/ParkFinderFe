@@ -1,13 +1,7 @@
 .google-map {
   position: absolute;
-  top: 0;
+  top: 0;     
   left: 0;
-  height: 100vh;
-  width: 100vw;
+  width: auto;
   display: block;
-}
-
-.google-map.map-container {
-    height: 100%;
-    width: 100%;
 }

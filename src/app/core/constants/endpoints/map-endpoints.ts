@@ -7,7 +7,6 @@ export const MAP_ENDPOINTS = {
   getParkingLotLocation: (param: string) => ENVIRONMENT.serviceUrl.default + `/ParkingLot/search/${param}`,
   getParkingLotDetail: (id: string) => `/ParkingLot/detail/${id}`,
   getParkingLotLocationMapboxAPI: (query: string) => 
-    `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
-      query
-    )}.json?access_token=${ENVIRONMENT.mapboxAccessToken}&limit=1`,
+    `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json?access_token=${ENVIRONMENT.mapboxAccessToken}&limit=1`,
+  getMapDataJSON: `${ENVIRONMENT.serviceUrl.default}/Map`,
 }

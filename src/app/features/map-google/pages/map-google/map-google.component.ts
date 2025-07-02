@@ -10,6 +10,7 @@ import {
 import { GoogleMap } from '@angular/google-maps';
 import { CustomMapOptions } from '../../models/map-options';
 import { isPlatformBrowser } from '@angular/common';
+import { MapDataService } from '../../services/map-google.service';
 
 @Component({
   selector: 'app-map-google',
@@ -19,11 +20,16 @@ import { isPlatformBrowser } from '@angular/common';
 export class MapGoogleComponent implements AfterViewInit {
   @ViewChild(GoogleMap) map!: GoogleMap;
 
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private mapService: MapDataService
+  ) {}
+
   private watchId!: number;
   private userLocation!: google.maps.LatLngLiteral;
   private center: { lat: number; lng: number } = {
-    lat: 21.01380025467188,
-    lng: 105.5254893092536,
+    lat: 21.0285,
+    lng: 105.8542,
   };
   private customMap: CustomMapOptions = {
     styles: [
@@ -31,17 +37,21 @@ export class MapGoogleComponent implements AfterViewInit {
       { featureType: 'transit', stylers: [{ visibility: 'off' }] },
     ],
     center: this.center,
-    zoom: 15,
+    zoom: 13,
+    minZoom: 8,
+    maxZoom: 20
   };
 
   protected apiLoaded: boolean = false;
+
+  protected markers: google.maps.LatLngLiteral[] = [];
+
+  protected markerIcon: any;
 
   protected customMapOptions: google.maps.MapOptions = {
     ...this.customMap,
     gestureHandling: 'auto',
   };
-
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngAfterViewInit() {
     if (!isPlatformBrowser(this.platformId)) return;
@@ -59,7 +69,27 @@ export class MapGoogleComponent implements AfterViewInit {
     } catch (err) {
       console.warn(err);
     }
+
+    await Promise.all([this.fetchMapData()]);
+
     this.apiLoaded = true;
+  }
+
+  async fetchMapData() {
+    this.mapService.getGeoJson().subscribe((geo) => {
+      this.createMarker(geo);
+    });
+  }
+
+  async createMarker(geojson: any) {
+    this.markerIcon = {
+      url: 'assets/icons/sus.png',
+      scaledSize: new google.maps.Size(40, 40),
+    };
+    this.markers = geojson.features.map((f: any) => {
+      const [lng, lat] = f.geometry.coordinates;
+      return { lat, lng };
+    });
   }
 
   getUserLocation() {
@@ -67,8 +97,6 @@ export class MapGoogleComponent implements AfterViewInit {
       console.warn('Geolocation is not supported.');
       return;
     }
-
-    console.log('Requesting geolocation...');
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const coords: google.maps.LatLngLiteral = {

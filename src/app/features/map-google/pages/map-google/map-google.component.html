@@ -4,4 +4,11 @@
   [height]="'100vh'"
   [width]="'100vw'"
   [options]="customMapOptions"
-></google-map>
+>
+  <map-marker
+    *ngFor="let m of markers"
+    [position]="m"
+    [icon]="markerIcon"
+  >
+  </map-marker>
+</google-map>
