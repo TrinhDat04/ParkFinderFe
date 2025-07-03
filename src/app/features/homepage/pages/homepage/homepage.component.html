@@ -1,32 +1,136 @@
-<app-basic-header></app-basic-header>
-<div class="container p-3">
-    <div class="row heading ">
-        <div class="col-sm-1 main-heading">
-            <p class="h5 text-branding">ParkFinder xin chào!</p>
+<div class="container-fluid home-wrapper px-3 pt-3 pb-5">
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <!-- Bên trái: Avatar/User Info -->
+    <div class="d-flex align-items-center gap-3">
+      <ng-container *ngIf="!isLoading">
+        <div *ngIf="user; else emptyBlock" class="d-flex align-items-center gap-2">
+          <img src="/assets/images/avatar-placeholder.png" class="rounded-circle" width="40" height="40" />
+          <div>
+            <div class="fw-semibold">{{ user.fullName }}</div>
+            <div class="text-muted small">Chào bạn!</div>
+          </div>
         </div>
-        <div class="col-sm-1 subheading">
-            <p class="h7">Tin tức</p>
+        <ng-template #emptyBlock></ng-template>
+      </ng-container>
+      <ng-container *ngIf="isLoading">
+        <div class="spinner-border text-primary" role="status" style="width: 1.5rem; height: 1.5rem;">
+          <span class="visually-hidden">Loading...</span>
         </div>
+      </ng-container>
     </div>
-    <div class="row content mt-4">
-        <div class="col-sm-1">
-            <div class="action-box background-color-gray">
-               
-            </div>
-        </div>
+
+    <!-- Bên phải -->
+    <div class="d-flex align-items-center gap-3">
+      <ng-container *ngIf="!isLoading && !user">
+        <button class="btn btn-primary btn-sm" (click)="goToLogin()">Đăng nhập</button>
+      </ng-container>
+      <i class="bi bi-bell icon-clickable" (click)="openNews($event)"></i>
+      <i class="bi bi-search icon-clickable"></i>
     </div>
-    <div class="row content mt-4">
-        <div class="col-sm-1">
-            <div class="action-box background-color-gray">
-          
-            </div>
+  </div>
+
+  <!-- Search -->
+  <div class="mb-3">
+    <input type="text" class="form-control search-bar" placeholder="Bạn muốn tới đâu" />
+  </div>
+
+  <!-- Đang trong quá trình -->
+  <div class="mb-4" *ngIf="isNavigating">
+    <div class="fw-semibold mb-2">Đang trong quá trình tới</div>
+    <div class="in-progress-box p-3 d-flex justify-content-between align-items-center">
+      <div>
+        <div class="fw-semibold text-white">
+          {{ navigationData?.lotName }}
         </div>
-    </div>
-     <div class="row content mt-4">
-        <div class="col-sm-1">
-            <div class="action-box background-color-gray">
-          
-            </div>
+        <div class="text-white-50 small">
+          {{ navigationData?.lotCode }} ·
+          <i class="bi bi-geo-alt-fill"></i> {{ navigationData?.distanceKm }}
         </div>
+      </div>
+      <button class="btn btn-light btn-sm rounded-pill px-3" (click)="goToMap()">Mở map</button>
     </div>
+  </div>
+
+  <!-- Chỗ đỗ gần bạn -->
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <div class="fw-semibold">Các chỗ đỗ gần bạn</div>
+    <a href="#" class="text-primary small">Xem thêm</a>
+  </div>
+  <div class="d-flex gap-3 overflow-auto mb-4 flex-nowrap">
+    <div class="nearby-card card border-0 rounded-4 p-2 position-relative">
+      <span class="badge bg-primary position-absolute top-0 start-0 m-2">POPULAR</span>
+      <img src="/assets/images/parkingLot.jpg" class="rounded-3 mb-2" />
+      <div class="fw-semibold small">Bãi đỗ Hòa Lạc</div>
+      <div class="text-muted small">
+        <div><i class="bi bi-geo-alt-fill"></i> 1.3km</div>
+        <div><i class="bi bi-currency-dollar"></i> 20000đ/h</div>
+      </div>
+    </div>
+
+    <div class="nearby-card card border-0 rounded-4 p-2 position-relative">
+      <span class="badge bg-primary position-absolute top-0 start-0 m-2">POPULAR</span>
+      <img src="/assets/images/parkingLot.jpg" class="rounded-3 mb-2" />
+      <div class="fw-semibold small">Bãi đỗ Hòa Lạc</div>
+      <div class="text-muted small">
+        <div><i class="bi bi-geo-alt-fill"></i> 1.3km</div>
+        <div><i class="bi bi-currency-dollar"></i> 20000đ/h</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Danh mục -->
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <div class="fw-semibold">Danh mục</div>
+  </div>
+
+  <div class="d-flex gap-3 mb-4 flex-nowrap overflow-auto">
+    <div class="category-item text-center" (click)="goToNews()">
+      <div class="icon-circle bg-primary text-white mb-1">
+        <i class="bi bi-newspaper"></i>
+      </div>
+      <div class="small">Tin Tức</div>
+    </div>
+
+    <div class="category-item text-center" (click)="goToSettings()">
+      <div class="icon-circle bg-primary text-white mb-1">
+        <i class="bi bi-gear-fill"></i>
+      </div>
+      <div class="small">Cài Đặt</div>
+    </div>
+
+    <div class="category-item text-center" (click)="goToMap()">
+      <div class="icon-circle bg-primary text-white mb-1">
+        <i class="bi bi-map-fill"></i>
+      </div>
+      <div class="small">Map</div>
+    </div>
+  </div>
+
+  <!-- Đánh giá cao -->
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <div class="fw-semibold">Đánh giá cao nhất</div>
+    <a href="#" class="text-primary small">Xem thêm</a>
+  </div>
+
+  <div class="d-flex flex-column gap-3">
+    <div class="rated-item d-flex gap-3 align-items-center" *ngFor="let lot of topRatedLots">
+      <img src="/assets/images/parkingLot.jpg" class="rounded-3" width="80" />
+      <div>
+        <div class="fw-semibold">{{ lot.parkingLotName }}</div>
+        <div class="text-muted small">
+          <i class="bi bi-currency-dollar"></i> {{ lot.pricePerHour | number }}đ/h
+        </div>
+        <div class="text-warning small">
+          <ng-container *ngFor="let star of [1,2,3,4,5]; let i = index">
+            <i class="bi" [ngClass]="{
+            'bi-star-fill': i < lot.averageRating,
+            'bi-star': i >= lot.averageRating
+          }"></i>
+          </ng-container>
+          <span class="text-muted">({{ lot.totalReviews }})</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

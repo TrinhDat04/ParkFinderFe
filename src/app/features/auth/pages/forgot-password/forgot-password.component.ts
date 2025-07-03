@@ -18,7 +18,17 @@ export class ForgotPasswordComponent implements OnInit {
   ngOnInit() {
   }
 
+  isValidEmail(email: string): boolean {
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return pattern.test(email);
+  }
+
   sendCode() {
+    if (!this.isValidEmail(this.email)) {
+      this.message = 'Email không hợp lệ. Vui lòng kiểm tra lại.';
+      return;
+    }
+
     this.authService.sendVerificationToken({email: this.email})
       .subscribe({
         next: response => {

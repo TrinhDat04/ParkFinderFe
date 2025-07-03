@@ -1,0 +1,76 @@
+:host {
+  display: block;
+  font-family: 'Arial', sans-serif;
+  background-color: #ffffff;
+  min-height: 100vh;
+  position: relative;
+}
+
+.card {
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding-bottom: 100px;
+}
+
+.card-img-top {
+  object-fit: cover;
+  height: 200px;
+  border-radius: 12px;
+  width: 100%;
+}
+
+.author-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(0, 123, 255, 0.9);
+  color: white;
+  padding: 4px 10px;
+  font-size: 12px;
+  border-radius: 12px;
+}
+
+.post-meta {
+  font-size: 14px;
+  color: gray;
+}
+
+.likes-comments-shares {
+  position: fixed;
+  bottom: 70px;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  padding: 10px 20px;
+  border-top: 1px solid #ddd;
+  display: flex;
+  justify-content: start;
+  gap: 30px;
+  font-size: 14px;
+  color: #6c757d;
+  z-index: 999;
+}
+
+.likes-comments-shares i {
+  margin-right: 6px;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.image-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+}
+.back-link {
+  color: #000;           /* màu đen */
+  font-weight: 600;      /* in đậm */
+}

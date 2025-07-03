@@ -12,14 +12,34 @@ export class ResetPasswordComponent implements OnInit {
   password = "";
   password2 = "";
   message = "";
+  passwordVisible = false;
+  confirmPasswordVisible = false;
 
   constructor(private authService: AuthService, private router: Router) {
   }
 
+  togglePassword(): void{
+    this.passwordVisible = !this.passwordVisible;
+  }
+
+  toggleConfirmPassword(): void{
+    this.confirmPasswordVisible = !this.confirmPasswordVisible;
+  }
+
   ngOnInit() {
+    const email = localStorage.getItem('resetEmail');
+    if (!email || email.trim() === '') {
+      this.router.navigate(['/homepage']); // redirect wherever makes sense
+    }
   }
 
   changePassword() {
+    if (!this.password || this.password.trim() === '' ||
+      !this.password2 || this.password2.trim() === '') {
+      this.message = 'Vui lòng nhập đầy đủ thông tin.';
+      return;
+    }
+
     if (this.password !== this.password2) {
       this.message = 'Mật khẩu không khớp!';
       return;

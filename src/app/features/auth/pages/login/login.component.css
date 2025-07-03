@@ -1,0 +1,16 @@
+/* Use full viewport height on larger screens */
+@media (min-width: 768px) {
+  .vh-md-100 {
+    height: 100vh;
+  }
+}
+
+:host {
+  font-family: 'Inter', sans-serif;
+  display: block;
+  height: 100vh;
+  background-image: url('https://wallpapersok.com/images/hd/cool-pokemon-purple-pokeball-mewtwo-yb1yihj7ej8upn9o.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}

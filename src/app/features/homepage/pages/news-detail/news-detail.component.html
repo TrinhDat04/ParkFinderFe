@@ -1,0 +1,32 @@
+<div class="container pt-4 px-3" *ngIf="newsDetail">
+  <a href="#" class="back-link mb-3 d-inline-block" (click)="goBack($event)"><i class="bi bi-arrow-return-left"></i> Trở lại</a>
+
+  <div class="card">
+    <div class="image-wrapper mb-3">
+      <img [src]="newsDetail.image" class="card-img-top" alt="Ảnh bài viết" />
+      <div class="author-badge">Tin Nhanh</div>
+    </div>
+
+    <div class="card-body px-0">
+      <div class="d-flex justify-content-between mb-2 post-meta">
+        <div>Trending 🔥</div>
+        <div>{{ newsDetail.date }}</div>
+      </div>
+
+      <h5 class="card-title">
+        {{ newsDetail.title }}
+      </h5>
+
+      <p class="card-text text-muted" style="font-size: 15px;">
+        {{ newsDetail.content }}
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- Likes / Comments / Shares fixed and lifted -->
+<div class="likes-comments-shares" *ngIf="newsDetail">
+  <span><i class="bi bi-hand-thumbs-up"></i> {{ newsDetail.likes }} Likes</span>
+  <span><i class="bi bi-chat-left-text"></i> {{ newsDetail.comments }} Comments</span>
+  <span><i class="bi bi-share"></i> {{ newsDetail.shares }} Shares</span>
+</div>

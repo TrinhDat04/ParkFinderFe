@@ -37,6 +37,11 @@ export class VerifyCodeComponent implements OnInit {
 
 
   ngOnInit() {
+    const email = localStorage.getItem('resetEmail');
+    console.log(email);
+    if (!email || email.trim() === '') {
+      this.router.navigate(['/homepage']); // redirect wherever makes sense
+    }
   }
 
   isCodeComplete(): boolean {

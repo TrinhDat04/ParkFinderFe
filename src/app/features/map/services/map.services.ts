@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { MAP_ENDPOINTS } from "../../../core/constants/endpoints/map-endpoints";
 import { ApiService } from "../../../core/services/network/api.service";
-import { Observable } from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {ParkingLot} from '../models/parking-lot';
 
 
@@ -15,5 +15,11 @@ export class MapService {
       serviceUrl: 'default',
       endpoint: MAP_ENDPOINTS.getParkingLotDetail(id),
     });
+  }
+  private hideNavbarSubject = new BehaviorSubject<boolean>(false);
+  hideNavbar$ = this.hideNavbarSubject.asObservable();
+
+  setNavbarHidden(hidden: boolean) {
+    this.hideNavbarSubject.next(hidden);
   }
 }

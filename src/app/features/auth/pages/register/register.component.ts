@@ -17,13 +17,27 @@ export class RegisterComponent implements OnInit {
   fullName = '';
   phoneNumber: string | null = null;
   message = '';
+  passwordVisible = false;
+  confirmPasswordVisible = false;
 
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
+    const token = localStorage.getItem('user_token');
+    if (token) {
+      this.router.navigate(['/homepage']); // redirect wherever makes sense
+    }
   }
 
   registerErrors: { [key: string]: string } = {};
+
+  togglePassword(): void{
+    this.passwordVisible = !this.passwordVisible;
+  }
+
+  toggleConfirmPassword(): void{
+    this.confirmPasswordVisible = !this.confirmPasswordVisible;
+  }
 
   register() {
     this.registerErrors = {}; // Reset errors before submission

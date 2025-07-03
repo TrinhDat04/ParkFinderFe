@@ -10,6 +10,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import {UserProfileResolver} from '../../core/resolvers/user-profile-resolver';
 import {AuthGuard} from '../../core/guards/auth.guard';
+import {UserSettingComponent} from './pages/user-setting/user-setting.component';
 
 const routes: Routes = [
   { path: '', component: UserListComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'detail', component: UserDetailComponent },
   { path: 'edit', component: UserEditComponent },
   { path: 'profile', component: UserProfileComponent ,canActivate: [AuthGuard],resolve: { userData: UserProfileResolver }},
+  { path: 'setting', component: UserSettingComponent,canActivate: [AuthGuard],resolve: { userData: UserProfileResolver } },
 ];
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ const routes: Routes = [
     UserListComponent,
     UserCreateComponent,
     UserEditComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    UserSettingComponent
   ],
   imports: [CommonModule, RouterModule.forChild(routes), TranslateModule, FormsModule],
 })

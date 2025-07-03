@@ -6,6 +6,7 @@ import { ENVIRONMENT } from '../../../../../environments/environment';
 import { MAP_ENDPOINTS } from '../../../../core/constants/endpoints/map-endpoints';
 import { MapService } from '../../services/map.services';
 import { ParkingLot } from '../../models/parking-lot';
+import {HomepageService} from '../../../homepage/services/homepage.service';
 
 @Component({
   selector: 'app-map',
@@ -29,12 +30,17 @@ export class MapComponent implements AfterViewInit {
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
-    private mapService: MapService
+    private mapService: MapService,
+    private homepageService: HomepageService
   ) {}
 
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.Init();
+      const navData = this.homepageService.getCurrentState();
+      if (navData.isNavigating && navData.pinCoords && navData.userCoords) {
+        this.getRoute(navData.userCoords, navData.pinCoords);
+      }
     }
   }
 
@@ -199,6 +205,15 @@ export class MapComponent implements AfterViewInit {
       return;
     }
     this.getRoute(this.userCoords, this.pinCoords, this.mode);
+    const lotName = this.selectedFeature.properties?.['name'] || 'Bãi đỗ không xác định';
+    const distanceKm = this.formatDistance(this.totalDistance);
+    this.getRoute(this.userCoords, this.pinCoords);
+    this.homepageService.startNavigation({
+      lotName,
+      distanceKm,
+      pinCoords: this.pinCoords,
+      userCoords: this.userCoords,
+    });
   }
 
   async getRoute(userCoords: number[], pinCoords: number[], mode: string) {
@@ -290,6 +305,8 @@ export class MapComponent implements AfterViewInit {
       this.flyToLocation(location, 14);
     }
     this.tempFeature = null;
+    this.selectedFeature = null;
+    this.homepageService.stopNavigation();
   }
 
   onSearchResult(location: { lat: number; lng: number }) {
@@ -307,8 +324,10 @@ export class MapComponent implements AfterViewInit {
 
   showDetails() {
     this.detailSelected = true;
-    const id = this.selectedFeature?.properties?.['ParkingLotId'];
+    const id = this.selectedFeature?.properties?.['id'];
+    console.log(this.selectedFeature)
     this.loadDetail(id!);
+    this.mapService.setNavbarHidden(true);
   }
 
   loadDetail(id: string) {
@@ -325,5 +344,7 @@ export class MapComponent implements AfterViewInit {
   closeDetail() {
     this.detailSelected = null;
     this.parkingLot = undefined;
+    this.mapService.setNavbarHidden(false);
   }
+
 }
