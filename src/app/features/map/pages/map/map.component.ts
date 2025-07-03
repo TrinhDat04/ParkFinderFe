@@ -314,6 +314,7 @@ export class MapComponent implements AfterViewInit {
     const id = this.selectedFeature?.properties?.['id'];
     console.log(this.selectedFeature)
     this.loadDetail(id!);
+    this.mapService.setNavbarHidden(true);
   }
 
   loadDetail(id: string) {
@@ -330,6 +331,7 @@ export class MapComponent implements AfterViewInit {
   closeDetail() {
     this.detailSelected = null;
     this.parkingLot = undefined;
+    this.mapService.setNavbarHidden(false);
   }
 
 }

@@ -15,5 +15,8 @@ const routes: Routes = [{ path: '', component: MapComponent }];
     TranslateModule,
     ReactiveFormsModule,
   ],
+  exports: [
+    SearchBoxComponent
+  ]
 })
 export class MapModule {}
