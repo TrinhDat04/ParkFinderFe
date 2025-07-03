@@ -67,7 +67,7 @@ export class HomepageComponent implements OnInit {
     this.router.navigate(['/auth/login']);
   }
   goToMap(){
-    this.router.navigate(['/map']);
+    this.router.navigate(['/map-google']);
   }
   goToSettings(){
     this.router.navigate(['/user/setting']);

@@ -10,8 +10,8 @@
       />
     </div>
     <div class="row">
-      <div (click)="openFilterDialog()">
-        <app-filter-box></app-filter-box>
+      <div>
+        <app-filter-box (filtersChanged)="onFiltersChanged($event)"></app-filter-box>
       </div>
     </div>
   </div>

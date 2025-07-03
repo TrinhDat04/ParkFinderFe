@@ -1,7 +1,7 @@
-<div class="d-flex justify-content-end" type="button">
-  <div class="d-flex flex-row justify-content-between action-box">
+<div class="d-flex justify-content-end" type="button" (click)="toggleFilterBox($event)">
+  <div class="d-flex flex-row justify-content-between align-items-center action-box">
     <div class=""><i class="bi bi-filter"></i></div>
     <div class="px-2">Lọc</div>
-    <div class="filter-count rounded-circle">3</div>
+    <div class="filter-count rounded-circle" *ngIf="selectedFilterCount > 0">{{selectedFilterCount}}</div>
   </div>
 </div>

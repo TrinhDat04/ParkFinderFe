@@ -13,6 +13,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { FilterDialogComponent } from '../../../map/pages/filter-dialog/filter-dialog.component';
 import { MapsLibLoaderService } from '../../services/map-google-lib-loader.service';
+import { FilterData } from '../../../map/models/filter-data.interface';
 
 @Component({
   selector: 'app-search-box',
@@ -24,6 +25,7 @@ export class SearchBoxComponent implements AfterViewInit {
   results: { name: string; placeId: string }[] = [];
 
   @Output() resultSelected = new EventEmitter<{ lat: number; lng: number }>();
+  @Output() filtersChanged = new EventEmitter<FilterData | null>();
 
   private autocompleteService!: google.maps.places.AutocompleteService;
   private placesService!: google.maps.places.PlacesService;
@@ -74,6 +76,12 @@ export class SearchBoxComponent implements AfterViewInit {
       });
   }
 
+   onFiltersChanged(filters: FilterData | null) {
+    console.log('Filters changed in search-box:', filters);
+    this.filtersChanged.emit(filters);
+  }
+
+
   selectResult(result: { name: string; placeId: string }) {
     this.placesService.getDetails(
       { placeId: result.placeId, fields: ['geometry'] },
@@ -90,14 +98,5 @@ export class SearchBoxComponent implements AfterViewInit {
         }
       }
     );
-  }
-
-  openFilterDialog() {
-    this.dialog.open(FilterDialogComponent, {
-      width: '100vw',
-      height: '100vh',
-      maxWidth: '100vw',
-      panelClass: 'full-screen-dialog',
-    });
   }
 }

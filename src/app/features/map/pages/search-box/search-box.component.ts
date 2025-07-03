@@ -12,7 +12,8 @@ import {
 } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
 import {FilterDialogComponent} from '../filter-dialog/filter-dialog.component';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import { FilterData } from '../../models/filter-data.interface';
 
 @Component({
   selector: 'app-search-box',
@@ -24,11 +25,13 @@ export class SearchBoxComponent implements OnInit {
   results: { name: string; placeId: string }[] = [];
 
   @Output() resultSelected = new EventEmitter<{ lat: number; lng: number }>();
+  @Output() filtersChanged = new EventEmitter<FilterData | null>();
 
   private autocompleteService!: google.maps.places.AutocompleteService;
   private placesService!: google.maps.places.PlacesService;
 
   constructor(
+    private dialogRef: MatDialogRef<FilterDialogComponent>,
     @Inject(PLATFORM_ID) private platformId: Object,
     private dialog: MatDialog
   ) {
@@ -39,6 +42,11 @@ export class SearchBoxComponent implements OnInit {
 
   ngOnInit(): void {
       // this.openFilterDialog();
+  }
+
+  onFiltersChanged(filters: FilterData | null) {
+    console.log('Filters changed in search-box:', filters);
+    this.filtersChanged.emit(filters);
   }
 
   initGoogleSearch() {
@@ -98,12 +106,4 @@ export class SearchBoxComponent implements OnInit {
     );
   }
 
-  openFilterDialog() {
-    this.dialog.open(FilterDialogComponent, {
-      width: '100vw',
-      height: '100vh',
-      maxWidth: '100vw',
-      panelClass: 'full-screen-dialog'
-    });
-  }
 }

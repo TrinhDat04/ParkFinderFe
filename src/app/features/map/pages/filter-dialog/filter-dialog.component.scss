@@ -91,3 +91,17 @@
     }
   }
 }
+
+.category-row {
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-bottom: 6px;
+}
+
+.selected-row {
+  background: #e3f0ff;
+  color: #1976d2;
+  font-weight: 500;
+}

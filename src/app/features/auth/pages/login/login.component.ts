@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../../../core/services/auth/auth.service';
 import Swal from 'sweetalert2';
 import {Router} from '@angular/router';
-
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+//
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

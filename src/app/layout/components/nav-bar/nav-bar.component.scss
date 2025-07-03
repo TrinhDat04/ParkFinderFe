@@ -1,11 +1,13 @@
 
+@import '../../../../styles/themes/colors';
+
 .my-navbar {
-  background-color: #D9D9D9 !important;
+  background-color: $color-white !important;
   color: #1976d2;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  height: 64px;
+  height: 10vh;
   padding: 0;
   border-top: 1px solid #e0e0e0;
   box-shadow: 0 -2px 8px rgba(0,0,0,0.08);
@@ -28,7 +30,7 @@
 .nav-item-custom i {
   font-size: 1.7rem;
   margin-bottom: 2px;
-  color: #1976d2;
+  color: black;
 }
 
 .nav-label {
@@ -39,11 +41,14 @@
 }
 
 .nav-item-custom.active {
-  background-color: #1976d2;
-  color: #fff;
+  background-color: $color-gray;
+  transition: all 0.3s ease;
+  height: 10vh;
+  color: black;
 }
+
 
 .nav-item-custom.active i,
 .nav-item-custom.active .nav-label {
-  color: #fff;
+  color: black;
 }

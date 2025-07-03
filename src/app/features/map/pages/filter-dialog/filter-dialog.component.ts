@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FilterData } from '../../models/filter-data.interface';
 
 type DropdownKey = 'category' | 'price' | 'feature' | 'scale' | 'rating';
 
@@ -7,7 +9,12 @@ type DropdownKey = 'category' | 'price' | 'feature' | 'scale' | 'rating';
   templateUrl: './filter-dialog.component.html',
   styleUrl: './filter-dialog.component.scss'
 })
-export class FilterDialogComponent {
+export class FilterDialogComponent implements OnInit {
+  
+  constructor(
+    private dialogRef: MatDialogRef<FilterDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 
   // Sửa kiểu cho dropdownOpen
   dropdownOpen: Record<DropdownKey, boolean> = {
@@ -20,7 +27,9 @@ export class FilterDialogComponent {
 
   categories = [
     { name: 'Bãi xe', selected: false },
-    { name: 'Trạm sạc', selected: false }
+    { name: 'Trạm sạc', selected: false },
+    { name: 'Trạm dừng nghỉ', selected: false },
+    { name: 'Hầm gửi xe', selected: false },
   ];
   prices = [
     { name: 'Dưới 10k', selected: false },
@@ -28,18 +37,12 @@ export class FilterDialogComponent {
     { name: 'Trên 20k', selected: false }
   ];
   features = [
-    { name: 'RỬA XE', selected: false },
-    { name: 'WHITE', selected: false },
-    { name: 'GREY', selected: false },
-    { name: 'YELLOW', selected: false },
-    { name: 'BLUE', selected: false },
-    { name: 'PURPLE', selected: false },
-    { name: 'GREEN', selected: false },
-    { name: 'RED', selected: false },
-    { name: 'PINK', selected: false },
-    { name: 'ORANGE', selected: false },
-    { name: 'GOLD', selected: false },
-    { name: 'SILVER', selected: false }
+    { name: 'Gửi xe máy', selected: false },
+    { name: 'Gửi Ô tô', selected: false },
+    { name: 'Có mái che', selected: false },
+    { name: 'Gửi qua đêm', selected: false },
+    { name: 'Có camera giám sát', selected: false },
+    { name: 'Có sạc xe điện', selected: false },
   ];
   scales = [
     { name: 'Nhỏ', selected: false },
@@ -54,11 +57,87 @@ export class FilterDialogComponent {
     { name: '5 sao', selected: false }
   ];
 
+  ngOnInit() {
+    if (this.data && this.data.savedFilters) {
+      this.restoreFilters(this.data.savedFilters);
+    }
+  }
+
+  private restoreFilters(savedFilters: FilterData) {
+    if (savedFilters.categories) {
+      this.categories.forEach(cat => {
+        const savedCat = savedFilters.categories.find(sc => sc.name === cat.name);
+        if (savedCat) {
+          cat.selected = savedCat.selected;
+        }
+      });
+    }
+    
+    if (savedFilters.prices) {
+      this.prices.forEach(price => {
+        const savedPrice = savedFilters.prices.find(sp => sp.name === price.name);
+        if (savedPrice) {
+          price.selected = savedPrice.selected;
+        }
+      });
+    }
+    
+    if (savedFilters.features) {
+      this.features.forEach(feature => {
+        const savedFeature = savedFilters.features.find(sf => sf.name === feature.name);
+        if (savedFeature) {
+          feature.selected = savedFeature.selected;
+        }
+      });
+    }
+    
+    if (savedFilters.scales) {
+      this.scales.forEach(scale => {
+        const savedScale = savedFilters.scales.find(ss => ss.name === scale.name);
+        if (savedScale) {
+          scale.selected = savedScale.selected;
+        }
+      });
+    }
+    
+    if (savedFilters.ratings) {
+      this.ratings.forEach(rating => {
+        const savedRating = savedFilters.ratings.find(sr => sr.name === rating.name);
+        if (savedRating) {
+          rating.selected = savedRating.selected;
+        }
+      });
+    }
+  }
+
+  private getCurrentFilters(): FilterData {
+    return {
+      categories: [...this.categories],
+      prices: [...this.prices],
+      features: [...this.features],
+      scales: [...this.scales],
+      ratings: [...this.ratings]
+    };
+  }
+
   get selectedCategoryCount() {
     return this.categories.filter(c => c.selected).length;
   }
   get selectedFeatureCount() {
     return this.features.filter(f => f.selected).length;
+  }
+  get selectedPriceCount() {
+    return this.prices.filter(p => p.selected).length;
+  }
+  get selectedScaleCount() {
+    return this.scales.filter(s => s.selected).length;
+  }
+  get selectedRatingCount() {
+    return this.ratings.filter(r => r.selected).length;
+  }
+  get totalSelectedCount() {
+    return this.selectedCategoryCount + this.selectedFeatureCount + 
+           this.selectedPriceCount + this.selectedScaleCount + this.selectedRatingCount;
   }
 
   toggleDropdown(type: DropdownKey) {
@@ -79,5 +158,30 @@ export class FilterDialogComponent {
   }
   toggleRating(rating: any) {
     rating.selected = !rating.selected;
+  }
+
+  onCloseFilter(event: Event): void {
+    event.preventDefault(); // Ngăn reload hoặc scroll top
+    const currentFilters = this.getCurrentFilters();
+    this.dialogRef.close({ 
+      totalSelected: this.totalSelectedCount,
+      savedFilters: currentFilters
+    });
+  }
+
+  applyFilter() {
+    const currentFilters = this.getCurrentFilters();
+    this.dialogRef.close({ 
+      totalSelected: this.totalSelectedCount,
+      savedFilters: currentFilters
+    });
+  }
+
+  clearAllFilters() {
+    this.categories.forEach(cat => cat.selected = false);
+    this.prices.forEach(price => price.selected = false);
+    this.features.forEach(feature => feature.selected = false);
+    this.scales.forEach(scale => scale.selected = false);
+    this.ratings.forEach(rating => rating.selected = false);
   }
 }

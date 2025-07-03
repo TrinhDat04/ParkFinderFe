@@ -1,13 +1,16 @@
 <google-map
   class="google-map"
   *ngIf="apiLoaded"
-  [height]="'96vh'"
+  [height]="'90vh'"
   [width]="'100vw'"
   [options]="customMapOptions"
 >
 </google-map>
 
-<app-search-box (resultSelected)="onSearchResult($event)"></app-search-box>
+<app-search-box 
+  (resultSelected)="onSearchResult($event)"
+  (filtersChanged)="onFiltersChanged($event)">
+</app-search-box>
 
 <div class="detail-panel" *ngIf="selectedFeature && !detailSelected">
   <div class="drag-handle"></div>

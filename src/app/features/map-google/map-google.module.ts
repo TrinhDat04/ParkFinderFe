@@ -9,14 +9,13 @@ import { FilterBoxComponent } from '../map/pages/filter-box/filter-box.component
 import { SearchBoxComponent } from './pages/search-box/search-box.component';
 import { FilterDialogComponent } from '../map/pages/filter-dialog/filter-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { SharedModule } from '../../shared/components/shared-components.module';
 
 const routes: Routes = [{ path: '', component: MapGoogleComponent }];
 @NgModule({
   declarations: [
     MapGoogleComponent,
     SearchBoxComponent,
-    FilterBoxComponent,
-    FilterDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -25,6 +24,7 @@ const routes: Routes = [{ path: '', component: MapGoogleComponent }];
     ReactiveFormsModule,
     MatDialogModule,
     GoogleMapsModule,
+    SharedModule,
   ],
 })
 export class MapGoogleModule {}

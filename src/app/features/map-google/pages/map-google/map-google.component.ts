@@ -14,6 +14,7 @@ import { MapDataService } from '../../services/map-google.service';
 import { lastValueFrom } from 'rxjs';
 import { ENVIRONMENT } from '../../../../../environments/environment';
 import { MapsLibLoaderService } from '../../services/map-google-lib-loader.service';
+import { FilterData } from '../../../map/models/filter-data.interface';
 
 @Component({
   selector: 'app-map-google',
@@ -321,5 +322,10 @@ export class MapGoogleComponent implements AfterViewInit {
   onSearchResult(location: { lat: number; lng: number }) {
     this.map.panTo(location);
     this.map.googleMap?.setZoom(16);
+  }
+
+  onFiltersChanged(filters: any) {
+    console.log('Filters changed in map-google:', filters);
+    // TODO: Implement filtering logic here
   }
 }

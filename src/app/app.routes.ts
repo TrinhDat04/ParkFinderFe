@@ -10,7 +10,6 @@ import { HasAnyRoleGuard } from './core/guards/has-any-role.guard';
 import { EnumRole } from './core/constants/roles.enum';
 import { UserProfileComponent } from './features/user/pages/user-profile/user-profile.component';
 import { UserProfileResolver } from './core/resolvers/user-profile-resolver';
-import { MapComponent } from './features/map/pages/map/map.component';
 import { MapLayoutComponent } from './layout/map-layout/map-layout.component';
 import { MapGoogleComponent } from './features/map-google/pages/map-google/map-google.component';
 export const routes: Routes = [
@@ -60,17 +59,17 @@ export const routes: Routes = [
       },
     ],
   },
-  {
-    path: 'map',
-    component: MapLayoutComponent,
-    children: [
-      {
-        path: '',
-        loadChildren: () =>
-          import('./features/map/map.modules').then((m) => m.MapModule),
-      },
-    ],
-  },
+  // {
+  //   path: 'map',
+  //   component: MapLayoutComponent,
+  //   children: [
+  //     {
+  //       path: '',
+  //       loadChildren: () =>
+  //         import('./features/map/map.modules').then((m) => m.MapModule),
+  //     },
+  //   ],
+  // },
   {
     path: 'map-google',
     component: MapLayoutComponent,
@@ -108,6 +107,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'map',
+    redirectTo: 'map-google',
   },
 ];
