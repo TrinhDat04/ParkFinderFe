@@ -8,7 +8,7 @@ import { LayoutModule } from '../../layout/layout.module';
 import {NewsListComponent} from './pages/news-list/news-list.component';
 import {NewsDetailComponent} from './pages/news-detail/news-detail.component';
 
-const routes: Routes = [{ path: '', component: HomepageComponent ,},
+const routes: Routes = [{ path: '', component: HomepageComponent },
   { path: 'news', component: NewsListComponent },
   { path: 'news/:id', component: NewsDetailComponent },];
 @NgModule({
@@ -21,7 +21,7 @@ const routes: Routes = [{ path: '', component: HomepageComponent ,},
     RouterModule.forChild(routes),
     TranslateModule,
     ReactiveFormsModule,
-    LayoutModule
+    LayoutModule,
   ],
 })
 export class HomepageModule {}
