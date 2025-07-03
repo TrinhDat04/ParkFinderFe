@@ -23,5 +23,8 @@ const routes: Routes = [{ path: '', component: MapComponent }];
     ReactiveFormsModule,
     MatDialogModule
   ],
+  exports: [
+    SearchBoxComponent
+  ]
 })
 export class MapModule {}

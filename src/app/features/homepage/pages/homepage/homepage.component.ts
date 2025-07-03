@@ -52,7 +52,6 @@ export class HomepageComponent implements OnInit {
     this.homepageService.getTop5RatedParkingLots().subscribe({
       next: (lots) => {
         this.topRatedLots = lots;
-        console.log(lots);
       },
       error: (err) => {
         console.error('Lỗi khi lấy top đánh giá:', err);
