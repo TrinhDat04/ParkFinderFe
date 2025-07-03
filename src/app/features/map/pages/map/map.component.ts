@@ -19,6 +19,8 @@ export class MapComponent implements AfterViewInit {
   private geolocate!: mapboxgl.GeolocateControl;
   private userCoords: number[] | null = null;
   private pinCoords: number[] | null = null;
+  private mode: string = "";
+  private tempFeature: any | null = null;
   protected selectedFeature: any = null;
   protected isNavigating = false;
   protected detailSelected: any = null;
@@ -71,7 +73,7 @@ export class MapComponent implements AfterViewInit {
       });
 
       this.map.loadImage(
-        '/assets/icons/parking_lot_pin.png',
+        '/assets/icons/sus.png',
         (error, image) => {
           if (error) throw error;
           if (image && !this.map.hasImage('icon')) {
@@ -137,14 +139,14 @@ export class MapComponent implements AfterViewInit {
         const props = feature.properties;
 
         if (props) {
-          this.selectedFeature = {
+          this.selectedFeature = this.tempFeature = {
             coords: coords,
             properties: props,
           };
 
           const location: { lat: number; lng: number } = {
             lat: coords[1],
-            lng: coords[0 ],
+            lng: coords[0],
           };
           this.flyToLocation(location, 14);
         }
@@ -155,7 +157,8 @@ export class MapComponent implements AfterViewInit {
       if (this.pinCoords && this.userCoords && this.selectedFeature) {
         const url = `${MAP_ENDPOINTS.getRoute(
           this.userCoords,
-          this.pinCoords
+          this.pinCoords,
+          this.mode
         )}`;
         const response = await fetch(url);
         const data = await response.json();
@@ -201,6 +204,7 @@ export class MapComponent implements AfterViewInit {
       alert('Unable to locate destination');
       return;
     }
+    this.getRoute(this.userCoords, this.pinCoords, this.mode);
     const lotName = this.selectedFeature.properties?.['name'] || 'Bãi đỗ không xác định';
     const distanceKm = this.formatDistance(this.totalDistance);
     this.getRoute(this.userCoords, this.pinCoords);
@@ -212,8 +216,8 @@ export class MapComponent implements AfterViewInit {
     });
   }
 
-  async getRoute(userCoords: number[], pinCoords: number[]) {
-    const url = `${MAP_ENDPOINTS.getRoute(userCoords, pinCoords)}`;
+  async getRoute(userCoords: number[], pinCoords: number[], mode: string) {
+    const url = `${MAP_ENDPOINTS.getRoute(userCoords, pinCoords, mode)}`;
 
     const response = await fetch(url);
     const data = await response.json();
@@ -292,6 +296,15 @@ export class MapComponent implements AfterViewInit {
     this.map.setFilter('points', baseFilter);
     this.map.setFilter('points-click-buffer', baseFilter);
 
+    const feature = this.tempFeature;
+    if (feature) {
+      const location: { lat: number; lng: number } = {
+        lat: feature.coords[1],
+        lng: feature.coords[0],
+      };
+      this.flyToLocation(location, 14);
+    }
+    this.tempFeature = null;
     this.selectedFeature = null;
     this.homepageService.stopNavigation();
   }

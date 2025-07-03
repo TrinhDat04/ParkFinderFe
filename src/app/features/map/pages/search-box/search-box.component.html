@@ -2,14 +2,18 @@
   <div class="container search-wrapper p-2">
     <div class="row search-box m-1 p-2 rounded-pill align-items-center">
       <i class="bi bi-search"></i>
-      <input type="text" [formControl]="searchControl" placeholder="Tìm kiếm" class="search-input" />
+      <input
+        type="text"
+        [formControl]="searchControl"
+        placeholder="Tìm kiếm"
+        class="search-input"
+      />
     </div>
     <div class="row">
       <div (click)="openFilterDialog()">
         <app-filter-box></app-filter-box>
       </div>
     </div>
-
   </div>
   <!-- <ul *ngIf="results.length > 0" class="search-results">
     <li *ngFor="let result of results" (click)="selectResult(result)" class="search-result-item">

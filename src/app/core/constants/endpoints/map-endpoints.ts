@@ -2,12 +2,11 @@ import { ENVIRONMENT } from '../../../../environments/environment';
 
 export const MAP_ENDPOINTS = {
   tileSet: ENVIRONMENT.serviceUrl.tile + `/api/Tile/{z}/{x}/{y}.pbf`,
-  getRoute: (userCoords: number[], pinCoords: number[]) =>
-    `https://api.mapbox.com/directions/v5/mapbox/driving/${userCoords[0]},${userCoords[1]};${pinCoords[0]},${pinCoords[1]}?geometries=geojson&access_token=${ENVIRONMENT.mapboxAccessToken}`,
+  getRoute: (userCoords: number[], pinCoords: number[], mode: string) =>
+    `https://api.mapbox.com/directions/v5/mapbox/driving-traffic/${userCoords[0]},${userCoords[1]};${pinCoords[0]},${pinCoords[1]}?geometries=geojson&access_token=${ENVIRONMENT.mapboxAccessToken}${mode}`,
   getParkingLotLocation: (param: string) => ENVIRONMENT.serviceUrl.default + `/ParkingLot/search/${param}`,
   getParkingLotDetail: (id: string) => `/ParkingLot/detail/${id}`,
   getParkingLotLocationMapboxAPI: (query: string) => 
-    `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
-      query
-    )}.json?access_token=${ENVIRONMENT.mapboxAccessToken}&limit=1`,
+    `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json?access_token=${ENVIRONMENT.mapboxAccessToken}&limit=1`,
+  getMapDataJSON: `${ENVIRONMENT.serviceUrl.default}/Map`,
 }

@@ -8,10 +8,11 @@ import { DashboardLayoutComponent } from './layout/dashboard-layout/dashboard-la
 import { AuthGuard } from './core/guards/auth.guard';
 import { HasAnyRoleGuard } from './core/guards/has-any-role.guard';
 import { EnumRole } from './core/constants/roles.enum';
-import {UserProfileComponent} from './features/user/pages/user-profile/user-profile.component';
-import {UserProfileResolver} from './core/resolvers/user-profile-resolver';
+import { UserProfileComponent } from './features/user/pages/user-profile/user-profile.component';
+import { UserProfileResolver } from './core/resolvers/user-profile-resolver';
 import { MapComponent } from './features/map/pages/map/map.component';
-import {MapLayoutComponent} from './layout/map-layout/map-layout.component';
+import { MapLayoutComponent } from './layout/map-layout/map-layout.component';
+import { MapGoogleComponent } from './features/map-google/pages/map-google/map-google.component';
 export const routes: Routes = [
   {
     path: 'auth',
@@ -38,7 +39,10 @@ export const routes: Routes = [
         canActivate: [HasAnyRoleGuard],
       },
       {
-        path: 'profile', component: UserProfileComponent,canActivate: [AuthGuard], resolve: { userData: UserProfileResolver }
+        path: 'profile',
+        component: UserProfileComponent,
+        canActivate: [AuthGuard],
+        resolve: { userData: UserProfileResolver },
       },
     ],
     canActivate: [AuthGuard],
@@ -68,6 +72,23 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'map-google',
+    component: MapLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./features/map-google/map-google.module').then(
+            (m) => m.MapGoogleModule
+          ),
+        resolve: {
+          language: TranslationModuleResolver,
+        },
+        data: { LanguageModules: [EnumLanguageModule.Map] } as RouteData,
+      },
+    ],
+  },
+  {
     path: 'homepage',
     component: MainLayoutComponent,
     children: [
@@ -82,7 +103,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'map',
+    redirectTo: 'map-google',
     pathMatch: 'full',
   },
   {

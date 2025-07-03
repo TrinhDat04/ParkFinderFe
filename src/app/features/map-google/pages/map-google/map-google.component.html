@@ -1,0 +1,32 @@
+<google-map
+  class="google-map"
+  *ngIf="apiLoaded"
+  [height]="'96vh'"
+  [width]="'100vw'"
+  [options]="customMapOptions"
+>
+</google-map>
+
+<app-search-box (resultSelected)="onSearchResult($event)"></app-search-box>
+
+<div class="detail-panel" *ngIf="selectedFeature && !detailSelected">
+  <div class="drag-handle"></div>
+  <h3>{{ selectedFeature.properties["name"] }}</h3>
+  <p>{{ selectedFeature.properties["description"] }}</p>
+  <div class="info-row">
+    <p>Khoảng cách: {{ totalDistance }} || {{ totalTime }}</p>
+  </div>
+  <p>
+    Giá: {{ selectedFeature.properties["pricePerHour"] | number : "1.0-0" }}đ /
+    lượt
+  </p>
+  <div class="button-group">
+    <button (click)="startNavigation()">Chỉ đường</button>
+    <button (click)="showDetails()">Chi tiết</button>
+  </div>
+  <button (click)="closeDetailPanel()">Đóng</button>
+</div>
+
+<button *ngIf="isNavigating" (click)="stopNavigation()" class="cancel-button">
+  Dừng chỉ đường
+</button>
