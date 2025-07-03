@@ -30,6 +30,60 @@
   <button (click)="closeDetailPanel()">Đóng</button>
 </div>
 
+<div class="top-bar-overlay" *ngIf="selectedFeature && detailSelected">
+  <div class="top-bar-left-group">
+    <i class="bi bi-arrow-left fs-5 back-icon" (click)="closeDetail()"></i>
+    <div class="top-bar-left">
+      <div class="top-location">{{ parkingLot?.name }}</div>
+      <div class="top-date">Mar 12 – Mar 15</div>
+    </div>
+  </div>
+</div>
+<div class="parking-detail-panel-fixed" *ngIf="selectedFeature && detailSelected">
+  <!--  &lt;!&ndash; Ảnh &ndash;&gt;-->
+  <!--  <div class="parking-image">-->
+  <!--    <img src="/assets/images/parkingLot.jpg" alt="Parking image" />-->
+  <!--  </div>-->
+
+  <!-- Dot indicators -->
+  <div class="image-indicators">
+    <div class="dot active"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+
+  <!-- Nội dung -->
+  <div class="parking-info">
+    <div class="parking-header">
+      <div class="title-group">
+        <div class="parking-name">{{ parkingLot?.name }}</div>
+        <div class="parking-price">
+          {{ parkingLot?.pricePerHour | number: '1.0-0' }} đồng/giờ
+        </div>
+      </div>
+      <i class="bi bi-share-fill share-icon"></i>
+    </div>
+
+    <div class="parking-description">
+      <strong>VỀ CHỖ ĐỖ</strong><br />
+      {{ parkingLot?.description}}
+    </div>
+
+    <div class="owner-section">
+      <img src="/assets/images/avatar-placeholder.png" alt="Avatar" />
+      <div>
+        <div class="owner-name">Karen Roe</div>
+        <div class="owner-rating"><i class="bi bi-star-fill"></i> 4.8</div>
+      </div>
+    </div>
+
+    <div class="action-buttons">
+      <button class="btn btn-outline-primary" (click)="startNavigation()">Chọn bãi đỗ</button>
+      <button class="btn btn-outline-primary">Đánh giá</button>
+    </div>
+  </div>
+</div>
+
 <button *ngIf="isNavigating" (click)="stopNavigation()" class="cancel-button">
   Dừng chỉ đường
 </button>

@@ -7,10 +7,10 @@ import {REVIEW_ENDPOINTS} from '../../../core/constants/endpoints/review-service
 export interface NavigationInfo {
   isNavigating: boolean;
   lotName?: string;
-  // lotCode?: string;
   distanceKm?: string;
-  pinCoords?: number[];
-  userCoords?: number[];
+  destinationCoords?: number[]; // [lng, lat]
+  userCoords?: number[];        // [lng, lat]
+  featureId?: string;           // ID để load lại nếu cần
 }
 @Injectable({ providedIn: 'root' })
 export class HomepageService {

@@ -134,3 +134,8 @@
     </div>
   </div>
 </div>
+
+<div class="custom-popup" *ngIf="showPopup">
+  {{ popupMessage }}
+  <button class="btn btn-sm btn-light ms-2" (click)="closePopup()">X</button>
+</div>
