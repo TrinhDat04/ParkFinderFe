@@ -1,7 +1,69 @@
 .google-map {
   position: absolute;
-  top: 0;     
+  top: 0;
   left: 0;
   width: auto;
   display: block;
+}
+
+.detail-panel {
+  position: absolute;
+  bottom: 60px;
+  left: 0;
+  width: 100%;
+  max-height: 40%;
+  background: #fff;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  animation: slideUp 0.3s ease-out;
+}
+
+.drag-handle {
+  width: 40px;
+  height: 5px;
+  background: #ccc;
+  border-radius: 5px;
+  margin: 0 auto 10px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.button-group button {
+  width: 48%;
+}
+
+button {
+  display: block;
+  margin: 8px 0;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #306ef3;
+  color: white;
+  border: none;
+  border-radius: 8px;
+}
+
+.cancel-button {
+  position: absolute;
+  bottom: 70px;
+  left: 50%;
+  width: 80vw;
+  transform: translateX(-50%);
+  z-index: 1000;
+
+  background-color: #306ef3 !important;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  color: white !important;
 }

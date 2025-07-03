@@ -1,0 +1,74 @@
+@import "../../../../../styles/themes/colors";
+
+.search-container {
+  position: relative;
+  top: 60px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80vw;
+  z-index: 10;
+}
+
+.search-wrapper {
+  align-items: center;
+  border-radius: 8px;
+  background-color: white;
+  padding: 0 12px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background-color: $color-light-gray;
+}
+
+.search-input {
+  flex: 1;
+  height: 100%;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+}
+
+.search-results {
+  position: absolute;
+  top: calc(100% - 4px);
+  left: 0;
+  width: 100%;
+  margin-top: 4px;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 20;
+  padding: 0;
+  list-style: none;
+}
+
+.search-result-item {
+  padding: 12px;
+  font-size: 16px;
+  cursor: pointer;
+  border-bottom: 1px solid #e0e0e0;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+::ng-deep .full-screen-dialog .mat-mdc-dialog-surface {
+  display: block;
+  border-radius: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: 100vw !important;
+  max-height: 100vh !important;
+  box-sizing: border-box;
+  padding: 10px 20px;
+  z-index: 998;
+}
