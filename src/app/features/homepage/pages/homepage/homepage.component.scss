@@ -1,4 +1,82 @@
-.action-box {
-    border-radius: 0;
-    height: 120px;
+.home-wrapper {
+  background-color: #ffffff;
+  font-family: 'system-ui', sans-serif;
+  min-height: 100vh;
+  z-index: 999; /* Đảm bảo nổi lên trên map và thanh menu */
+  overflow-y: auto; /* Nếu dài quá sẽ scroll */}
+
+.search-bar {
+  border-radius: 12px;
+  background-color: #f1f3f5;
+  border: none;
+  padding: 10px 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.in-progress-box {
+  background: linear-gradient(to right, #2b6cfb, #3672fc);
+  border-radius: 16px;
+}
+
+.nearby-card {
+  width: 140px;
+  flex: 0 0 auto;
+}
+
+.category-item {
+  width: 60px;
+}
+
+.icon-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+}
+
+.rated-item img {
+  object-fit: cover;
+  height: 60px;
+}
+
+.icon-clickable {
+  cursor: pointer;
+  font-size: 1.4rem;
+  color: #333;
+  transition: color 0.2s ease-in-out;
+}
+
+.icon-clickable:hover {
+  color: #0d6efd;
+}
+
+
+.d-flex.align-items-center.gap-3 > button.btn-primary {
+  min-width: 90px;
+  padding: 0.25rem 0.8rem;
+  font-size: 0.85rem;
+}
+
+img.rounded-circle {
+  object-fit: cover;
+  height: 40px;
+  width: 40px;
+}
+
+.d-flex.align-items-center.gap-2 > div > div.fw-semibold {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.d-flex.align-items-center.gap-2 > div > div.text-muted.small {
+  font-size: 0.75rem;
+}
+.nearby-card .text-muted.small > div {
+  line-height: 1.2;
+}
+.d-flex.flex-nowrap.overflow-auto {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
 }

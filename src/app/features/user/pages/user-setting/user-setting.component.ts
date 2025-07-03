@@ -44,6 +44,7 @@ export class UserSettingComponent implements OnInit {
   }
   logout() {
     localStorage.removeItem('user_token');
+    localStorage.removeItem('user_id');
     this.openModal('Đăng xuất', 'Bạn đã đăng xuất!');
     setTimeout(() => {
       this.closeModal();

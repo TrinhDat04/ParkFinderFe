@@ -93,10 +93,10 @@ export class UserProfileComponent implements OnInit {
     };
 
     this.userService.editProfile(updatePresenter).subscribe({
-      next: (res) => {
+      next: () => {
         this.successMessage = 'Thông tin tài khoản đã được cập nhật!';
       },
-      error: (err) => {
+      error: () => {
         this.errors.push('Đã xảy ra lỗi khi cập nhật thông tin!');
       }
     });
@@ -106,6 +106,7 @@ export class UserProfileComponent implements OnInit {
 
   logout() {
     localStorage.removeItem('user_token');
+    localStorage.removeItem('user_id');
     this.openModal('Đăng xuất', 'Bạn đã đăng xuất!');
     setTimeout(() => {
       this.closeModal();
