@@ -4,25 +4,20 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SearchBoxComponent } from './pages/search-box/search-box.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import {FilterBoxComponent} from './pages/filter-box/filter-box.component';
-import {MatDialogModule} from '@angular/material/dialog';
-import {FilterDialogComponent} from './pages/filter-dialog/filter-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { SharedModule } from '../../shared/components/shared-components.module';
 
-const routes: Routes = [{ path: '', }];
+const routes: Routes = [{ path: '' }];
 @NgModule({
-  declarations: [
-    SearchBoxComponent,
-    FilterBoxComponent,
-    FilterDialogComponent],
+  declarations: [SearchBoxComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     TranslateModule,
     ReactiveFormsModule,
-    MatDialogModule
+    MatDialogModule,
+    SharedModule,
   ],
-  exports: [
-    SearchBoxComponent
-  ]
+  exports: [SearchBoxComponent],
 })
 export class MapModule {}
