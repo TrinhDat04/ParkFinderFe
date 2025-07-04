@@ -9,12 +9,14 @@ import {
 } from '@angular/core';
 import { GoogleMap } from '@angular/google-maps';
 import { CustomMapOptions } from '../../models/map-options';
-import { isPlatformBrowser } from '@angular/common';
+import {formatDate, isPlatformBrowser} from '@angular/common';
 import { MapDataService } from '../../services/map-google.service';
 import { lastValueFrom } from 'rxjs';
 import { ENVIRONMENT } from '../../../../../environments/environment';
 import { MapsLibLoaderService } from '../../services/map-google-lib-loader.service';
 import { FilterData } from '../../../map/models/filter-data.interface';
+import {ParkingLot} from '../../../map/models/parking-lot';
+import {HomepageService} from '../../../homepage/services/homepage.service';
 
 @Component({
   selector: 'app-map-google',
@@ -27,7 +29,8 @@ export class MapGoogleComponent implements AfterViewInit {
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private mapService: MapDataService,
-    private libLoader: MapsLibLoaderService
+    private libLoader: MapsLibLoaderService,
+    private homepageService : HomepageService,
   ) {}
 
   private watchId!: number;
@@ -56,6 +59,8 @@ export class MapGoogleComponent implements AfterViewInit {
   protected totalDistance?: string;
   protected totalTime?: string;
   protected isNavigating?: boolean = false;
+  parkingLot?: ParkingLot;
+  currentDate: string = '';
   protected customMapOptions: google.maps.MapOptions = {
     ...this.customMap,
     gestureHandling: 'auto',
@@ -64,12 +69,49 @@ export class MapGoogleComponent implements AfterViewInit {
     mapId: ENVIRONMENT.googleMapId,
   };
 
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
     if (!isPlatformBrowser(this.platformId)) return;
-    this.libLoader.loadLibraries().then(() => {
-      this.apiLoaded = true;
-      this.initMap();
-    });
+    await this.libLoader.loadLibraries();
+    this.apiLoaded = true;
+    await this.initMap();
+    const selectedId = this.homepageService.getSelectedFeatureId();
+    if (selectedId && this.markers.length > 0) {
+      const foundMarker = this.markers.find(m => m.get('feature')?.properties?.['id'] === selectedId);
+      if (foundMarker) {
+        this.showFeatureInfo(foundMarker);
+        this.showDetails();
+        this.homepageService.clearSelectedFeatureId(); // Xóa tránh lặp lại khi quay lại
+      }
+    }
+    if (this.userLocation && !this.userLocationPuck) {
+      this.createUserPuckMarker(this.userLocation);
+    }
+      const navData = this.homepageService.getCurrentState();
+      if (navData.isNavigating && navData.destinationCoords && navData.userCoords) {
+        const [destLng, destLat] = navData.destinationCoords;
+        const [userLng, userLat] = navData.userCoords;
+
+        const origin = { lat: userLat, lng: userLng };
+        const destination = { lat: destLat, lng: destLng };
+
+        this.calculateRoute(origin, destination);
+        this.directionsService.route(
+          {
+            origin,
+            destination,
+            travelMode: google.maps.TravelMode.DRIVING,
+          },
+          (result, status) => {
+            if (status === 'OK' && result) {
+              this.directionsRenderer.setDirections(result);
+              this.isNavigating = true;
+            } else {
+              console.warn('Directions restore failed:', status);
+            }
+          }
+        );
+      }
+
   }
 
   async initMap() {
@@ -98,6 +140,9 @@ export class MapGoogleComponent implements AfterViewInit {
       },
     });
     this.directionsRenderer.setMap(this.map.googleMap!);
+    const today = new Date();
+    this.currentDate = formatDate(today, 'MMM d, yyyy', 'en-US');
+    // Ví dụ: Jul 4, 2025
   }
 
   async fetchMapData() {
@@ -260,6 +305,19 @@ export class MapGoogleComponent implements AfterViewInit {
     this.tempFeature = this.selectedFeature;
     this.closeDetailPanel();
     this.isNavigating = true;
+    const destinationCoords1 = this.tempFeature.geometry.coordinates; // [lng, lat]
+    const [lng1, lat1] = destinationCoords1;
+
+    const lotName = this.tempFeature.properties?.['name'] || 'Bãi đỗ không xác định';
+    const distanceKm = this.totalDistance || '';
+
+    this.homepageService.startNavigation({
+      lotName,
+      distanceKm,
+      destinationCoords: [lng1, lat1],
+      userCoords: [this.userLocation.lng, this.userLocation.lat],
+      featureId: this.selectedFeature?.properties?.['id']
+    });
   }
 
   calculateRoute(
@@ -300,8 +358,29 @@ export class MapGoogleComponent implements AfterViewInit {
     }
   }
 
-  showDetails() {}
-
+  showDetails() {
+    this.detailSelected = true;
+    const id = this.selectedFeature?.properties?.['id'];
+    this.loadDetail(id!);
+    this.mapService.setNavbarHidden(true);
+    this.mapService.setDetailVisible(true);
+  }
+  loadDetail(id: string) {
+    this.mapService.getParkingLotDetail(id).subscribe({
+      next: (data) => {
+        this.parkingLot = data;
+      },
+      error: (err) => {
+        console.error('Lỗi khi lấy dữ liệu bãi đỗ xe', err);
+      },
+    });
+  }
+  closeDetail() {
+    this.detailSelected = null;
+    this.parkingLot = undefined;
+    this.mapService.setNavbarHidden(false);
+    this.mapService.setDetailVisible(false);
+  }
   closeDetailPanel() {
     this.selectedFeature = null;
   }
@@ -317,6 +396,7 @@ export class MapGoogleComponent implements AfterViewInit {
     this.showFeatureInfo(tempMarker);
     this.markers.forEach((m) => m.setMap(this.map.googleMap!));
     this.tempFeature = null;
+    this.homepageService.stopNavigation();
   }
 
   onSearchResult(location: { lat: number; lng: number }) {

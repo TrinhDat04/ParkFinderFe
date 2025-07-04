@@ -14,6 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { FilterDialogComponent } from '../../../map/pages/filter-dialog/filter-dialog.component';
 import { MapsLibLoaderService } from '../../services/map-google-lib-loader.service';
 import { FilterData } from '../../../map/models/filter-data.interface';
+import {MapDataService} from '../../services/map-google.service';
 
 @Component({
   selector: 'app-search-box',
@@ -23,6 +24,7 @@ import { FilterData } from '../../../map/models/filter-data.interface';
 export class SearchBoxComponent implements AfterViewInit {
   searchControl = new FormControl('');
   results: { name: string; placeId: string }[] = [];
+  hideSearch = false;
 
   @Output() resultSelected = new EventEmitter<{ lat: number; lng: number }>();
   @Output() filtersChanged = new EventEmitter<FilterData | null>();
@@ -33,7 +35,8 @@ export class SearchBoxComponent implements AfterViewInit {
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private dialog: MatDialog,
-    private libLoader: MapsLibLoaderService
+    private libLoader: MapsLibLoaderService,
+    private mapService: MapDataService
   ) {}
 
   async ngAfterViewInit() {
@@ -74,6 +77,9 @@ export class SearchBoxComponent implements AfterViewInit {
           }
         );
       });
+    this.mapService.detailVisible$.subscribe(visible => {
+      this.hideSearch = visible;
+    });
   }
 
    onFiltersChanged(filters: FilterData | null) {

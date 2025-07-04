@@ -67,16 +67,6 @@
         <div><i class="bi bi-currency-dollar"></i> 20000đ/h</div>
       </div>
     </div>
-
-    <div class="nearby-card card border-0 rounded-4 p-2 position-relative">
-      <span class="badge bg-primary position-absolute top-0 start-0 m-2">POPULAR</span>
-      <img src="/assets/images/parkingLot.jpg" class="rounded-3 mb-2" />
-      <div class="fw-semibold small">Bãi đỗ Hòa Lạc</div>
-      <div class="text-muted small">
-        <div><i class="bi bi-geo-alt-fill"></i> 1.3km</div>
-        <div><i class="bi bi-currency-dollar"></i> 20000đ/h</div>
-      </div>
-    </div>
   </div>
 
   <!-- Danh mục -->
@@ -114,7 +104,7 @@
   </div>
 
   <div class="d-flex flex-column gap-3">
-    <div class="rated-item d-flex gap-3 align-items-center" *ngFor="let lot of topRatedLots">
+    <div class="rated-item d-flex gap-3 align-items-center" (click)="openLotDetail(lot.parkingLotId)" *ngFor="let lot of topRatedLots">
       <img src="/assets/images/parkingLot.jpg" class="rounded-3" width="80" />
       <div>
         <div class="fw-semibold">{{ lot.parkingLotName }}</div>
@@ -133,4 +123,9 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="custom-popup" *ngIf="showPopup">
+  {{ popupMessage }}
+  <button class="btn btn-sm btn-light ms-2" (click)="closePopup()">X</button>
 </div>

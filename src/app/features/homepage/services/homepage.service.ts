@@ -7,10 +7,10 @@ import {REVIEW_ENDPOINTS} from '../../../core/constants/endpoints/review-service
 export interface NavigationInfo {
   isNavigating: boolean;
   lotName?: string;
-  // lotCode?: string;
   distanceKm?: string;
-  pinCoords?: number[];
-  userCoords?: number[];
+  destinationCoords?: number[]; // [lng, lat]
+  userCoords?: number[];        // [lng, lat]
+  featureId?: string;           // ID để load lại nếu cần
 }
 @Injectable({ providedIn: 'root' })
 export class HomepageService {
@@ -40,5 +40,19 @@ export class HomepageService {
       serviceUrl: 'default',
       endpoint: REVIEW_ENDPOINTS.getTopRating(3),
     });
+  }
+  private selectedFeatureIdSubject = new BehaviorSubject<string | null>(null);
+  selectedFeatureId$ = this.selectedFeatureIdSubject.asObservable();
+
+  setSelectedFeatureId(id: string) {
+    this.selectedFeatureIdSubject.next(id);
+  }
+
+  getSelectedFeatureId(): string | null {
+    return this.selectedFeatureIdSubject.getValue();
+  }
+
+  clearSelectedFeatureId() {
+    this.selectedFeatureIdSubject.next(null);
   }
 }
