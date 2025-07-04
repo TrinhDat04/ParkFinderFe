@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {Component,  Inject, OnInit, PLATFORM_ID, } from '@angular/core';
 import { Router} from '@angular/router';
 import {UserService} from '../../../user/services/user.service';
 import {User} from '../../../user/models/user';
@@ -36,9 +36,8 @@ export class HomepageComponent implements OnInit {
           this.user = user;
           this.isLoading = false;
         },
-        error: (err) => {
-          console.error('Lỗi khi lấy thông tin user:', err);
-          alert('Không thể lấy thông tin người dùng. Vui lòng thử lại!');
+        error: () => {
+          this.showError('Lỗi khi lấy thông tin user');
           this.isLoading = false;
         }
       });
@@ -53,8 +52,8 @@ export class HomepageComponent implements OnInit {
       next: (lots) => {
         this.topRatedLots = lots;
       },
-      error: (err) => {
-        console.error('Lỗi khi lấy top đánh giá:', err);
+      error: () => {
+        this.showError('Lỗi khi lấy thông tin bãi đỗ');
       }
     });
   }
@@ -75,5 +74,22 @@ export class HomepageComponent implements OnInit {
   goToNews(){
     this.router.navigate(['/homepage/news']);
   }
+  showPopup = false;
+  popupMessage = '';
 
+  showError(message: string) {
+    this.popupMessage = message;
+    this.showPopup = true;
+
+    // Tự động ẩn sau 3 giây
+    setTimeout(() => this.showPopup = false, 3000);
+  }
+
+  closePopup() {
+    this.showPopup = false;
+  }
+  openLotDetail(id: string) {
+    this.homepageService.setSelectedFeatureId(id);
+    this.router.navigate(['/map-google']);
+  }
 }

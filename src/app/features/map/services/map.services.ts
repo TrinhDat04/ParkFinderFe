@@ -22,4 +22,10 @@ export class MapService {
   setNavbarHidden(hidden: boolean) {
     this.hideNavbarSubject.next(hidden);
   }
+  private detailVisibleSubject = new BehaviorSubject<boolean>(false);
+  detailVisible$ = this.detailVisibleSubject.asObservable();
+
+  setDetailVisible(value: boolean) {
+    this.detailVisibleSubject.next(value);
+  }
 }

@@ -12,6 +12,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FilterData } from '../../models/filter-data.interface';
+import {MapService} from '../../services/map.services';
 
 @Component({
   selector: 'app-search-box',
@@ -31,15 +32,19 @@ export class SearchBoxComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<FilterDialogComponent>,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private mapService: MapService,
   ) {
     if (isPlatformBrowser(this.platformId)) {
       this.initGoogleSearch();
     }
   }
+  hideSearch = false;
 
   ngOnInit(): void {
-    // this.openFilterDialog();
+    this.mapService.detailVisible$.subscribe(visible => {
+      this.hideSearch = visible;
+    });
   }
 
   onFiltersChanged(filters: FilterData | null) {

@@ -67,3 +67,175 @@ button {
   font-size: 16px;
   color: white !important;
 }
+.info-row {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.parking-detail-panel-fixed {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-height: 95vh;
+  background-color: #fff;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
+  z-index: 1000;
+  font-family: 'Helvetica Neue', sans-serif;
+}
+
+/* Ảnh ở đầu panel */
+.parking-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  object-fit: cover;
+}
+
+/* Dots */
+.image-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin: 8px 0;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #ccc;
+}
+
+.dot.active {
+  background-color: #306EF3;
+}
+
+/* Nội dung */
+.parking-info {
+  padding: 16px;
+}
+
+/* Header */
+.parking-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.parking-name {
+  font-weight: bold;
+  font-size: 17px;
+}
+
+.parking-price {
+  font-size: 14px;
+  color: #666;
+}
+
+.share-icon {
+  font-size: 18px;
+  color: #999;
+}
+
+/* Mô tả */
+.parking-description {
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 16px;
+}
+
+/* Chủ bãi */
+.owner-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.owner-section img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.owner-name {
+  font-weight: 600;
+}
+
+.owner-rating {
+  font-size: 13px;
+  color: #f5b301;
+}
+
+/* Nút */
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.action-buttons .btn {
+  width: 100%;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 10px 0;
+}
+
+.action-buttons .btn-outline-primary {
+  border: 3px solid #306EF3;
+  color: #306EF3;
+  background-color: white;
+}
+.top-bar-overlay {
+  position: absolute;
+  top: 70px;
+  left: 0;
+  right: 0;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  z-index: 1100;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Helvetica Neue', sans-serif;
+  pointer-events: auto;
+}
+
+/* Nhóm icon + chữ */
+.top-bar-left-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.top-bar-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.top-location {
+  font-size: 15px;
+  font-weight: 600;
+  color: #000;
+}
+
+.top-date {
+  font-size: 13px;
+  color: #666;
+}
+
+.back-icon {
+  font-size: 22px;
+  color: #306EF3;
+  cursor: pointer;
+}
