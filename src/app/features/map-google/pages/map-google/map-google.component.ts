@@ -75,7 +75,6 @@ export class MapGoogleComponent implements AfterViewInit {
     this.apiLoaded = true;
     await this.initMap();
     const selectedId = this.homepageService.getSelectedFeatureId();
-    console.log(selectedId);
     if (selectedId && this.markers.length > 0) {
       const foundMarker = this.markers.find(m => m.get('feature')?.properties?.['id'] === selectedId);
       if (foundMarker) {
@@ -360,10 +359,8 @@ export class MapGoogleComponent implements AfterViewInit {
   }
 
   showDetails() {
-    console.log('selectedFeature', this.selectedFeature);
     this.detailSelected = true;
     const id = this.selectedFeature?.properties?.['id'];
-    console.log(this.selectedFeature);
     this.loadDetail(id!);
     this.mapService.setNavbarHidden(true);
     this.mapService.setDetailVisible(true);
