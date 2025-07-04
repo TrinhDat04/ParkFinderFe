@@ -306,6 +306,7 @@ export class MapGoogleComponent implements AfterViewInit {
     this.selectedFeature = null;
   }
 
+  //ඞ sus
   stopNavigation() {
     this.directionsRenderer.set('directions', null);
     this.isNavigating = false;
@@ -324,8 +325,72 @@ export class MapGoogleComponent implements AfterViewInit {
     this.map.googleMap?.setZoom(16);
   }
 
-  onFiltersChanged(filters: any) {
-    console.log('Filters changed in map-google:', filters);
-    // TODO: Implement filtering logic here
+  onFiltersChanged(filter: any) {
+    if (!filter) return;
+
+    const validMarkers: google.maps.Marker[] = [];
+
+    this.markers.forEach((marker) => {
+      const feature = marker.get('feature');
+      if (!feature || !feature.properties) return;
+
+      const props = feature.properties;
+
+      const markerFeatureIds: number[] = (props.features || []).map(
+        (f: any) => f.FeatureId
+      );
+      const matchesAllFeatures =
+        filter.features.length === 0 ||
+        filter.features.every((id: number) => markerFeatureIds.includes(id));
+
+      if (!matchesAllFeatures) return;
+
+      const price = props.pricePerHour ?? 0;
+      const matchesPrice =
+        filter.prices.length === 0 ||
+        filter.prices.some((op: string) => {
+          switch (op) {
+            case '<':
+              return price < 10000;
+            case '=':
+              return price >= 10000 && price <= 20000;
+            case '>':
+              return price > 20000;
+            default:
+              return false;
+          }
+        });
+
+      if (!matchesPrice) return;
+
+      const categoryIndex = props.categoryIndex;
+      const matchesCategory =
+        filter.categories.length === 0 ||
+        filter.categories.includes(categoryIndex);
+
+      if (!matchesCategory) return;
+
+      const scaleIndex = props.scaleIndex;
+      const matchesScale =
+        filter.scales.length === 0 || filter.scales.includes(scaleIndex);
+
+      if (!matchesScale) return;
+
+      const ratingIndex = props.ratingIndex; 
+      const matchesRating =
+        filter.ratings.length === 0 || filter.ratings.includes(ratingIndex);
+
+      if (!matchesRating) return;
+
+      validMarkers.push(marker);
+    });
+
+    this.markers.forEach((m) => {
+      if (!validMarkers.includes(m)) {
+        m.setMap(null);
+      } else {
+        m.setMap(this.map.googleMap!);
+      }
+    });
   }
 }

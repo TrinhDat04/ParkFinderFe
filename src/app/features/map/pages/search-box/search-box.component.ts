@@ -3,16 +3,14 @@ import {
   Output,
   EventEmitter,
   PLATFORM_ID,
-  Inject, OnInit,
+  Inject,
+  OnInit,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import {
-  debounceTime,
-  distinctUntilChanged,
-} from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
-import {FilterDialogComponent} from '../filter-dialog/filter-dialog.component';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FilterData } from '../../models/filter-data.interface';
 
 @Component({
@@ -41,7 +39,7 @@ export class SearchBoxComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      // this.openFilterDialog();
+    // this.openFilterDialog();
   }
 
   onFiltersChanged(filters: FilterData | null) {
@@ -65,7 +63,7 @@ export class SearchBoxComponent implements OnInit {
             }
 
             this.autocompleteService.getPlacePredictions(
-              {input: query, componentRestrictions: {country: 'vn'}},
+              { input: query, componentRestrictions: { country: 'vn' } },
               (predictions, status) => {
                 if (
                   status === google.maps.places.PlacesServiceStatus.OK &&
@@ -91,7 +89,7 @@ export class SearchBoxComponent implements OnInit {
 
   selectResult(result: { name: string; placeId: string }) {
     this.placesService.getDetails(
-      {placeId: result.placeId, fields: ['geometry']},
+      { placeId: result.placeId, fields: ['geometry'] },
       (place, status) => {
         if (
           status === google.maps.places.PlacesServiceStatus.OK &&
@@ -99,11 +97,10 @@ export class SearchBoxComponent implements OnInit {
         ) {
           const lat = place.geometry.location.lat();
           const lng = place.geometry.location.lng();
-          this.resultSelected.emit({lat, lng});
+          this.resultSelected.emit({ lat, lng });
           this.results = [];
         }
       }
     );
   }
-
 }
