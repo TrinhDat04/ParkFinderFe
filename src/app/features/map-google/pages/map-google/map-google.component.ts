@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { GoogleMap } from '@angular/google-maps';
 import { CustomMapOptions } from '../../models/map-options';
-import { isPlatformBrowser } from '@angular/common';
+import {formatDate, isPlatformBrowser} from '@angular/common';
 import { MapDataService } from '../../services/map-google.service';
 import { lastValueFrom } from 'rxjs';
 import { ENVIRONMENT } from '../../../../../environments/environment';
@@ -60,6 +60,7 @@ export class MapGoogleComponent implements AfterViewInit {
   protected totalTime?: string;
   protected isNavigating?: boolean = false;
   parkingLot?: ParkingLot;
+  currentDate: string = '';
   protected customMapOptions: google.maps.MapOptions = {
     ...this.customMap,
     gestureHandling: 'auto',
@@ -68,11 +69,14 @@ export class MapGoogleComponent implements AfterViewInit {
     mapId: ENVIRONMENT.googleMapId,
   };
 
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
     if (!isPlatformBrowser(this.platformId)) return;
-    this.libLoader.loadLibraries().then(() => {
-      this.apiLoaded = true;
-      this.initMap();
+    await this.libLoader.loadLibraries();
+    this.apiLoaded = true;
+    await this.initMap();
+    if (this.userLocation && !this.userLocationPuck) {
+      this.createUserPuckMarker(this.userLocation);
+    }
       const navData = this.homepageService.getCurrentState();
       if (navData.isNavigating && navData.destinationCoords && navData.userCoords) {
         const [destLng, destLat] = navData.destinationCoords;
@@ -98,7 +102,6 @@ export class MapGoogleComponent implements AfterViewInit {
           }
         );
       }
-    });
 
   }
 
@@ -128,6 +131,9 @@ export class MapGoogleComponent implements AfterViewInit {
       },
     });
     this.directionsRenderer.setMap(this.map.googleMap!);
+    const today = new Date();
+    this.currentDate = formatDate(today, 'MMM d, yyyy', 'en-US');
+    // Ví dụ: Jul 4, 2025
   }
 
   async fetchMapData() {
@@ -290,10 +296,10 @@ export class MapGoogleComponent implements AfterViewInit {
     this.tempFeature = this.selectedFeature;
     this.closeDetailPanel();
     this.isNavigating = true;
-    const destinationCoords1 = this.selectedFeature.geometry.coordinates; // [lng, lat]
+    const destinationCoords1 = this.tempFeature.geometry.coordinates; // [lng, lat]
     const [lng1, lat1] = destinationCoords1;
 
-    const lotName = this.selectedFeature.properties?.['name'] || 'Bãi đỗ không xác định';
+    const lotName = this.tempFeature.properties?.['name'] || 'Bãi đỗ không xác định';
     const distanceKm = this.totalDistance || '';
 
     this.homepageService.startNavigation({
@@ -384,7 +390,6 @@ export class MapGoogleComponent implements AfterViewInit {
     this.markers.forEach((m) => m.setMap(this.map.googleMap!));
     this.tempFeature = null;
     this.homepageService.stopNavigation();
-
   }
 
   onSearchResult(location: { lat: number; lng: number }) {

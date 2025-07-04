@@ -7,7 +7,7 @@
 >
 </google-map>
 
-<app-search-box 
+<app-search-box
   (resultSelected)="onSearchResult($event)"
   (filtersChanged)="onFiltersChanged($event)">
 </app-search-box>
@@ -35,7 +35,7 @@
     <i class="bi bi-arrow-left fs-5 back-icon" (click)="closeDetail()"></i>
     <div class="top-bar-left">
       <div class="top-location">{{ parkingLot?.name }}</div>
-      <div class="top-date">Mar 12 – Mar 15</div>
+      <div class="top-date">{{ currentDate }}</div>
     </div>
   </div>
 </div>
@@ -72,8 +72,8 @@
     <div class="owner-section">
       <img src="/assets/images/avatar-placeholder.png" alt="Avatar" />
       <div>
-        <div class="owner-name">Karen Roe</div>
-        <div class="owner-rating"><i class="bi bi-star-fill"></i> 4.8</div>
+        <div class="owner-name">{{ parkingLot?.providerName}}</div>
+        <div class="owner-rating"><i class="bi bi-star-fill"></i> {{ parkingLot?.rating}}</div>
       </div>
     </div>
 

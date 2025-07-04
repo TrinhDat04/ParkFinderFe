@@ -1,4 +1,4 @@
-import {Component, , Inject, OnInit, PLATFORM_ID, } from '@angular/core';
+import {Component,  Inject, OnInit, PLATFORM_ID, } from '@angular/core';
 import { Router} from '@angular/router';
 import {UserService} from '../../../user/services/user.service';
 import {User} from '../../../user/models/user';

@@ -8,4 +8,6 @@ export interface ParkingLot {
   totalSlots: number;
   availableSlots: number;
   status: string;
+  rating: number;
+  providerName: string;
 }
