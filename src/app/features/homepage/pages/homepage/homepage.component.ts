@@ -88,4 +88,8 @@ export class HomepageComponent implements OnInit {
   closePopup() {
     this.showPopup = false;
   }
+  openLotDetail(id: string) {
+    this.homepageService.setSelectedFeatureId(id);
+    this.router.navigate(['/map-google']);
+  }
 }

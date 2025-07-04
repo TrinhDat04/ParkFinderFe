@@ -41,4 +41,18 @@ export class HomepageService {
       endpoint: REVIEW_ENDPOINTS.getTopRating(3),
     });
   }
+  private selectedFeatureIdSubject = new BehaviorSubject<string | null>(null);
+  selectedFeatureId$ = this.selectedFeatureIdSubject.asObservable();
+
+  setSelectedFeatureId(id: string) {
+    this.selectedFeatureIdSubject.next(id);
+  }
+
+  getSelectedFeatureId(): string | null {
+    return this.selectedFeatureIdSubject.getValue();
+  }
+
+  clearSelectedFeatureId() {
+    this.selectedFeatureIdSubject.next(null);
+  }
 }

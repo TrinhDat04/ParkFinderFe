@@ -74,6 +74,16 @@ export class MapGoogleComponent implements AfterViewInit {
     await this.libLoader.loadLibraries();
     this.apiLoaded = true;
     await this.initMap();
+    const selectedId = this.homepageService.getSelectedFeatureId();
+    console.log(selectedId);
+    if (selectedId && this.markers.length > 0) {
+      const foundMarker = this.markers.find(m => m.get('feature')?.properties?.['id'] === selectedId);
+      if (foundMarker) {
+        this.showFeatureInfo(foundMarker);
+        this.showDetails();
+        this.homepageService.clearSelectedFeatureId(); // Xóa tránh lặp lại khi quay lại
+      }
+    }
     if (this.userLocation && !this.userLocationPuck) {
       this.createUserPuckMarker(this.userLocation);
     }
