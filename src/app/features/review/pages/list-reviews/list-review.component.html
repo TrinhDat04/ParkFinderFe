@@ -1,0 +1,93 @@
+<div class="container vh-100">
+  <div class="card mx-auto mb-4" style="width: 100%; max-width: 400px; border: none;">
+    <div class="header" style="border-bottom: 0.5px; margin-top: 20px;">
+      <i class="bi bi-chevron-left text-primary back-button"
+         (click)="window.history.back()"
+         style="cursor:pointer;"></i>
+      <span class="title">Đánh giá</span>
+      <a href="/reviews/add?parkingLotId={{parkingLotId}}"
+         class="btn btn-primary new-review"><i class="bi bi-plus-circle"></i></a>
+    </div>
+    <div style="padding: 15px;">
+      <div style="margin-bottom: 30px;">
+        <div style="display: flex; flex-direction: column; margin-bottom: 20px;">
+          <span
+            style="font-weight: 800; font-size: 18px; margin-bottom: 10px;">{{ review?.parkingLotName }}</span>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-center" *ngIf="totalPages > 1">
+        <nav aria-label="Review pagination">
+          <ul class="pagination pagination-sm">
+            <li class="page-item"
+                [class.disabled]="page === '...'"
+                *ngFor="let page of paginationPages">
+
+              <a *ngIf="page !== '...'"
+                 class="page-link"
+                 [class.active]="page === this.currentPage"
+                 (click)="changePage(page)"
+                 style="cursor: pointer">
+                {{ page }}
+              </a>
+
+              <span *ngIf="page === '...'" class="page-link">…</span>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      <div *ngIf="!review || review?.reviews?.length === 0" class="text-muted text-center py-3">
+        Bạn chưa đánh giá bãi đỗ xe này.
+      </div>
+      <div *ngFor="let review of review?.reviews">
+        <div class="card">
+          <div class="card-body">
+            <span class="subtitle text-muted">Created at: {{ review.createdAt | date:'dd/MM/yyyy' }}</span>
+            <div>
+                              <span *ngFor="let star of [1,2,3,4,5]">
+                              <i class="star bi"
+                                 [ngClass]="{
+                                    'bi-star-fill text-primary': star <= review.rating,
+                                    'bi-star text-secondary': star > review.rating
+                                 }"
+                                 [attr.data-value]="star"
+                              ></i>
+                            </span>
+            </div>
+            <span class="rating-content">{{ review.comment }}</span>
+            <br/>
+            <span class="rating-content">{{ review.additionalComments }}</span>
+            <div class="d-flex justify-content-end">
+              <a style="font-size: 10px" class="btn btn-sm btn-primary me-1"
+                 href="/reviews/edit?id={{review.id}}">Sửa
+              </a>
+              <button style="font-size: 10px" class="btn btn-sm btn-danger"
+                      (click)="openDeleteModal(review.id)">Xóa
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-danger">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="deleteModalLabel">Xác nhận xóa</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+      </div>
+      <div class="modal-body">
+        Bạn có chắc chắn muốn xóa đánh giá này?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+        <button type="button" class="btn btn-danger" (click)="confirmDelete()">Xóa</button>
+      </div>
+    </div>
+  </div>
+</div>

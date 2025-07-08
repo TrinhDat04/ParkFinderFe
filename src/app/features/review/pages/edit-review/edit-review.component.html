@@ -1,0 +1,85 @@
+<div class="container vh-100">
+  <div class="card mx-auto mb-4" style="width: 100%; max-width: 400px; border: none;">
+    <div class="header" style="border-bottom: 0.5px; margin-top: 20px;">
+      <i class="bi bi-chevron-left text-primary back-button"
+         (click)="window.history.back()"
+         style="cursor: pointer"></i>
+      <span class="title">Đánh giá</span>
+    </div>
+    <form #reviewForm="ngForm" (ngSubmit)="submitReview(reviewForm)">
+      <div style="padding: 15px;">
+        <div style="margin-bottom: 56px;">
+          <div style="display: flex; flex-direction: column; margin-bottom: 20px;">
+            <span style="font-weight: 800; font-size: 18px; margin-bottom: 10px;">Đánh giá chỗ đỗ của bạn!</span>
+            <span class="text-muted"
+                  style="font-weight: 400; font-size: 14px;">Vui lòng điền một số thông tin sau</span>
+          </div>
+          <div>
+            <i *ngFor="let star of stars; let i = index"
+               class="star bi"
+               [ngClass]="{
+                               'bi-star-fill text-primary': i < rating,
+                               'bi-star text-secondary': i >= rating
+                             }"
+               (click)="setRating(i)">
+            </i>
+          </div>
+        </div>
+
+        <div ngModelGroup="reviewComment">
+          <div style="margin-bottom: 56px;">
+            <div style="margin-bottom: 16px;">
+              <span class="category-title">Bạn thích điều gì về chỗ đỗ</span>
+            </div>
+
+            <span *ngFor="let feature of Object.keys(likedFeatureMap)">
+              <input
+                type="checkbox"
+                class="btn-check"
+                [id]="'liked-' + feature"
+                [name]="'likedFeatures-' + feature"
+                [checked]="likedFeatureMap[feature]"
+                (change)="onFeatureToggle('liked', feature, $event)"
+              />
+              <label class="btn custom-toggle" [for]="'liked-' + feature">{{ feature }}</label>
+            </span>
+
+          </div>
+          <div style="margin-bottom: 56px;">
+            <div style="margin-bottom: 16px;">
+              <span class="category-title">Những điểm cần cải thiện</span>
+            </div>
+            <span *ngFor="let feature of Object.keys(featuresToBeImprovedMap)">
+              <input
+                type="checkbox"
+                class="btn-check"
+                [id]="'improve-' + feature"
+                [name]="'improveFeatures-' + feature"
+                [checked]="featuresToBeImprovedMap[feature]"
+                (change)="onFeatureToggle('improve', feature, $event)"
+              />
+              <label class="btn custom-toggle" [for]="'improve-' + feature">{{ feature }}</label>
+            </span>
+          </div>
+          <div style="margin-bottom: 56px;">
+            <div style="margin-bottom: 16px;">
+              <span class="category-title">Đánh giá trực tiếp</span>
+            </div>
+            <textarea name="comment"
+                      style="height: 94px; width: 100%; border: 1px soild blue; font-weight: 400; font-size: 14px;"
+                      placeholder="Nhận xét của bạn"
+                      name="additionalComments"
+                      [(ngModel)]="additionalComment"></textarea>
+          </div>
+        </div>
+
+        <div>
+          <button type="submit" class="btn btn-primary"
+                  style="width: 100%; height: 48px; border-radius: 12px;">
+            <span style="font-weight: 600; font-size: 12px;">Gửi</span>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

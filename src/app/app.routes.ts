@@ -101,6 +101,18 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'reviews',
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./features/review/review.module').then(
+            (m) => m.ReviewModule
+          )
+      }
+    ]
+  },
+  {
     path: '',
     redirectTo: 'map-google',
     pathMatch: 'full',
