@@ -1,4 +1,5 @@
 export interface ParkingLot {
+  id: string;
   name: string;
   description: string;
   openTime: string;

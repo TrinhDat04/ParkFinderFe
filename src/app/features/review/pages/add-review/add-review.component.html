@@ -1,0 +1,96 @@
+<div class="container vh-100">
+  <div class="card mx-auto mb-4" style="width: 100%; max-width: 400px; border: none;">
+    <div class="header" style="border-bottom: 0.5px; margin-top: 20px;">
+      <i class="bi bi-chevron-left text-primary back-button"
+         (click)="window.history.back()"
+         style="cursor: pointer"></i>
+      <span class="title">Đánh giá</span>
+    </div>
+    <form #reviewForm="ngForm" (ngSubmit)="submitReview(reviewForm)">
+      <div style="padding: 15px;">
+        <div style="margin-bottom: 56px;">
+          <div style="display: flex; flex-direction: column; margin-bottom: 20px;">
+            <span style="font-weight: 800; font-size: 18px; margin-bottom: 10px;">Đánh giá chỗ đỗ của bạn!</span>
+            <span class="text-muted"
+                  style="font-weight: 400; font-size: 14px;">Vui lòng điền một số thông tin sau</span>
+          </div>
+          <div>
+            <i *ngFor="let star of stars; let i = index"
+               class="star bi"
+               [ngClass]="{
+                               'bi-star-fill text-primary': i < rating,
+                               'bi-star text-secondary': i >= rating
+                             }"
+               (click)="setRating(i)">
+            </i>
+          </div>
+        </div>
+
+        <div ngModelGroup="reviewComment">
+          <div style="margin-bottom: 56px;">
+            <div style="margin-bottom: 16px;">
+              <span class="category-title">Bạn thích điều gì về chỗ đỗ</span>
+            </div>
+            <div>
+              <input type="checkbox" class="btn-check" id="rating-option-1"
+                     autocomplete="off"
+                     [value]="'Tiện lợi'" [(ngModel)]="likedFeatureMap['Tiện lợi']" name="likedFeatures">
+              <label class="btn custom-toggle" for="rating-option-1">Tiện lợi</label>
+
+              <input type="checkbox" class="btn-check" id="rating-option-2"
+                     autocomplete="off"
+                     [value]="'Hữu ích'" [(ngModel)]="likedFeatureMap['Hữu ích']" name="likedFeatures">
+              <label class="btn custom-toggle" for="rating-option-2">Hữu ích</label>
+
+              <input type="checkbox" class="btn-check" id="rating-option-4"
+                     autocomplete="off" checked
+                     [value]="'Đẹp'" [(ngModel)]="likedFeatureMap['Đẹp']" name="likedFeatures">
+              <label class="btn custom-toggle" for="rating-option-4">Đẹp</label>
+
+            </div>
+          </div>
+          <div style="margin-bottom: 56px;">
+            <div style="margin-bottom: 16px;">
+              <span class="category-title">Những điểm cần cải thiện</span>
+            </div>
+            <div>
+              <input type="checkbox" class="btn-check" id="rating-option-6"
+                     autocomplete="off"
+                     [value]="'Có thể có nhiều tính năng hơn'"
+                     [(ngModel)]="featuresToBeImprovedMap['Có thể có nhiều tính năng hơn']" name="featuresToBeImproved">
+              <label class="btn custom-toggle" for="rating-option-6">Có thể có nhiều tính năng hơn</label>
+
+              <input type="checkbox" class="btn-check" id="rating-option-7"
+                     autocomplete="off"
+                     [value]="'Phức tạp'" [(ngModel)]="featuresToBeImprovedMap['Phức tạp']" name="featuresToBeImproved">
+              <label class="btn custom-toggle" for="rating-option-7">Phức tạp</label>
+
+              <input type="checkbox" class="btn-check" id="rating-option-8"
+                     autocomplete="off"
+                     [value]="'Thiếu tương tác'" [(ngModel)]="featuresToBeImprovedMap['Thiếu tương tác']"
+                     name="featuresToBeImproved">
+              <label class="btn custom-toggle" for="rating-option-8">Thiếu tương tác</label>
+
+            </div>
+          </div>
+          <div style="margin-bottom: 56px;">
+            <div style="margin-bottom: 16px;">
+              <span class="category-title">Đánh giá trực tiếp</span>
+            </div>
+            <textarea name="comment"
+                      style="height: 94px; width: 100%; border: 1px soild blue; font-weight: 400; font-size: 14px;"
+                      placeholder="Nhận xét của bạn"
+                      name="additionalComments" ngModel></textarea>
+          </div>
+        </div>
+
+        <div>
+          <button type="submit" class="btn btn-primary"
+                  style="width: 100%; height: 48px; border-radius: 12px;">
+            <span style="font-weight: 600; font-size: 12px;">Gửi</span>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

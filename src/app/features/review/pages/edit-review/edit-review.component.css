@@ -1,0 +1,68 @@
+:host {
+  font-family: 'Inter', sans-serif;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+}
+
+.back-button {
+  position: absolute;
+  left: 24px;
+  font-size: 20px;
+}
+
+.title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.rating-options {
+  font-weight: 600;
+  font-size: 10px;
+  padding: 6px 12px 6px 12px;
+  margin-bottom: 4px;
+}
+
+.star {
+  cursor: pointer;
+  transition: color 0.2s;
+  font-size: 20px;
+}
+
+.category-title {
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.custom-toggle {
+  border-radius: 30px;
+  /* Rounded edges */
+  background-color: #eaf2ff;
+  /* Light gray when unchecked */
+  color: var(--bs-primary);
+  transition: all 0.3s ease;
+  padding: 6px 8px;
+  border: 2px solid transparent;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin: 4px;
+}
+
+.btn-check:checked+.custom-toggle {
+  background-color: var(--bs-primary);
+  /* Bootstrap primary when checked */
+  color: white;
+  border-color: var(--bs-primary);
+}
+
+.btn-check:not(:checked)+.custom-toggle {
+  background-color: #eaf2ff;
+  /* This ensures it stays light gray */
+  color: var(--bs-primary);
+}
