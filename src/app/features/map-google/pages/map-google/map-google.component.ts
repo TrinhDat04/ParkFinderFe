@@ -88,6 +88,8 @@ export class MapGoogleComponent implements AfterViewInit {
     }
       const navData = this.homepageService.getCurrentState();
       if (navData.isNavigating && navData.destinationCoords && navData.userCoords) {
+        this.tempFeature = navData.tempFeature ?? null;
+
         const [destLng, destLat] = navData.destinationCoords;
         const [userLng, userLat] = navData.userCoords;
 
@@ -316,7 +318,8 @@ export class MapGoogleComponent implements AfterViewInit {
       distanceKm,
       destinationCoords: [lng1, lat1],
       userCoords: [this.userLocation.lng, this.userLocation.lat],
-      featureId: this.selectedFeature?.properties?.['id']
+      featureId: this.selectedFeature?.properties?.['id'],
+      tempFeature: this.tempFeature
     });
   }
 

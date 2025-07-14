@@ -11,6 +11,7 @@ export interface NavigationInfo {
   destinationCoords?: number[]; // [lng, lat]
   userCoords?: number[];        // [lng, lat]
   featureId?: string;           // ID để load lại nếu cần
+  tempFeature? : any;
 }
 @Injectable({ providedIn: 'root' })
 export class HomepageService {
