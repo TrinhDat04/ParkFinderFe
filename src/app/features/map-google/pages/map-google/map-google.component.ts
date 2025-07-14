@@ -349,7 +349,7 @@ export class MapGoogleComponent implements AfterViewInit {
     const feature = marker.get('feature');
     if (feature) {
       this.selectedFeature = feature;
-      this.detailSelected = false;
+      this.showDetails();
       const destination = marker.getPosition()?.toJSON();
       if (this.userLocation && destination) {
         this.calculateRoute(this.userLocation, destination);
@@ -456,7 +456,7 @@ export class MapGoogleComponent implements AfterViewInit {
 
       if (!matchesScale) return;
 
-      const ratingIndex = props.ratingIndex; 
+      const ratingIndex = props.ratingIndex;
       const matchesRating =
         filter.ratings.length === 0 || filter.ratings.includes(ratingIndex);
 

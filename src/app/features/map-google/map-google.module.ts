@@ -26,5 +26,8 @@ const routes: Routes = [{ path: '', component: MapGoogleComponent }];
     GoogleMapsModule,
     SharedModule,
   ],
+  exports: [
+    FilterBoxComponent
+  ]
 })
 export class MapGoogleModule {}
