@@ -1,7 +1,7 @@
 <div class="news-list-container">
   <h1 class="news-list-title">Tin tức mới nhất</h1>
 
-  <div class="news-item" *ngFor="let news of newsList" (click)="goToDetail(news)">
+  <div class="news-item" *ngFor="let news of newsList.slice().reverse()" (click)="goToDetail(news)">
     <div class="news-left">
       <img [src]="news.avatar" alt="avatar" class="news-avatar" />
       <div class="news-text">
