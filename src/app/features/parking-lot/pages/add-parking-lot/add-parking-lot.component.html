@@ -1,0 +1,126 @@
+<div class="container vh-100">
+  <div class="card mx-auto mb-4" style="width: 100%; max-width: 400px; border: none;">
+    <div class="header" style="border-bottom: 0.5px; margin-top: 20px;">
+      <i class="bi bi-chevron-left text-primary back-button"
+         (click)="window.history.back()"
+         style="cursor: pointer"></i>
+    </div>
+    <form #reviewForm="ngForm" (ngSubmit)="submitReview(reviewForm)">
+      <div style="padding: 15px;">
+        <div class="mb-3">
+          <div style="display: flex; flex-direction: column; margin-bottom: 20px;">
+            <span style="font-weight: 800; font-size: 18px; margin-bottom: 10px;">Đăng ký bãi đỗ của bạn</span>
+            <span class="text-muted"
+                  style="font-weight: 400; font-size: 14px;">Trở thành đối tác của ParkFinder</span>
+          </div>
+        </div>
+
+        <div data-mdb-input-init class="form-outline form-white mb-1">
+          <label for="typeName" class="descriptor">Tên bãi đỗ</label>
+          <input type="text" id="typeName" class="form-control text-box" placeholder="Bãi đỗ xe Mỹ Đình"
+                 name="name"
+                 [(ngModel)]="name"/>
+          <p *ngIf="validationErrors['Name']" class="text-danger error-text">{{ validationErrors['Name'] }}</p>
+        </div>
+
+        <div data-mdb-input-init class="form-outline form-white mb-1">
+          <label for="typeDescription" class="descriptor">Mô tả bãi đỗ</label>
+          <input type="text" id="typeDescription" class="form-control text-box" placeholder=""
+                 name="description"
+                 [(ngModel)]="description"/>
+        </div>
+
+        <div class="form-outline form-white mb-1">
+          <label for="price" class="descriptor">Giá tiền</label>
+          <div id="price" *ngFor="let vehicleType of vehicleTypes">
+            <div data-mdb-input-init class="form-outline form-white mb-1">
+              <label [for]="'price-' + vehicleType.id"
+                     class="descriptor">{{ vehicleType.name }}</label>
+              <input type="number"
+                     [id]="'price-' + vehicleType.id"
+                     class="form-control text-box"
+                     placeholder=""
+                     name="totalSlots"
+                     [(ngModel)]="priceMap[vehicleType.id]"/>
+              <p *ngIf="validationErrors['ParkingPrices-' + vehicleType.id]"
+                 class="text-danger error-text">{{ validationErrors['ParkingPrices-' + vehicleType.id] }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div data-mdb-input-init class="form-outline form-white mb-1">
+          <label for="typeTotalSlots" class="descriptor">Số chỗ đỗ tất cả</label>
+          <input type="number" id="typeTotalSlots" class="form-control text-box" placeholder="100"
+                 name="totalSlots"
+                 [(ngModel)]="totalSlots"/>
+          <p *ngIf="validationErrors['TotalSlots']"
+             class="text-danger error-text">{{ validationErrors['TotalSlots'] }}</p>
+        </div>
+
+        <div data-mdb-input-init class="form-outline form-white mb-3">
+          <label for="openTime" class="descriptor">Thời gian mở cửa</label>
+          <div id="openTime" class="form-control" style="border: none;">
+            <label class="main-text">
+              <input type="radio" name="openTime" value="24"
+                     [(ngModel)]="selectedOpenTimeOption"> Mở của 24/7
+            </label><br>
+
+            <label class="main-text">
+              <input type="radio" name="openTime" value="custom"
+                     [(ngModel)]="selectedOpenTimeOption"> Mở cửa
+            </label>
+
+            <div class="time-range">
+              <label class="main-text">
+                Từ:
+                <input type="time" id="startTime"
+                       name="openAt"
+                       [disabled]="selectedOpenTimeOption !== 'custom'"
+                       [(ngModel)]="openTime">
+              </label>
+              <label class="main-text ml-2">
+                Đến
+                <input type="time" id="endTime"
+                       name="closeAt"
+                       [disabled]="selectedOpenTimeOption !== 'custom'"
+                       [(ngModel)]="closeTime">
+              </label>
+              <p *ngIf="validationErrors['OpenTime']"
+                 class="text-danger error-text">{{ validationErrors['OpenTime'] }}</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div ngModelGroup="features">
+          <div style="margin-bottom: 56px;">
+            <div style="margin-bottom: 16px;">
+              <span class="category-title">Tính năng của bãi đỗ</span>
+            </div>
+            <div>
+              <span *ngFor="let feature of featureOptions">
+                <input
+                  type="checkbox"
+                  class="btn-check"
+                  [id]="'feature-' + feature.id"
+                  [name]="'feature-' + feature.id"
+                  [(ngModel)]="featuresMap[feature.name]"/>
+                <label class="btn custom-toggle" [for]="'feature-' + feature.id">
+                  {{ feature.name }}
+                </label>
+              </span>
+
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <button type="submit" class="btn btn-primary"
+                  style="width: 100%; height: 48px; border-radius: 12px;">
+            <span style="font-weight: 600; font-size: 12px;">Đăng ký</span>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
